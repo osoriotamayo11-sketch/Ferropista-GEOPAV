@@ -1,0 +1,5 @@
+﻿ventana,n_cand_E,n_cand_W,lat_E,lon_E,cota_E,municipio_E,lat_W,lon_W,cota_W,municipio_W,longitud_m,pendiente_pct,portal_E_pegado_al_borde
+adoptada,57,47,4.364,-75.196,951.0,Ibagué,4.48,-75.652,1451.5,Calarcá,52211.8,0.9587,si
+oriental ampliada,62,47,4.318,-75.234,950.0,Rovira,4.48,-75.652,1451.5,Calarcá,49733.7,1.0083,no
+occidental ampliada,57,47,4.364,-75.196,951.0,Ibagué,4.48,-75.652,1451.5,Calarcá,52211.8,0.9587,si
+ambas ampliadas,64,67,4.318,-75.234,950.0,Rovira,4.442,-75.664,1448.4,Calarcá,49659.1,1.0036,no

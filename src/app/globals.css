@@ -1,0 +1,60 @@
+@import 'leaflet/dist/leaflet.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-800 font-sans antialiased selection:bg-uni-700 selection:text-white;
+  }
+}
+
+/* Custom smooth scroll & subtle grid lines */
+html {
+  scroll-behavior: smooth;
+}
+
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(to right, rgba(25, 63, 119, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(25, 63, 119, 0.06) 1px, transparent 1px);
+}
+
+.dark .bg-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+}
+
+.bg-radial-glow {
+  background: radial-gradient(circle at 50% 20%, rgba(25, 63, 119, 0.10), transparent 70%);
+}
+
+.glow-emerald {
+  box-shadow: 0 0 25px -5px rgba(15, 123, 85, 0.18);
+}
+
+.glow-steel {
+  box-shadow: 0 0 25px -5px rgba(25, 63, 119, 0.18);
+}
+
+/* Fix Leaflet map z-index and dark theme tweaks */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  background: #eef3fa !important;
+  font-family: inherit;
+  z-index: 1;
+}
+
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+  background: #ffffff !important;
+  color: #0f2449 !important;
+  border: 1px solid #d8e3f2;
+  box-shadow: 0 10px 25px -5px rgba(15, 36, 73, 0.18) !important;
+}
+
+/* Tipografia academica: los titulos van en azul institucional */
+h1, h2, h3 { color: #0f2449; }

@@ -1,0 +1,137 @@
+{
+  "version": "2",
+  "fecha": "2026-09-08",
+  "tol_adoptada_m": 2.0,
+  "portal_oriental": {
+    "lat": 4.364,
+    "lon": -75.196,
+    "cota_msnm": 951.0
+  },
+  "portal_occidental": {
+    "lat": 4.48,
+    "lon": -75.652,
+    "cota_msnm": 1451.5
+  },
+  "longitud_m": 52211.8,
+  "longitud_km": 52.212,
+  "desnivel_m": 500.5,
+  "pendiente_pct": 0.9586,
+  "criterio_pendiente_pct": 1.5,
+  "cumple_pendiente": true,
+  "cota_max_terreno_msnm": 3393.0,
+  "cobertura_max_m": 2031.4,
+  "cobertura_media_m": 840.2,
+  "cobertura_min_m": -0.0,
+  "pct_trazado_cobertura_mayor_700m": 60.7,
+  "n_abscisas_cartera": 106,
+  "paso_cartera_m": 500.0,
+  "error_medio_absoluto_dem_m": 35.0,
+  "cierre_trazado_portal_m": 0.0,
+  "portal_oriental_ubicacion": {
+    "municipio": "Ibagué",
+    "depto": "Tolima",
+    "cod_dane": "73001"
+  },
+  "portal_occidental_ubicacion": {
+    "municipio": "Calarcá",
+    "depto": "Quindío",
+    "cod_dane": "63130"
+  },
+  "area_estudio": [
+    {
+      "MpNombre": "Cajamarca",
+      "Depto": "Tolima",
+      "MpCodigo": "73124",
+      "trazado_m": 22299.3,
+      "pct_trazado": 42.7
+    },
+    {
+      "MpNombre": "Ibagué",
+      "Depto": "Tolima",
+      "MpCodigo": "73001",
+      "trazado_m": 20481.1,
+      "pct_trazado": 39.2
+    },
+    {
+      "MpNombre": "Calarcá",
+      "Depto": "Quindío",
+      "MpCodigo": "63130",
+      "trazado_m": 9431.5,
+      "pct_trazado": 18.1
+    }
+  ],
+  "sensibilidad": [
+    {
+      "tol_m": 2.0,
+      "n_cand_E": 57,
+      "n_cand_W": 47,
+      "lat_E": 4.364,
+      "lon_E": -75.196,
+      "cota_E": 951.0,
+      "lat_W": 4.48,
+      "lon_W": -75.652,
+      "cota_W": 1451.5,
+      "longitud_m": 52211.8,
+      "desnivel_m": 500.5,
+      "pendiente_pct": 0.9587,
+      "cob_max_m": 2031.4,
+      "cob_media_m": 840.3,
+      "cob_min_m": 0.0,
+      "pct_cob_mayor_700": 60.7
+    },
+    {
+      "tol_m": 5.0,
+      "n_cand_E": 130,
+      "n_cand_W": 137,
+      "lat_E": 4.364,
+      "lon_E": -75.196,
+      "cota_E": 951.0,
+      "lat_W": 4.512,
+      "lon_W": -75.642,
+      "cota_W": 1446.0,
+      "longitud_m": 52135.9,
+      "desnivel_m": 495.1,
+      "pendiente_pct": 0.9496,
+      "cob_max_m": 2033.1,
+      "cob_media_m": 828.4,
+      "cob_min_m": 0.0,
+      "pct_cob_mayor_700": 54.1
+    },
+    {
+      "tol_m": 10.0,
+      "n_cand_E": 262,
+      "n_cand_W": 249,
+      "lat_E": 4.372,
+      "lon_E": -75.194,
+      "cota_E": 959.1,
+      "lat_W": 4.498,
+      "lon_W": -75.646,
+      "cota_W": 1455.6,
+      "longitud_m": 52065.7,
+      "desnivel_m": 496.6,
+      "pendiente_pct": 0.9538,
+      "cob_max_m": 1972.2,
+      "cob_media_m": 833.7,
+      "cob_min_m": 0.0,
+      "pct_cob_mayor_700": 52.5
+    },
+    {
+      "tol_m": 15.0,
+      "n_cand_E": 396,
+      "n_cand_W": 380,
+      "lat_E": 4.364,
+      "lon_E": -75.2,
+      "cota_E": 960.9,
+      "lat_W": 4.5,
+      "lon_W": -75.644,
+      "cota_W": 1436.4,
+      "longitud_m": 51522.8,
+      "desnivel_m": 475.5,
+      "pendiente_pct": 0.9229,
+      "cob_max_m": 1968.9,
+      "cob_media_m": 838.5,
+      "cob_min_m": -3.9,
+      "pct_cob_mayor_700": 49.1
+    }
+  ]
+}

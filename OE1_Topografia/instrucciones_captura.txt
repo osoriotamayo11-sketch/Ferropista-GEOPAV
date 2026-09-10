@@ -1,0 +1,105 @@
+========================================================================
+OE 1 - TOPOGRAFIA Y TRAZADO  ·  Semillero GEOPAV  ·  Universidad de Ibague
+Actividad 3 del cronograma - Evidencia: captura de pantalla del proyecto QGIS
+========================================================================
+
+Responsable: Tamayo Osorio Miguel Angel
+Proyecto QGIS: OE1_trazado.qgz  (carpeta OE1_Topografia\)
+QGIS recomendado: 3.44.13 (instalado en C:\Program Files\QGIS 3.44.13)
+                  tambien sirve 3.34.12; el proyecto abre en cualquiera de las dos.
+
+------------------------------------------------------------------------
+QUE CONTIENE EL PROYECTO (ya configurado, no hay que montar nada)
+------------------------------------------------------------------------
+CRS del proyecto: EPSG:4326 (WGS 84)
+
+Capas, de arriba hacia abajo en el panel "Capas":
+  1. Portales (control)              -> 2 puntos rojos con etiqueta "<cota> msnm"
+                                         (campo cota_msnm: 955 y 1464)
+  2. Trazado tunel (preliminar)      -> linea azul de 1 mm entre los dos portales
+  3. DEM elevacion (pseudocolor)     -> rampa de elevacion (verde-amarillo-naranja-
+                                         blanco), 55 % de opacidad
+  4. DEM relieve sombreado (hillshade) -> relieve sombreado, azimut 315, angulo 45,
+                                         factor Z 111120 (porque el DEM esta en grados)
+
+Rutas de datos: relativas. No muevas OE1_trazado.qgz fuera de la carpeta
+OE1_Topografia\ ni renombres las subcarpetas Act1_DEM, Act2_Portales, Act4_Trazado,
+o QGIS pedira relocalizar las capas al abrir.
+
+------------------------------------------------------------------------
+PASO 1 - ABRIR EL PROYECTO
+------------------------------------------------------------------------
+Opcion A: doble clic sobre  OE1_Topografia\OE1_trazado.qgz
+Opcion B: abrir QGIS y menu  Proyecto > Abrir...  (Ctrl+O),
+         navegar a OE1_Topografia\ y elegir OE1_trazado.qgz
+
+Al abrir deberia verse directamente el corredor Ibague - Armenia con el relieve
+y la linea azul. Si alguna capa aparece con un signo de admiracion rojo, usar
+clic derecho sobre la capa > "Reparar fuente de datos..." y apuntar al archivo
+correspondiente dentro de las subcarpetas Act1/Act2/Act4.
+
+Nota: la primera vez que se dibuja el pseudocolor, QGIS puede tardar unos
+segundos en calcular estadisticas del raster. Es normal.
+
+------------------------------------------------------------------------
+PASO 2 - ENCUADRAR EL CORREDOR COMPLETO
+------------------------------------------------------------------------
+1. En el panel "Capas" (izquierda), clic derecho sobre la capa
+   "DEM relieve sombreado (hillshade)".
+2. Elegir  "Acercar a la(s) capa(s)"  (Zoom to Layer(s)).
+   -> el mapa se ajusta a toda la extension del DEM, que ya cubre los dos
+      portales y todo el trazado con margen.
+3. Verificar que se ven:
+   - los 2 puntos de portal (extremos de la linea azul) con su etiqueta de cota,
+   - la linea azul completa,
+   - el relieve sombreado de fondo con la rampa de color.
+4. Si quieres un encuadre mas ajustado a la linea, clic derecho sobre
+   "Trazado tunel (preliminar)" > "Acercar a la(s) capa(s)" y luego aleja
+   una muesca de rueda del raton para dejar aire alrededor.
+
+Opcional - tamano de ventana: maximiza la ventana de QGIS antes de exportar
+para que el lienzo tenga buena proporcion.
+
+------------------------------------------------------------------------
+PASO 3 - EXPORTAR LA VISTA COMO IMAGEN
+------------------------------------------------------------------------
+1. Menu  Proyecto > Importar/Exportar > Exportar mapa a imagen...
+2. En el cuadro de dialogo "Guardar mapa como imagen":
+   - Resolucion: 150 ppp (o 96 ppp si el archivo sale muy grande).
+   - Anchura / Altura: dejar los valores que propone (los toma del lienzo actual).
+   - "Extension":  boton  "Establecer a extension del lienzo del mapa"
+     (Calcular desde marco del mapa / Map Canvas Extent).
+   - Marcar  "Dibujar anotaciones"  y  "Dibujar decoraciones"  si quieres que
+     salga cualquier escala o flecha norte que hayas agregado (no es obligatorio).
+   - Dejar SIN marcar "Anadir informacion de georreferenciacion" (no hace falta
+     para una evidencia; si la marcas genera ademas un world file, no molesta).
+3. Clic en  "Guardar".
+4. En el explorador de archivos:
+   - Carpeta:  C:\Users\tamay\OneDrive\Documentos\Paz y Region\OE1_Topografia\
+   - Nombre de archivo:  captura_QGIS_OE1
+   - Tipo:  PNG (*.png)
+   - Guardar.
+
+Resultado esperado:
+   OE1_Topografia\captura_QGIS_OE1.png
+
+------------------------------------------------------------------------
+COMPROBACION FINAL
+------------------------------------------------------------------------
+Abrir captura_QGIS_OE1.png y confirmar que se distingue:
+  [ ] relieve sombreado + rampa de elevacion del corredor cordillerano
+  [ ] linea azul continua del trazado, de portal a portal
+  [ ] los 2 portales con etiqueta legible: "955 msnm" y "1464 msnm"
+Si las etiquetas de cota no aparecen: capa "Portales (control)" > clic derecho >
+Propiedades > pestana "Etiquetas" > verificar que esta en "Etiquetas sencillas"
+y que el valor es la expresion  format_number("cota_msnm", 0) || ' msnm'.
+
+------------------------------------------------------------------------
+ORIGEN DE LOS DATOS (para la memoria del OE 1)
+------------------------------------------------------------------------
+DEM:      Copernicus DEM GLO-30, recorte del corredor (EPSG:4326).
+Portales: cotas objetivo 950 / 1450 msnm localizadas sobre el DEM (calculo propio,
+          marca CP). Valores DEM: 955 y 1464 msnm.
+Trazado:  alineamiento recto entre portales (calculo propio, marca CP).
+          Es un trazado INDICATIVO, no metrico.
+========================================================================

@@ -1,0 +1,50 @@
+# Dependencies
+node_modules/
+
+# Next.js build output
+.next/
+out/
+
+# Environment variables (NEVER commit these)
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Respaldos de versiones anteriores del OE 1 (el historial ya lo guarda git)
+OE1_Topografia/_v1_obsoleto/
+OE5_SeguridadVial/_v1_obsoleto/
+
+# Descarga cruda de límites del IGAC (8,4 MB; procesamiento_OE1.py la regenera)
+OE1_Topografia/Act1_DEM/limites_igac_tol_qui.geojson
+
+# Descargas del chat, no son entregables
+Claude outputs/
+
+# Rásteres e insumos que procesamiento_OE1.py regenera (no versionar)
+/cop30_N04W075.tif
+/cop30_N04W076.tif
+/dem_corredor.tif
+/limites_igac_tol_qui.geojson
+OE1_Topografia/Act1_DEM/DEM_area_estudio.tif
+
+# Respaldo comprimido del proyecto (no versionar: 145 MB)
+/Respaldo_*.zip

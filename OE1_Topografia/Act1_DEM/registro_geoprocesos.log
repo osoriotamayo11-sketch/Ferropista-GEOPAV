@@ -1,0 +1,82 @@
+[2026-09-08 23:31:09 UTC] === OE 1 · Semillero GEOPAV · procesamiento v2 ===
+[2026-09-08 23:31:09 UTC] PASO 1 — Mosaico del DEM y recorte del corredor
+[2026-09-08 23:31:09 UTC]   ya existe cop30_N04W076.tif
+[2026-09-08 23:31:09 UTC]   ya existe cop30_N04W075.tif
+[2026-09-08 23:31:14 UTC]   mosaico dem_corredor.tif  7200x3600 px
+[2026-09-08 23:31:14 UTC]   recorte DEM_corredor_recorte.tif  2844x1620 px  (alineado a la malla)
+[2026-09-08 23:31:14 UTC] PASO 1b — Capa de departamentos del IGAC (localización del layout)
+[2026-09-08 23:31:14 UTC]   descargando departamentos (sin resultRecordCount) ...
+[2026-09-08 23:31:26 UTC]   departamentos: 33
+[2026-09-08 23:31:26 UTC]   verificado: 33 features e incluye Tolima y Quindío -> Act1_DEM\departamentos_colombia_igac.geojson
+[2026-09-08 23:31:27 UTC] PASO 2 — Validación del DEM contra cotas conocidas
+[2026-09-08 23:31:27 UTC]   Ibagué       DEM    1228  ref  1285  dif    -57 m
+[2026-09-08 23:31:27 UTC]   Armenia      DEM    1474  ref  1483  dif     -9 m
+[2026-09-08 23:31:27 UTC]   Cajamarca    DEM    1848  ref  1813  dif    +35 m
+[2026-09-08 23:31:27 UTC]   Calarcá      DEM    1497  ref  1536  dif    -39 m
+[2026-09-08 23:31:27 UTC]   error medio absoluto: 35 m  (aceptable para DEM de ~30 m)
+[2026-09-08 23:31:27 UTC] PASO 3 — Localización de portales por cota objetivo
+[2026-09-08 23:31:27 UTC]   criterio: par que minimiza la distancia, entre candidatos con |cota-objetivo| <= TOL
+[2026-09-08 23:31:27 UTC]   TOL adoptada = 2 m [H]
+[2026-09-08 23:31:28 UTC]   TOL   2.0 m -> cand   57/  47  L  52,211.8 m  pend 0.9587 %  cob>700m  60.7 %
+[2026-09-08 23:31:29 UTC]   TOL   5.0 m -> cand  130/ 137  L  52,135.9 m  pend 0.9496 %  cob>700m  54.1 %
+[2026-09-08 23:31:30 UTC]   TOL  10.0 m -> cand  262/ 249  L  52,065.7 m  pend 0.9538 %  cob>700m  52.5 %
+[2026-09-08 23:31:31 UTC]   TOL  15.0 m -> cand  396/ 380  L  51,522.8 m  pend 0.9229 %  cob>700m  49.1 %
+[2026-09-08 23:31:31 UTC]   tabla de sensibilidad -> Act2_Portales/portales_sensibilidad.csv
+[2026-09-08 23:31:31 UTC]   ADOPTADO  portal oriental   4.3640,-75.1960  951.0 msnm (objetivo 950, dif +1.0 m)
+[2026-09-08 23:31:31 UTC]   ADOPTADO  portal occidental 4.4800,-75.6520  1451.5 msnm (objetivo 1450, dif +1.5 m)
+[2026-09-08 23:31:31 UTC]   ADOPTADO  distancia entre portales: 52,211.8 m = 52.212 km
+[2026-09-08 23:31:31 UTC] PASO 4 — Trazado en planta
+[2026-09-08 23:31:31 UTC]   vértices: 106   longitud poligonal 52,211.8 m   geodésica 52,211.8 m   dif +0.0 m
+[2026-09-08 23:31:31 UTC]   cierre en el portal occidental: 0.00 m
+[2026-09-08 23:31:31 UTC]   trazado -> Act4_Trazado/trazado_tunel.geojson
+[2026-09-08 23:31:31 UTC]   zip -> Act4_Trazado\trazado_tunel_SHP.zip
+[2026-09-08 23:31:31 UTC]   trazado -> Act4_Trazado/trazado_tunel.shp (reemplaza el v1)
+[2026-09-08 23:31:31 UTC] PASO 5 — Cartera de rasantes y perfil longitudinal
+[2026-09-08 23:31:31 UTC]   cartera -> Act5_Perfil/cartera_rasantes.csv y .xlsx
+[2026-09-08 23:31:31 UTC]   abscisas: 106   paso mín 211.8 m  máx 500.0 m
+[2026-09-08 23:31:31 UTC]   última abscisa: K52+211.80  (portal en K52+211.80)
+[2026-09-08 23:31:31 UTC]   cobertura en el PK 0: -0.0 m
+[2026-09-08 23:31:31 UTC]   perfil continuo (1500 puntos) -> Act5_Perfil/perfil_continuo.csv
+[2026-09-08 23:31:31 UTC] PASO 6 — Área de estudio: municipios que cruza el trazado
+[2026-09-08 23:31:31 UTC]   59 municipios cargados desde limites_igac_tol_qui.geojson
+[2026-09-08 23:31:31 UTC]   Cajamarca    Tolima   DANE 73124    22,299.3 m    42.7 %
+[2026-09-08 23:31:31 UTC]   Ibagué       Tolima   DANE 73001    20,481.1 m    39.2 %
+[2026-09-08 23:31:31 UTC]   Calarcá      Quindío  DANE 63130     9,431.5 m    18.1 %
+[2026-09-08 23:31:32 UTC]   SUMA                                52,211.8 m   (geodésica del trazado: 52,211.8 m, dif +0.0 m)
+[2026-09-08 23:31:32 UTC]   contexto: 12 municipios vecinos dentro del encuadre del mapa
+[2026-09-08 23:31:32 UTC]   -> Act1_DEM/limites_area_estudio.geojson, limites_contexto.geojson, mascara_exterior.geojson
+[2026-09-08 23:31:32 UTC]   portal oriental    -> {'municipio': 'Ibagué', 'depto': 'Tolima', 'cod_dane': '73001'}
+[2026-09-08 23:31:32 UTC]   portal occidental  -> {'municipio': 'Calarcá', 'depto': 'Quindío', 'cod_dane': '63130'}
+[2026-09-08 23:31:32 UTC]   sensibilidad a la ventana de búsqueda:
+[2026-09-08 23:31:33 UTC]     adoptada             L  52,211.8 m  pend 0.9587 %  portal E en Ibagué     (pegado al borde)
+[2026-09-08 23:31:34 UTC]     oriental ampliada    L  49,733.7 m  pend 1.0083 %  portal E en Rovira     
+[2026-09-08 23:31:35 UTC]     occidental ampliada  L  52,211.8 m  pend 0.9587 %  portal E en Ibagué     (pegado al borde)
+[2026-09-08 23:31:36 UTC]     ambas ampliadas      L  49,659.1 m  pend 1.0036 %  portal E en Rovira     
+[2026-09-08 23:31:36 UTC]   -> Act2_Portales/ventanas_sensibilidad.csv
+[2026-09-08 23:31:36 UTC]   portales -> Act2_Portales/puntos_control_portales.geojson
+[2026-09-08 23:31:36 UTC]   zip -> Act2_Portales\puntos_control_portales_SHP.zip
+[2026-09-08 23:31:36 UTC]   portales -> Act2_Portales/puntos_control_portales.shp
+[2026-09-08 23:31:36 UTC] PASO 8 — Recorte del DEM al área de estudio
+[2026-09-08 23:31:36 UTC]   gdal.Warp no disponible (No module named 'osgeo'); se prueba rasterio.mask.mask
+[2026-09-08 23:31:37 UTC]   recorte por rasterio.mask.mask (fuente: mosaico dem_corredor.tif)
+[2026-09-08 23:31:37 UTC]   bounds DEM_area_estudio.tif: O -75.8051  S 4.2374  E -74.9657  N 4.7007
+[2026-09-08 23:31:37 UTC]   bbox de los tres municipios:  O -75.8050  S 4.2374  E -74.9657  N 4.7007   (objetivo mínimo O -75.805 S 4.237 E -74.966 N 4.701)
+[2026-09-08 23:31:37 UTC]   bounds cubren el área de estudio completa: OK
+[2026-09-08 23:31:37 UTC]   píxeles con dato: recorte del corredor 4,607,280  ->  área de estudio 2,223,157  (OK, menor)
+[2026-09-08 23:31:37 UTC]   cota del DEM recortado en las 106 abscisas de la cartera: 0 en nodata
+[2026-09-08 23:31:37 UTC]   las 106 abscisas de la cartera tienen dato en el DEM recortado -> Act1_DEM\DEM_area_estudio.tif
+[2026-09-08 23:31:37 UTC] PASO 7 — Comprobación de coherencia mosaico / recorte
+[2026-09-08 23:31:37 UTC]   portal E     mosaico    951.0   recorte    951.0   OK
+[2026-09-08 23:31:37 UTC]   portal W     mosaico   1451.5   recorte   1451.5   OK
+[2026-09-08 23:31:37 UTC]   Ibagué       mosaico   1228.1   recorte   1228.1   OK
+[2026-09-08 23:31:37 UTC]   Armenia      mosaico   1474.1   recorte   1474.1   OK
+[2026-09-08 23:31:37 UTC]   Cajamarca    mosaico   1848.4   recorte   1848.4   OK
+[2026-09-08 23:31:37 UTC]   Calarcá      mosaico   1497.3   recorte   1497.3   OK
+[2026-09-08 23:31:37 UTC]   coherencia mosaico/recorte: CORRECTA
+[2026-09-08 23:31:37 UTC]   cifras congeladas -> cifras_OE1.json  (fuente de verdad del OE 1)
+[2026-09-08 23:31:37 UTC] === fin ===
+[2026-09-08 23:32:35 UTC] === layout_OE1.py ===
+[2026-09-08 23:32:35 UTC]   QGIS 3.44.13-Solothurn
+[2026-09-08 23:32:35 UTC]   DEM mín: 459.74  máx: 5217.29
+[2026-09-08 23:32:35 UTC]   PNG: C:\Users\tamay\OneDrive\Documentos\Paz y Region\OE1_Topografia\Visuales\mapa_OE1_layout.png
+[2026-09-08 23:32:35 UTC]   PDF: C:\Users\tamay\OneDrive\Documentos\Paz y Region\OE1_Topografia\Visuales\mapa_OE1_layout.pdf

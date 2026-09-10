@@ -1,0 +1,56 @@
+{
+ "type": "FeatureCollection",
+ "name": "puntos_control_portales",
+ "crs": {
+  "type": "name",
+  "properties": {
+   "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+  }
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "nombre": "Portal oriental · extremo Ibagué · Ibagué, Tolima",
+    "extremo_corredor": "Ibagué",
+    "extremo_marca": "F, dia. 20",
+    "municipio": "Ibagué",
+    "depto": "Tolima",
+    "cod_dane": "73001",
+    "cota_msnm": 951.0,
+    "cota_objetivo_msnm": 950.0,
+    "tol_m": 2.0,
+    "marca": "CP"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -75.196,
+     4.364
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "nombre": "Portal occidental · extremo Armenia · Calarcá, Quindío",
+    "extremo_corredor": "Armenia",
+    "extremo_marca": "F, dia. 20",
+    "municipio": "Calarcá",
+    "depto": "Quindío",
+    "cod_dane": "63130",
+    "cota_msnm": 1451.5,
+    "cota_objetivo_msnm": 1450.0,
+    "tol_m": 2.0,
+    "marca": "CP"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -75.652,
+     4.48
+    ]
+   }
+  }
+ ]
+}
