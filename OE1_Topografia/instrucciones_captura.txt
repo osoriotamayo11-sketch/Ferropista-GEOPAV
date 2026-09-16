@@ -75,7 +75,7 @@ PASO 3 - EXPORTAR LA VISTA COMO IMAGEN
      para una evidencia; si la marcas genera ademas un world file, no molesta).
 3. Clic en  "Guardar".
 4. En el explorador de archivos:
-   - Carpeta:  C:\Users\tamay\OneDrive\Documentos\Paz y Region\OE1_Topografia\
+   - Carpeta:  <raiz del proyecto>\OE1_Topografia\
    - Nombre de archivo:  captura_QGIS_OE1
    - Tipo:  PNG (*.png)
    - Guardar.

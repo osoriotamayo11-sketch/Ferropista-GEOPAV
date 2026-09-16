@@ -10,6 +10,8 @@ import {
   GEO, TRAZADO, PLAN_ACCION, EQUIPO,
   ETIQUETA_MARCA, COLOR_MARCA, type Dato, type Marca, type EstadoItem,
 } from '@/data/proyecto';
+import Acordeon from './Acordeon';
+import { PerfilOE1, CoberturaOE1 } from './graficos/GraficosOE1';
 
 /* Chip de marca de origen — mismo patrón visual que la ficha técnica del sitio. */
 const ChipMarca: React.FC<{ marca: Marca }> = ({ marca }) => (
@@ -21,7 +23,7 @@ const ChipMarca: React.FC<{ marca: Marca }> = ({ marca }) => (
   </span>
 );
 
-const ESTADO_UI: Record<EstadoItem, { texto: string; clase: string; Icono: React.ElementType }> = {
+const ESTADO_UI: Record<EstadoItem, { texto: string; clase: string; Icono: React.ComponentType<{ className?: string }> }> = {
   completado: { texto: 'Completado', clase: 'bg-gmae-50 text-gmae-700 border-gmae-300', Icono: CheckCircle2 },
   en_curso:   { texto: 'En curso',   clase: 'bg-uni-50 text-uni-700 border-uni-200',    Icono: Loader2 },
   pendiente:  { texto: 'Pendiente',  clase: 'bg-slate-100 text-slate-600 border-slate-300', Icono: Circle },
@@ -48,25 +50,34 @@ const Cifra: React.FC<{ etiqueta: string; dato: Dato }> = ({ etiqueta, dato }) =
   </div>
 );
 
-/* Láminas: copias para web en public/oe1/. Dimensiones intrínsecas para no provocar
-   reflow; el CSS las hace responsivas (w-full h-auto). */
-const LAMINAS = [
+/* Gráficos del objetivo. Cada uno sustituye a la lámina PNG que ocupaba su
+   lugar: la lámina sigue siendo el entregable y queda enlazada para descarga.
+   La curva se dibuja sobre 401 puntos que incluyen el de cobertura máxima, de
+   modo que pasa por la cifra que rotula. Las cifras agregadas —media y rangos—
+   siguen siendo del cálculo sobre 1.500 puntos; el pie de cada gráfico lo dice. */
+const GRAFICOS = [
   {
-    src: '/oe1/perfil_longitudinal.png', w: 2700, h: 1120,
+    id: 'perfil',
     titulo: 'Perfil longitudinal del terreno y de la rasante',
-    pie: 'Cota del terreno sobre el eje del trazado y rasante de pendiente constante entre portales, con la cobertura resultante punto a punto. Fuente del terreno: Copernicus DEM GLO-30 (ESA/Airbus), ~30 m.',
+    pie: 'Cota del terreno sobre el eje del trazado y rasante de pendiente constante entre portales, con la cobertura resultante punto a punto. La curva se dibuja sobre 401 puntos remuestreados del cálculo sobre 1.500, incluido el punto de cobertura máxima: el pico rotulado es un punto real de la curva. La cobertura media se promedia sobre los 1.500. Fuente del terreno: Copernicus DEM GLO-30 (ESA/Airbus), ~30 m.',
+    lamina: '/oe1/perfil_longitudinal.png',
   },
   {
-    src: '/oe1/cobertura_tunel.png', w: 2700, h: 1380,
+    id: 'cobertura',
     titulo: 'Cobertura sobre la clave del túnel',
-    pie: 'Espesor de roca sobre el túnel a lo largo del trazado y su distribución por rangos. La clasificación de rangos es propia del semillero, no una norma. Fuente del terreno: Copernicus DEM GLO-30.',
+    pie: 'Espesor de roca sobre el túnel a lo largo del trazado y su distribución por rangos, insumo para la selección del método de excavación en el objetivo específico 4. La clasificación de rangos es propia del semillero, no una norma. La curva pasa por el máximo rotulado; la media y los porcentajes por rango se calculan sobre los 1.500 puntos. Fuente del terreno: Copernicus DEM GLO-30.',
+    lamina: '/oe1/cobertura_tunel.png',
   },
-  {
-    src: '/oe1/mapa_OE1_layout.png', w: 1800, h: 1273,
-    titulo: 'Lámina de trazado sobre el área de estudio',
-    pie: 'Trazado preliminar entre portales sobre el relieve sombreado de Ibagué, Cajamarca y Calarcá, con mapas de localización. Reducida a 1.800 px de ancho para la web; el script de reducción está en public/oe1/. Fuente del relieve: Copernicus DEM GLO-30.',
-  },
-];
+] as const;
+
+/* La lámina de trazado se conserva como imagen: es un mapa compuesto, no una
+   serie que el navegador pueda volver a dibujar. El relieve interactivo del
+   corredor vive en la sección del mapa. */
+const LAMINA_MAPA = {
+  src: '/oe1/mapa_OE1_layout.png', w: 1800, h: 1273,
+  titulo: 'Lámina de trazado sobre el área de estudio',
+  pie: 'Trazado preliminar entre portales sobre el relieve sombreado de Ibagué, Cajamarca y Calarcá, con mapas de localización. Reducida a 1.800 px de ancho para la web; el script de reducción está en public/oe1/. Fuente del relieve: Copernicus DEM GLO-30.',
+};
 
 const TESELAS_DEM = [
   {
@@ -166,85 +177,73 @@ export const SintesisOE1: React.FC = () => {
             <Cifra etiqueta="Abscisas de la cartera" dato={GEO.nAbscisas} />
           </div>
 
-          {/* Distribución de cobertura por rangos */}
-          <div className="mt-6 pt-5 border-t border-slate-200">
-            <div className="flex items-center gap-2 mb-3">
-              <h4 className="text-sm font-bold text-slate-700">Distribución de la cobertura por rangos</h4>
-              <ChipMarca marca="CP" />
-              <span className="text-[10px] text-slate-400">sobre 1.500 puntos del perfil</span>
-            </div>
-            <div className="flex w-full h-10 rounded-lg overflow-hidden border border-slate-200">
-              {GEO.distribucionCobertura.map((r, i) => {
-                const tono = ['#cde2fb', '#9ec5f4', '#5598e7', '#2a78d6', '#184f95'][i];
-                return (
-                  <div
-                    key={r.rango}
-                    style={{ width: `${r.pct}%`, background: tono }}
-                    className="flex items-center justify-center"
-                    title={`${r.rango} · ${r.km.toLocaleString('es-CO')} km · ${r.pct.toLocaleString('es-CO')} %`}
-                  >
-                    {r.pct >= 8 && (
-                      <span className={`text-[10px] font-bold ${i >= 3 ? 'text-white' : 'text-uni-900'}`}>
-                        {r.pct.toLocaleString('es-CO')} %
-                      </span>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-            <div className="mt-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
-              {GEO.distribucionCobertura.map((r, i) => (
-                <div key={r.rango} className="flex items-start gap-2 text-[11px] text-slate-500">
-                  <span
-                    className="w-3 h-3 rounded-sm shrink-0 mt-0.5"
-                    style={{ background: ['#cde2fb', '#9ec5f4', '#5598e7', '#2a78d6', '#184f95'][i] }}
-                  />
-                  <span>
-                    <span className="font-semibold text-slate-600">{r.rango}</span><br />
-                    {r.km.toLocaleString('es-CO')} km · {r.pct.toLocaleString('es-CO')} %
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
 
         {/* 3. Láminas */}
-        <div className="space-y-4 mb-6">
-          {LAMINAS.map((l, i) => (
+        <div className="mb-6 space-y-4">
+          {GRAFICOS.map((g, i) => (
             <motion.figure
-              key={l.src}
+              key={g.id}
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.4, delay: i * 0.05 }}
-              className="rounded-2xl bg-white border border-slate-200 p-4 sm:p-5"
+              className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-6"
             >
-              <figcaption className="flex items-start justify-between gap-3 mb-3">
-                <h3 className="text-sm sm:text-base font-bold text-uni-900">{l.titulo}</h3>
+              <figcaption className="mb-4 flex items-start justify-between gap-3">
+                <h3 className="text-sm font-bold text-uni-900 sm:text-base">{g.titulo}</h3>
                 <ChipMarca marca="CP" />
               </figcaption>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={l.src}
-                alt={l.titulo}
-                width={l.w}
-                height={l.h}
-                loading="lazy"
-                className="w-full h-auto rounded-lg border border-slate-200 bg-white"
-              />
-              <p className="text-[11px] text-slate-500 leading-relaxed mt-3">{l.pie}</p>
+
+              {g.id === 'perfil' ? <PerfilOE1 /> : <CoberturaOE1 />}
+
+              <div className="mt-4 flex flex-col gap-3 border-t border-slate-200 pt-3 sm:flex-row sm:items-start sm:justify-between">
+                <p className="max-w-3xl text-[11px] leading-relaxed text-slate-500">{g.pie}</p>
+                <a
+                  href={g.lamina}
+                  download
+                  className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-[11px] font-semibold text-uni-600 transition-colors hover:border-uni-300 hover:text-uni-700"
+                >
+                  <Download className="h-3.5 w-3.5 shrink-0" />
+                  Descargar la lámina (PNG)
+                </a>
+              </div>
             </motion.figure>
           ))}
+
+          <motion.figure
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5"
+          >
+            <figcaption className="mb-3 flex items-start justify-between gap-3">
+              <h3 className="text-sm font-bold text-uni-900 sm:text-base">{LAMINA_MAPA.titulo}</h3>
+              <ChipMarca marca="CP" />
+            </figcaption>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={LAMINA_MAPA.src}
+              alt={LAMINA_MAPA.titulo}
+              width={LAMINA_MAPA.w}
+              height={LAMINA_MAPA.h}
+              loading="lazy"
+              className="h-auto w-full rounded-lg border border-slate-200 bg-white"
+            />
+            <p className="mt-3 text-[11px] leading-relaxed text-slate-500">{LAMINA_MAPA.pie}</p>
+          </motion.figure>
         </div>
 
-        {/* 4. Método reproducible */}
-        <div className="rounded-2xl bg-white border border-slate-200 p-5 sm:p-7 mb-6">
-          <div className="flex items-center gap-2 mb-3">
-            <Route className="w-4 h-4 text-uni-600" />
-            <h3 className="text-lg font-bold text-uni-900">Cómo se hizo, y qué no afirma</h3>
-          </div>
-          <div className="space-y-3 text-xs text-slate-600 leading-relaxed max-w-3xl">
+        {/* 4. Método reproducible, plegado: es el respaldo, no la portada del objetivo */}
+        <div className="mb-4">
+        <Acordeon
+          titulo="Cómo se hizo, y qué no afirma"
+          resumen="El modelo de elevación, la localización de los portales, el criterio de la rasante y las dos limitaciones declaradas."
+          icono={<Route className="h-5 w-5 text-uni-600" />}
+          contador="método"
+        >
+          <div className="max-w-3xl space-y-3 text-xs leading-relaxed text-slate-600">
             <p>
               Se descargó el <strong className="text-uni-900">Copernicus DEM GLO-30</strong> (ESA/Airbus,
               ~30 m), un modelo de elevación de acceso libre y sin registro. Los portales se localizaron
@@ -300,18 +299,18 @@ export const SintesisOE1: React.FC = () => {
               Copernicus DEM GLO-30 · ESA/Airbus · dominio del bucket público copernicus-dem-30m (AWS).
             </p>
           </div>
+        </Acordeon>
         </div>
 
-        {/* 5. Evidencias en Drive */}
-        <div className="rounded-2xl bg-slate-50 border border-slate-200 p-5 sm:p-7">
-          <div className="flex items-center gap-2 mb-1.5">
-            <FolderOpen className="w-4 h-4 text-gmae-600" />
-            <h3 className="text-lg font-bold text-uni-900">Carpetas de evidencia</h3>
-          </div>
-          <p className="text-xs text-slate-500 mb-5 max-w-3xl leading-relaxed">
-            Una carpeta por actividad, con los archivos de trabajo tal como se entregaron.
-          </p>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        {/* 5. Evidencias en Drive, también plegadas */}
+        <Acordeon
+          titulo="Carpetas de evidencia"
+          resumen="Una carpeta por actividad, con los archivos de trabajo tal como se entregaron."
+          icono={<FolderOpen className="h-5 w-5 text-gmae-600" />}
+          contador={`${evidencias.length} carpetas`}
+          tono="gris"
+        >
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {evidencias.map((e) => (
               <a
                 key={e.n}
@@ -333,7 +332,7 @@ export const SintesisOE1: React.FC = () => {
             {GEO.nota} · Trabajo del {EQUIPO.semillero}, {EQUIPO.universidad}. Criterio de pendiente
             máxima ({TRAZADO.pendienteCriterio.valor}): hipótesis del semillero, la ponencia no la declara.
           </p>
-        </div>
+        </Acordeon>
 
       </div>
     </section>

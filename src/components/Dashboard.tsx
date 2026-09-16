@@ -159,7 +159,8 @@ export const Dashboard: React.FC = () => {
           className="grid md:grid-cols-2 gap-6 mb-12"
         >
           {/* Card 1: Tiempo */}
-          <div className="rounded-2xl bg-white border border-slate-200 p-6 flex items-center justify-between shadow-lg">
+          <div className="rounded-2xl bg-white border border-slate-200 p-6 shadow-lg">
+            <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-gmae-600">
                 <Clock className="w-7 h-7" />
@@ -177,10 +178,18 @@ export const Dashboard: React.FC = () => {
               <span className="text-2xl font-black text-gmae-600">&minus;70,8 %</span>
               <span className="block text-[11px] text-slate-500">Ahorro de Tiempo</span>
             </div>
+            </div>
+            <p className="mt-4 border-t border-slate-200 pt-3 text-xs leading-relaxed text-slate-500">
+              <strong className="font-semibold text-slate-600">Qué compara:</strong> lo que hoy tarda un
+              vehículo de carga en cruzar el paso, frente al ciclo completo de la propuesta — cargue,
+              cruce y descargue, no solo el cruce. El porcentaje es cálculo propio [CP] sobre las dos
+              cifras de la ponencia.
+            </p>
           </div>
 
           {/* Card 2: Horas de viaje */}
-          <div className="rounded-2xl bg-white border border-slate-200 p-6 flex items-center justify-between shadow-lg">
+          <div className="rounded-2xl bg-white border border-slate-200 p-6 shadow-lg">
+            <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="p-3.5 rounded-xl bg-blue-500/10 border border-blue-500/20 text-uni-600">
                 <Hourglass className="w-7 h-7" />
@@ -199,6 +208,13 @@ export const Dashboard: React.FC = () => {
               <span className="text-2xl font-black text-uni-600 whitespace-nowrap">5,0 &ndash; 5,3 M</span>
               <span className="block text-[11px] text-slate-500">Ahorro anual de horas [dia. 28 y 29]</span>
             </div>
+            </div>
+            <p className="mt-4 border-t border-slate-200 pt-3 text-xs leading-relaxed text-slate-500">
+              <strong className="font-semibold text-slate-600">Qué compara:</strong> las horas que el
+              conjunto de usuarios del corredor pasa viajando en un año, antes y después. Se publica un
+              rango porque la fuente da dos valores del ahorro en dos diapositivas distintas: 5,0 en la
+              28 y 5,3 en la 29. No se escoge uno en silencio.
+            </p>
           </div>
         </motion.div>
 
@@ -221,6 +237,10 @@ export const Dashboard: React.FC = () => {
                   <div>
                     <h3 className="font-bold text-uni-900 text-lg">Tiempo de Tránsito (Minutos)</h3>
                     <p className="text-xs text-slate-500">Ibagué ↔ Armenia (Cruce de Cordillera)</p>
+                    <p className="mt-1 max-w-xs text-[11px] leading-snug text-slate-400">
+                      Cada barra es un tiempo extremo a extremo en minutos: en rojo el paso actual, en
+                      verde el ciclo integrado de la propuesta.
+                    </p>
                   </div>
                 </div>
                 <span className="px-2.5 py-1 rounded bg-slate-100 text-slate-600 text-xs font-mono">
@@ -263,6 +283,10 @@ export const Dashboard: React.FC = () => {
                   <div>
                     <h3 className="font-bold text-uni-900 text-lg">Tiempos de viaje (M horas/año)</h3>
                     <p className="text-xs text-slate-500">Tiempo agregado de los usuarios del corredor</p>
+                    <p className="mt-1 max-w-xs text-[11px] leading-snug text-slate-400">
+                      No es el tiempo de un viaje sino la suma anual de todos los usuarios del corredor.
+                      La diferencia entre las dos barras es el ahorro que declara la fuente.
+                    </p>
                   </div>
                 </div>
                 <span className="px-2.5 py-1 rounded bg-slate-100 text-slate-600 text-xs font-mono shrink-0 whitespace-nowrap">

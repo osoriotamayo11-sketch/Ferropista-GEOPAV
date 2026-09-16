@@ -5,28 +5,149 @@ import { motion } from 'framer-motion';
 import { Layers, Zap, ShieldCheck, ArrowRight } from 'lucide-react';
 import { TRAZADO, OPERACION, ACTUAL, AMBIENTAL } from '@/data/proyecto';
 
+/* ---------------------------------------------------------------------------
+ * Esquemas del proceso operativo.
+ *
+ * Son PICTOGRAMAS propios, dibujados en SVG: representan la operacion descrita
+ * por la ponencia, no miden nada. No llevan cifra alguna para que nadie los lea
+ * como dato; los numeros van en el texto de cada paso, con su diapositiva.
+ * Se dibujan en linea y no pesan: no hay imagenes externas que se rompan.
+ * ------------------------------------------------------------------------- */
+
+const UNI = '#193F77';
+const UNI_CLARO = '#8aa7d1';
+const VERDE = '#0F7B55';
+const GRIS = '#94a3b8';
+const GRIS_SUAVE = '#e2e8f0';
+
+function Tractomula({ x, y, escala = 1, color = UNI }: { x: number; y: number; escala?: number; color?: string }) {
+  return (
+    <g transform={`translate(${x} ${y}) scale(${escala})`}>
+      <rect x="0" y="-9" width="26" height="9" rx="1.5" fill={color} opacity="0.85" />
+      <path d="M27 -9 h6 l3 5 v4 h-9 z" fill={color} />
+      <circle cx="7" cy="1" r="2.2" fill="#0f172a" />
+      <circle cx="19" cy="1" r="2.2" fill="#0f172a" />
+      <circle cx="32" cy="1" r="2.2" fill="#0f172a" />
+    </g>
+  );
+}
+
+function EsquemaPaso({ paso }: { paso: '01' | '02' | '03' | '04' }) {
+  const comun = {
+    viewBox: '0 0 170 96',
+    className: 'h-full w-full',
+    role: 'img' as const,
+  };
+
+  if (paso === '01') {
+    return (
+      <svg {...comun} aria-label="Estación terminal intermodal con vehículos de carga en el patio de acceso">
+        <rect x="0" y="0" width="170" height="96" rx="10" fill="#f8fafc" />
+        <path d="M18 52 L50 34 L82 52 V80 H18 Z" fill={UNI} opacity="0.12" />
+        <path d="M18 52 L50 34 L82 52" fill="none" stroke={UNI} strokeWidth="2.2" strokeLinejoin="round" />
+        <rect x="18" y="52" width="64" height="28" fill="none" stroke={UNI} strokeWidth="2.2" />
+        <rect x="30" y="62" width="13" height="18" fill={UNI} opacity="0.32" />
+        <rect x="57" y="62" width="13" height="18" fill={UNI} opacity="0.32" />
+        <line x1="4" y1="80" x2="166" y2="80" stroke={GRIS} strokeWidth="2" />
+        <line x1="90" y1="87" x2="162" y2="87" stroke={GRIS_SUAVE} strokeWidth="3" strokeDasharray="7 6" />
+        <Tractomula x={92} y={80} escala={0.8} color={UNI} />
+        <Tractomula x={128} y={80} escala={0.8} color={UNI_CLARO} />
+        <line x1="99" y1="62" x2="99" y2="46" stroke={GRIS} strokeWidth="1.8" />
+        <rect x="86" y="36" width="26" height="10" rx="2.5" fill={VERDE} />
+        <line x1="90" y1="41" x2="108" y2="41" stroke="#ffffff" strokeWidth="1.6" strokeLinecap="round" opacity="0.85" />
+      </svg>
+    );
+  }
+
+  if (paso === '02') {
+    return (
+      <svg {...comun} aria-label="Peaje y embarque: la tractomula sube por la rampa a la plataforma ferroviaria">
+        <rect x="0" y="0" width="170" height="96" rx="10" fill="#f8fafc" />
+        <line x1="4" y1="86" x2="70" y2="86" stroke={GRIS} strokeWidth="2" />
+        <rect x="12" y="54" width="22" height="32" fill={UNI} opacity="0.14" stroke={UNI} strokeWidth="1.8" />
+        <path d="M8 54 h30 l-4 -7 h-22 z" fill={UNI} />
+        <rect x="17" y="60" width="12" height="9" rx="1" fill="#ffffff" stroke={UNI} strokeWidth="1.2" />
+        <circle cx="35" cy="70" r="2" fill="#b3261e" />
+        <line x1="35" y1="70" x2="62" y2="70" stroke="#b3261e" strokeWidth="3" strokeLinecap="round" />
+        <line x1="41" y1="70" x2="41" y2="76" stroke="#b3261e" strokeWidth="1.4" opacity="0.5" />
+        <line x1="53" y1="70" x2="53" y2="76" stroke="#b3261e" strokeWidth="1.4" opacity="0.5" />
+        <path d="M62 86 L100 70" stroke={GRIS} strokeWidth="3.5" strokeLinecap="round" />
+        <line x1="96" y1="82" x2="166" y2="82" stroke={GRIS} strokeWidth="2.4" />
+        <line x1="96" y1="87" x2="166" y2="87" stroke={GRIS_SUAVE} strokeWidth="2" />
+        <rect x="100" y="70" width="60" height="8" rx="1.5" fill={UNI} opacity="0.28" stroke={UNI} strokeWidth="1.6" />
+        <circle cx="110" cy="80" r="3" fill="#0f172a" />
+        <circle cx="124" cy="80" r="3" fill="#0f172a" />
+        <circle cx="138" cy="80" r="3" fill="#0f172a" />
+        <circle cx="152" cy="80" r="3" fill="#0f172a" />
+        <g transform="translate(66 84) rotate(-23)">
+          <Tractomula x={0} y={0} escala={0.72} color={UNI} />
+        </g>
+        <path d="M74 46 q22 -12 44 0" fill="none" stroke={VERDE} strokeWidth="2.2" strokeLinecap="round" />
+        <path d="M112 42 l8 5 -8 5 z" fill={VERDE} />
+      </svg>
+    );
+  }
+
+  if (paso === '03') {
+    return (
+      <svg {...comun} aria-label="Convoy eléctrico atravesando el túnel de base bajo la cordillera">
+        <rect x="0" y="0" width="170" height="96" rx="10" fill="#f8fafc" />
+        <path d="M8 72 L44 26 L74 54 L104 18 L152 72 Z" fill={VERDE} opacity="0.13" />
+        <path d="M8 72 L44 26 L74 54 L104 18 L152 72" fill="none" stroke={VERDE} strokeWidth="2" strokeLinejoin="round" />
+        <path d="M120 40 h22" stroke={VERDE} strokeWidth="2" strokeLinecap="round" />
+        <path d="M140 36 l8 4 -8 4 z" fill={VERDE} />
+        <rect x="6" y="66" width="158" height="20" rx="10" fill="#ffffff" stroke={UNI} strokeWidth="2" />
+        <line x1="14" y1="70" x2="156" y2="70" stroke={UNI_CLARO} strokeWidth="1.2" strokeDasharray="4 4" />
+        <rect x="22" y="74" width="22" height="8" rx="2" fill={UNI} />
+        <rect x="48" y="75" width="26" height="7" rx="1.5" fill={UNI} opacity="0.4" />
+        <rect x="78" y="75" width="26" height="7" rx="1.5" fill={UNI} opacity="0.4" />
+        <rect x="108" y="75" width="26" height="7" rx="1.5" fill={UNI} opacity="0.4" />
+        <line x1="12" y1="84" x2="158" y2="84" stroke={GRIS} strokeWidth="1.6" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg {...comun} aria-label="Descarga en el portal opuesto y continuación del viaje por carretera">
+      <rect x="0" y="0" width="170" height="96" rx="10" fill="#f8fafc" />
+      <rect x="10" y="52" width="56" height="8" rx="1.5" fill={UNI} opacity="0.28" stroke={UNI} strokeWidth="1.6" />
+      <circle cx="20" cy="62" r="3" fill="#0f172a" />
+      <circle cx="36" cy="62" r="3" fill="#0f172a" />
+      <circle cx="52" cy="62" r="3" fill="#0f172a" />
+      <line x1="6" y1="68" x2="72" y2="68" stroke={GRIS} strokeWidth="2.2" />
+      <path d="M66 56 L100 82" stroke={GRIS} strokeWidth="3.5" strokeLinecap="round" />
+      <line x1="96" y1="86" x2="166" y2="86" stroke={GRIS} strokeWidth="2.4" />
+      <line x1="100" y1="91" x2="162" y2="91" stroke={GRIS_SUAVE} strokeWidth="3" strokeDasharray="8 6" />
+      <Tractomula x={112} y={86} escala={0.85} color={VERDE} />
+      <path d="M112 40 h34" stroke={VERDE} strokeWidth="2.2" strokeLinecap="round" />
+      <path d="M144 36 l8 4 -8 4 z" fill={VERDE} />
+      <text x="112" y="32" fontSize="10" fill={VERDE} fontFamily="monospace">ruta</text>
+    </svg>
+  );
+}
+
 export const Solution: React.FC = () => {
   const steps = [
     {
-      number: '01',
+      number: '01' as const,
       title: 'Estación Terminal Intermodal (Ibagué / Armenia)',
       description:
         'Los vehículos de carga ingresan a una de las dos grandes estaciones logísticas previstas en los portales del túnel. [Ponencia, dia. 20]',
     },
     {
-      number: '02',
+      number: '02' as const,
       title: 'Peaje y Embarque Ro-Ro (Roll-on Roll-off)',
       description:
         `Las tractomulas suben a plataformas ferroviarias. La fuente asigna ${OPERACION.tPeajeCarga.valor} al conjunto de peaje y carga. [Ponencia, dia. 23]`,
     },
     {
-      number: '03',
+      number: '03' as const,
       title: 'Tránsito Eléctrico Subterráneo',
       description:
         `Convoyes de ${OPERACION.longitudTren.valor} con locomotora, vagón para conductores y ${OPERACION.tractomulasTren.valor}. El desplazamiento toma ${OPERACION.tDesplazamiento.valor}, lo que implica una velocidad comercial de ${OPERACION.velComercial.valor} sobre los 44 km de túnel principal [cálculo propio]. [Ponencia, dia. 20 y 23]`,
     },
     {
-      number: '04',
+      number: '04' as const,
       title: 'Descarga y Continuación de Ruta',
       description:
         `La descarga toma ${OPERACION.tDescarga.valor}. El ciclo completo suma ${OPERACION.tCicloTotal.valor}, frente a las ${ACTUAL.tiempoCruce.valor} del paso actual. Nótese que solo 30 de esos 70 minutos son desplazamiento: los otros 40 son operación en terminal. [Ponencia, dia. 23 y 29]`,
@@ -166,17 +287,29 @@ export const Solution: React.FC = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
             {steps.map((step, idx) => (
               <div key={idx} className="relative space-y-3">
-                <div className="text-4xl font-black text-slate-800 font-mono">{step.number}</div>
-                <h4 className="text-base font-bold text-uni-900 leading-snug">{step.title}</h4>
-                <p className="text-xs text-slate-500 leading-relaxed font-light">{step.description}</p>
+                {/* Esquema del paso. Ilustrativo, sin escala ni cifras. */}
+                <div className="relative overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
+                  <EsquemaPaso paso={step.number} />
+                  <span className="absolute left-3 top-2 font-mono text-2xl font-black text-uni-900/70">
+                    {step.number}
+                  </span>
+                </div>
+                <h4 className="text-base font-bold leading-snug text-uni-900">{step.title}</h4>
+                <p className="text-xs font-light leading-relaxed text-slate-500">{step.description}</p>
                 {idx < steps.length - 1 && (
-                  <div className="hidden lg:block absolute top-6 right-0 translate-x-1/2 text-slate-700">
-                    <ArrowRight className="w-5 h-5" />
+                  <div className="absolute top-12 right-0 hidden translate-x-1/2 text-slate-300 lg:block">
+                    <ArrowRight className="h-5 w-5" />
                   </div>
                 )}
               </div>
             ))}
           </div>
+
+          <p className="mt-8 border-t border-slate-200 pt-4 font-mono text-[11px] leading-relaxed text-slate-500">
+            Los cuatro esquemas son pictogramas propios del semillero, sin escala ni medida:
+            ilustran la secuencia operativa que describe la ponencia. Los valores de cada paso
+            van en su texto, con la diapositiva de origen.
+          </p>
         </motion.div>
 
       </div>

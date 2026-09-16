@@ -1,72 +1,43 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, Polyline, Tooltip as LeafletTooltip } from 'react-leaflet';
-import L from 'leaflet';
-import { MapPin, Navigation, Mountain, Layers, ShieldCheck, Zap } from 'lucide-react';
+/**
+ * ProjectMap — seccion del trazado del objetivo especifico 1.
+ *
+ * El visor paso de un mapa Leaflet con teselas de CARTO a un relieve 3D
+ * levantado del propio modelo de elevacion del proyecto. Motivos:
+ *   1. Las teselas `basemaps.cartocdn.com` dejaron de servirse sin llave de
+ *      API y estampaban la marca «API KEY REQUIRED» sobre todo el mapa.
+ *   2. El trazado de un tunel de base se entiende por el relieve que atraviesa,
+ *      y ese relieve es justamente el producto del objetivo especifico 1.
+ *
+ * El encabezado, la barra de estado y el pie de esta seccion se conservan.
+ */
+
+import React from 'react';
+import dynamic from 'next/dynamic';
+import { Navigation, Mountain, ShieldCheck, Zap, MousePointer2, Move3d } from 'lucide-react';
 import { GEO } from '@/data/proyecto';
 
-export const ProjectMap: React.FC = () => {
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  // Coordenadas centrales entre Ibagué y Armenia
-  const centerPosition: [number, number] = GEO.centro;
-
-  // Coordenadas de los portales del proyecto
-  const ibagueCoords: [number, number] = GEO.portalIbague;   // Portal oriental — OE 1
-  const armeniaCoords: [number, number] = GEO.portalArmenia; // Portal occidental — OE 1
-
-  // Trazado PRELIMINAR. Nota del semillero: la polilínea dibujada mide ~51 km entre los
-  // portales graficados, mientras la ponencia declara 44 km de túnel principal sobre un tramo
-  // total de 58 km. Resolver esa diferencia con un Modelo de Elevación Digital es el resultado
-  // esperado del objetivo específico 1; hasta entonces el trazado es indicativo, no métrico.
-  const tunnelPolyline: [number, number][] = [ibagueCoords, armeniaCoords];
-
-  // Custom DivIcons for Leaflet dark theme map markers
-  const createCustomMarkerIcon = (title: string, colorClass: string) => {
-    if (typeof window === 'undefined') return undefined;
-    
-    return L.divIcon({
-      className: 'custom-leaflet-marker',
-      html: `
-        <div class="relative flex items-center justify-center">
-          <span class="animate-ping absolute inline-flex h-8 w-8 rounded-full ${colorClass} opacity-40"></span>
-          <div class="relative w-7 h-7 rounded-full bg-slate-50 border-2 border-white flex items-center justify-center shadow-lg text-xs font-bold text-white">
-            <div class="w-3 h-3 rounded-full ${colorClass}"></div>
-          </div>
-        </div>
-      `,
-      iconSize: [28, 28],
-      iconAnchor: [14, 14],
-      popupAnchor: [0, -14],
-    });
-  };
-
-  if (!isMounted) {
-    return (
-      <div className="w-full h-[550px] bg-slate-50 rounded-3xl border border-slate-200 flex items-center justify-center">
-        <div className="flex items-center gap-3 text-slate-500 font-mono text-sm">
-          <Navigation className="w-5 h-5 animate-spin text-uni-600" />
-          <span>Cargando Mapa Interactivo del Trazado Subterráneo...</span>
-        </div>
+const Terreno3D = dynamic(() => import('./3d/Terreno3D'), {
+  ssr: false,
+  loading: () => (
+    <div className="flex h-[560px] w-full items-center justify-center bg-slate-50">
+      <div className="flex items-center gap-3 font-mono text-sm text-slate-500">
+        <Navigation className="h-5 w-5 animate-spin text-uni-600" />
+        <span>Cargando el relieve del corredor…</span>
       </div>
-    );
-  }
+    </div>
+  ),
+});
 
-  const ibagueIcon = createCustomMarkerIcon('Portal oriental', 'bg-blue-500');
-  const armeniaIcon = createCustomMarkerIcon('Portal occidental', 'bg-emerald-500');
-
+export const ProjectMap: React.FC = () => {
   return (
     <section id="mapa" className="py-24 bg-white/40 relative overflow-hidden border-t border-slate-200">
       {/* Glow ambient background */}
       <div className="absolute top-0 right-1/3 w-[600px] h-[500px] bg-blue-600/10 blur-[130px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4 mb-14">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-gmae-600 text-xs font-semibold uppercase tracking-wider">
@@ -83,7 +54,7 @@ export const ProjectMap: React.FC = () => {
 
         {/* Map Container Wrapper */}
         <div className="relative rounded-3xl overflow-hidden border border-slate-200 shadow-2xl bg-slate-50">
-          
+
           {/* Map Status Bar Header */}
           <div className="bg-slate-50 px-6 py-4 border-b border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
@@ -92,88 +63,49 @@ export const ProjectMap: React.FC = () => {
                 TRAZADO CALCULADO CON DEM — OBJETIVO ESPECÍFICO 1
               </span>
             </div>
-            
-            <div className="flex items-center gap-6 text-xs font-mono">
-              <div className="flex items-center gap-2">
-                <span className="w-3 h-1 bg-blue-500 rounded-full"></span>
-                <span className="text-slate-600">Portal oriental · Ibagué, Tolima</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-3 h-1 bg-emerald-500 rounded-full"></span>
-                <span className="text-slate-600">Portal occidental · Calarcá, Quindío</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-4 h-0.5 bg-sky-400 border border-dashed border-sky-300"></span>
-                <span className="text-sky-300 font-bold">Eje Túnel Base</span>
-              </div>
+
+            {/* Aqui iba una leyenda que repetia palabra por palabra las convenciones
+                dibujadas dentro del propio visor. Se retira: la leyenda vive en el
+                visor, junto a lo que nombra. En su lugar, como usarlo. */}
+            <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 font-mono text-[11px] text-slate-500">
+              <span className="flex items-center gap-1.5">
+                <MousePointer2 className="h-3.5 w-3.5 text-slate-400" />
+                Arrastra para girar
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Move3d className="h-3.5 w-3.5 text-slate-400" />
+                Rueda para acercar
+              </span>
+              <span className="text-slate-400">Convenciones dentro del visor</span>
             </div>
           </div>
 
-          {/* Leaflet Map React Instance */}
-          <div className="w-full h-[520px] relative">
-            <MapContainer
-              center={centerPosition}
-              zoom={10}
-              scrollWheelZoom={false}
-              className="w-full h-full"
-            >
-              {/* Dark carto map tiles */}
-              <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-                url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-                maxZoom={18}
-              />
+          {/* Relieve 3D levantado del DEM */}
+          <Terreno3D height={560} />
 
-              {/* Tunnel Polyline Trazado */}
-              <Polyline
-                positions={tunnelPolyline}
-                pathOptions={{
-                  color: '#38bdf8', // Sky 400
-                  weight: 5,
-                  dashArray: '8, 8',
-                  opacity: 0.9,
-                }}
-              >
-                <LeafletTooltip sticky permanent={false}>
-                  <div className="text-xs font-bold font-mono text-slate-800">
-                    Túnel de base · {GEO.longitud.valor} · pendiente {GEO.pendiente.valor}
-                  </div>
-                </LeafletTooltip>
-              </Polyline>
+          {/* Fichas de los portales, antes en los globos del mapa */}
+          <div className="grid gap-4 border-t border-slate-200 bg-white/70 p-6 sm:grid-cols-2">
+            <div className="space-y-2 rounded-xl border border-slate-200 bg-white p-4">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-[10px] font-bold uppercase text-uni-600">Portal oriental</span>
+                <span className="font-mono text-[10px] text-slate-500">{GEO.cotaPortalIbague} msnm [CP]</span>
+              </div>
+              <h4 className="text-sm font-bold text-uni-900">Terminal Intermodal Ibagué</h4>
+              <p className="text-xs leading-relaxed text-slate-600">
+                Portal oriental, en jurisdicción de Ibagué, Tolima (DANE 73001). Localizado sobre el DEM buscando la cota de 950 msnm que declara la ponencia, con tolerancia de 2 m. Criterio geométrico: pendiente de verificación geotécnica en el OE 3.
+              </p>
+            </div>
 
-              {/* Marker Ibagué */}
-              <Marker position={ibagueCoords} icon={ibagueIcon}>
-                <Popup>
-                  <div className="space-y-2 p-1 min-w-[180px]">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-mono text-uni-600 uppercase font-bold">Portal oriental</span>
-                      <span className="text-[10px] text-slate-500 font-mono">{GEO.cotaPortalIbague} msnm [CP]</span>
-                    </div>
-                    <h4 className="font-bold text-uni-900 text-sm">Terminal Intermodal Ibagué</h4>
-                    <p className="text-xs text-slate-600">
-                      Portal oriental, en jurisdicción de Ibagué, Tolima (DANE 73001). Localizado sobre el DEM buscando la cota de 950 msnm que declara la ponencia, con tolerancia de 2 m. Criterio geométrico: pendiente de verificación geotécnica en el OE 3.
-                    </p>
-                  </div>
-                </Popup>
-              </Marker>
-
-              {/* Marker Armenia */}
-              <Marker position={armeniaCoords} icon={armeniaIcon}>
-                <Popup>
-                  <div className="space-y-2 p-1 min-w-[180px]">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-mono text-gmae-600 uppercase font-bold">Portal occidental</span>
-                      <span className="text-[10px] text-slate-500 font-mono">{GEO.cotaPortalArmenia} msnm [CP]</span>
-                    </div>
-                    <h4 className="font-bold text-uni-900 text-sm">Terminal Intermodal Armenia</h4>
-                    <p className="text-xs text-slate-600">
-                      Portal occidental hacia el Eje Cafetero y Buenaventura, en jurisdicción de Calarcá, Quindío (DANE 63130) y no de Armenia, como se publicó al principio. Localizado sobre el DEM buscando la cota de 1.450 msnm de la ponencia, con tolerancia de 2 m.
-                    </p>
-                  </div>
-                </Popup>
-              </Marker>
-
-            </MapContainer>
+            <div className="space-y-2 rounded-xl border border-slate-200 bg-white p-4">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-[10px] font-bold uppercase text-gmae-600">Portal occidental</span>
+                <span className="font-mono text-[10px] text-slate-500">{GEO.cotaPortalArmenia} msnm [CP]</span>
+              </div>
+              <h4 className="text-sm font-bold text-uni-900">Terminal Intermodal Armenia</h4>
+              <p className="text-xs leading-relaxed text-slate-600">
+                Portal occidental hacia el Eje Cafetero y Buenaventura, en jurisdicción de Calarcá, Quindío (DANE 63130) y no de Armenia, como se publicó al principio. Localizado sobre el DEM buscando la cota de 1.450 msnm de la ponencia, con tolerancia de 2 m.
+              </p>
+            </div>
           </div>
 
           {/* Map Footer Information */}

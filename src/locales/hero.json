@@ -1,20 +1,16 @@
 {
   "es": {
-    "badge_tag": "ANÁLISIS ACADÉMICO · SEMILLERO GEOPAV",
-    "badge_year": "Paz y Región 2026B · Universidad de Ibagué",
     "title_part1": "Evaluación técnica del cruce",
     "title_highlight": "Ibagué — Armenia",
     "title_part2": "a través de la Cordillera Central",
     "subtitle_brand": "Ferropista Cordillera Central",
     "subtitle_text": "es la propuesta de un túnel de base de 58 km con operación de autopista rodante, planteada por ARCS / UC Consult (2025). El Semillero de Investigación GEOPAV de la Universidad de Ibagué evalúa sus parámetros técnicos, socioeconómicos y ambientales.",
-    "cta_specs": "Ver Ficha Técnica",
-    "cta_solution": "Conocer la Propuesta",
     "metric1_val": "58",
     "metric1_unit": "km",
     "metric1_label": "Longitud total del tramo (dia. 20)",
     "metric2_val": "-71%",
     "metric2_unit": "tiempo",
-    "metric2_label": "De 4 h a 70 min de cruce (dia. 23 y 29)",
+    "metric2_label": "De 4 h de recorrido a 70 min de ciclo completo (dia. 23 y 29)",
     "metric3_val": "-90%",
     "metric3_unit": "emisiones",
     "metric3_label": "Reducción de GEI y consumo energético (dia. 25)"

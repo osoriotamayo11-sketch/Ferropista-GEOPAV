@@ -6,10 +6,19 @@ import { ACTUAL, FUENTE_PRIMARIA } from '@/data/proyecto';
 
 interface ProblemItem {
   id: string;
-  icon: React.ElementType;
+  icon: React.ComponentType<{ className?: string }>;
   iconColor: string;
   bgColor: string;
   borderColor: string;
+  /* Acento propio de la tarjeta. Cada problema se identifica por su color y el
+     resaltado al pasar el cursor usa ese mismo color, no un rojo comun. */
+  accentText: string;
+  accentTextHover: string;
+  accentHoverBorder: string;
+  accentHoverShadow: string;
+  accentChip: string;
+  accentChipHover: string;
+  accentBarra: string;
   title: string;
   subtitle: string;
   description: string;
@@ -29,6 +38,13 @@ export const Problematic: React.FC = () => {
       iconColor: 'text-red-700',
       bgColor: 'bg-red-500/10',
       borderColor: 'border-red-500/30',
+      accentText: 'text-red-700',
+      accentTextHover: 'group-hover:text-red-700',
+      accentHoverBorder: 'hover:border-red-400',
+      accentHoverShadow: 'hover:shadow-red-500/20',
+      accentChip: 'border-red-200 bg-red-50 text-red-700',
+      accentChipHover: 'group-hover:border-red-600 group-hover:bg-red-600 group-hover:text-white',
+      accentBarra: 'bg-red-500',
       title: 'Siniestralidad Vial de Alta Gravedad',
       subtitle: 'Descensos prolongados de alta montaña',
       description:
@@ -43,9 +59,16 @@ export const Problematic: React.FC = () => {
     {
       id: 'eficiencia',
       icon: TrendingUp,
-      iconColor: 'text-acred-600',
+      iconColor: 'text-amber-600',
       bgColor: 'bg-amber-500/10',
       borderColor: 'border-amber-500/30',
+      accentText: 'text-amber-700',
+      accentTextHover: 'group-hover:text-amber-700',
+      accentHoverBorder: 'hover:border-amber-400',
+      accentHoverShadow: 'hover:shadow-amber-500/20',
+      accentChip: 'border-amber-200 bg-amber-50 text-amber-700',
+      accentChipHover: 'group-hover:border-amber-600 group-hover:bg-amber-600 group-hover:text-white',
+      accentBarra: 'bg-amber-500',
       title: 'Baja Eficiencia de Operación',
       subtitle: 'Velocidad media inferior a 20 km/h',
       description:
@@ -60,9 +83,16 @@ export const Problematic: React.FC = () => {
     {
       id: 'tiempo',
       icon: Clock,
-      iconColor: 'text-acred-600',
+      iconColor: 'text-orange-600',
       bgColor: 'bg-orange-500/10',
       borderColor: 'border-orange-500/30',
+      accentText: 'text-orange-700',
+      accentTextHover: 'group-hover:text-orange-700',
+      accentHoverBorder: 'hover:border-orange-400',
+      accentHoverShadow: 'hover:shadow-orange-500/20',
+      accentChip: 'border-orange-200 bg-orange-50 text-orange-700',
+      accentChipHover: 'group-hover:border-orange-600 group-hover:bg-orange-600 group-hover:text-white',
+      accentBarra: 'bg-orange-500',
       title: 'Tiempo de Cruce del Paso',
       subtitle: 'Cuello de botella del corredor',
       description:
@@ -77,9 +107,16 @@ export const Problematic: React.FC = () => {
     {
       id: 'volumen',
       icon: Truck,
-      iconColor: 'text-slate-400',
-      bgColor: 'bg-slate-500/10',
-      borderColor: 'border-slate-500/30',
+      iconColor: 'text-uni-700',
+      bgColor: 'bg-uni-500/10',
+      borderColor: 'border-uni-500/30',
+      accentText: 'text-uni-700',
+      accentTextHover: 'group-hover:text-uni-700',
+      accentHoverBorder: 'hover:border-uni-400',
+      accentHoverShadow: 'hover:shadow-uni-500/20',
+      accentChip: 'border-uni-200 bg-uni-50 text-uni-700',
+      accentChipHover: 'group-hover:border-uni-700 group-hover:bg-uni-700 group-hover:text-white',
+      accentBarra: 'bg-uni-600',
       title: 'Volumen de Carga Creciente',
       subtitle: 'Infraestructura operando al límite',
       description:
@@ -122,31 +159,50 @@ export const Problematic: React.FC = () => {
             return (
               <div
                 key={problem.id}
+                role="button"
+                tabIndex={0}
                 onClick={() => setSelectedProblem(problem)}
-                className="group relative rounded-2xl bg-white/80 p-6 border border-slate-200 hover:border-red-500/50 transition-all duration-300 flex flex-col justify-between hover:-translate-y-1 hover:shadow-xl hover:shadow-red-950/20 cursor-pointer"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setSelectedProblem(problem);
+                  }
+                }}
+                className={`group relative flex cursor-pointer flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white/80 p-6 pt-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${problem.accentHoverBorder} ${problem.accentHoverShadow}`}
               >
+                {/* Barra superior del color del problema: identifica la tarjeta
+                    incluso sin pasar el cursor, y se ensancha al hacerlo. */}
+                <span
+                  className={`absolute inset-x-0 top-0 h-1 origin-left ${problem.accentBarra} transition-transform duration-300 group-hover:scale-y-[2]`}
+                />
+
                 <div>
-                  <div className={`w-12 h-12 rounded-xl ${problem.bgColor} ${problem.borderColor} border flex items-center justify-center mb-5 group-hover:scale-110 transition-transform`}>
-                    <Icon className={`w-6 h-6 ${problem.iconColor}`} />
+                  <div className={`mb-5 flex h-12 w-12 items-center justify-center rounded-xl border ${problem.bgColor} ${problem.borderColor} transition-transform group-hover:scale-110`}>
+                    <Icon className={`h-6 w-6 ${problem.iconColor}`} />
                   </div>
-                  <h3 className="text-xl font-bold text-uni-900 mb-1 group-hover:text-red-700 transition-colors">
+                  <h3 className={`mb-1 text-xl font-bold text-uni-900 transition-colors ${problem.accentTextHover}`}>
                     {problem.title}
                   </h3>
-                  <p className="text-xs font-medium text-slate-500 mb-3">{problem.subtitle}</p>
-                  <p className="text-sm text-slate-600 leading-relaxed font-light mb-6">
+                  <p className="mb-3 text-xs font-medium text-slate-500">{problem.subtitle}</p>
+                  <p className="mb-6 text-sm font-light leading-relaxed text-slate-600">
                     {problem.description}
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-slate-900 flex items-end justify-between">
+                <div className="space-y-4 border-t border-slate-200 pt-4">
                   <div>
-                    <div className="text-2xl font-black text-uni-900 group-hover:text-red-700 transition-colors">
+                    <div className={`text-2xl font-black text-uni-900 transition-colors ${problem.accentTextHover}`}>
                       {problem.stat}
                     </div>
-                    <div className="text-[11px] text-slate-500">{problem.statLabel}</div>
+                    <div className="text-[11px] leading-snug text-slate-500">{problem.statLabel}</div>
                   </div>
-                  <span className="text-xs text-red-700 font-mono underline opacity-0 group-hover:opacity-100 transition-opacity">
-                    Ver informe +
+
+                  {/* Siempre visible: la tarjeta no anuncia su interaccion solo al hover. */}
+                  <span
+                    className={`inline-flex w-full items-center justify-center gap-1.5 rounded-lg border px-3 py-2 font-mono text-[11px] font-semibold uppercase tracking-wide transition-colors duration-300 ${problem.accentChip} ${problem.accentChipHover}`}
+                  >
+                    Ver informe
+                    <ExternalLink className="h-3.5 w-3.5" />
                   </span>
                 </div>
               </div>
@@ -192,7 +248,7 @@ export const Problematic: React.FC = () => {
           />
 
           {/* Modal Container */}
-          <div className="relative w-full max-w-2xl bg-white border border-slate-200 rounded-3xl shadow-2xl shadow-red-950/30 z-10 my-8 overflow-hidden">
+          <div className="relative w-full max-w-2xl bg-white border border-slate-200 rounded-3xl shadow-2xl shadow-slate-900/20 z-10 my-8 overflow-hidden">
             
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-slate-200 bg-slate-50">
@@ -201,7 +257,7 @@ export const Problematic: React.FC = () => {
                   <selectedProblem.icon className={`w-6 h-6 ${selectedProblem.iconColor}`} />
                 </div>
                 <div>
-                  <span className="text-xs font-mono font-semibold text-red-700 uppercase tracking-wider">
+                  <span className={`font-mono text-xs font-semibold uppercase tracking-wider ${selectedProblem.accentText}`}>
                     Análisis Ampliado de Problemática
                   </span>
                   <h3 className="text-xl font-bold text-uni-900">{selectedProblem.title}</h3>
@@ -221,7 +277,7 @@ export const Problematic: React.FC = () => {
               <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
                 <div>
                   <span className="text-xs text-slate-500 font-mono">Métrica Relevante</span>
-                  <p className="text-2xl font-black text-red-700">{selectedProblem.stat}</p>
+                  <p className={`text-2xl font-black ${selectedProblem.accentText}`}>{selectedProblem.stat}</p>
                 </div>
                 <div className="text-right text-xs text-slate-600 font-medium max-w-[200px]">
                   {selectedProblem.statLabel}

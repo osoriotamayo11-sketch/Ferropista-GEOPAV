@@ -11,7 +11,7 @@ import {
   EQUIPO, type ObjetivoEspecifico, type EstadoItem,
 } from '@/data/proyecto';
 
-const ESTADO_UI: Record<EstadoItem, { texto: string; clase: string; Icono: React.ElementType }> = {
+const ESTADO_UI: Record<EstadoItem, { texto: string; clase: string; Icono: React.ComponentType<{ className?: string }> }> = {
   completado: { texto: 'Completado', clase: 'bg-gmae-50 text-gmae-700 border-gmae-300', Icono: CheckCircle2 },
   en_curso:   { texto: 'En curso',   clase: 'bg-uni-50 text-uni-700 border-uni-200',       Icono: Loader2 },
   pendiente:  { texto: 'Pendiente',  clase: 'bg-slate-100 text-slate-600 border-slate-300',    Icono: Circle },

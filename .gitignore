@@ -48,3 +48,8 @@ OE1_Topografia/Act1_DEM/DEM_area_estudio.tif
 
 # Respaldo comprimido del proyecto (no versionar: 145 MB)
 /Respaldo_*.zip
+
+# Fuente primaria: obra de terceros, no se redistribuye
+/*SAI*08octubre2025.pdf
+
+originales_imagenes/

@@ -116,7 +116,7 @@ export const OPERACION = {
   tDescarga:      { valor: '15 min', n: 15, marca: 'F' as Marca, fuente: p(23) },
   tCicloTotal:    { valor: '70 min', n: 70, marca: 'F' as Marca, fuente: p(23),
                     nota: 'Solo 30 de los 70 minutos son desplazamiento. Los otros 40 son operación en terminal, lo que hace del diseño de las estaciones Ro-Ro un factor crítico de la eficiencia real.' },
-  capacidadDiaria:{ valor: '4.900 veh/día', n: 4900, marca: 'CP' as Marca, fuente: CALC,
+  capacidadDiaria:{ valor: '4.900 tractomulas/día', n: 4900, marca: 'CP' as Marca, fuente: CALC,
                     nota: '140 trenes/día × 35 tractomulas por tren.' },
   velComercial:   { valor: '≈ 88 km/h', n: 88, marca: 'CP' as Marca, fuente: CALC,
                     nota: '44 km de túnel principal en 30 min de desplazamiento.' },
@@ -142,7 +142,7 @@ export const ACTUAL = {
   /* RESUELTO por el objetivo específico 5 (9 sep 2026). La tasa se calcula y se
      publica: ver SEGURIDAD_VIAL, que es donde viven las cifras y sus notas. */
   siniestralidad:  { valor: '7,66 fallecidos / 100 M veh-km', n: 7.6605, marca: 'CP' as Marca, fuente: CALC,
-                     nota: 'Tasa del paso Calarcá – Cajamarca (45 km): 42 fallecidos de la ANSV entre 2015 y 2019, sobre el tránsito medido por INVÍAS en la estación 244 para el mismo periodo. Sobre los 74 km del corredor completo la tasa es 4,56. La ponencia no aporta ninguna tasa: la documenta de forma cualitativa con casos de prensa entre 2022 y 2025 (diapositivas 11 a 13). La línea base es anterior al Túnel de La Línea y sobrestima el riesgo actual.' },
+                     nota: 'Tasa del paso Calarcá – Cajamarca (45 km): 42 fallecidos de la ANSV entre 2015 y 2019, sobre el tránsito medido por INVÍAS en la estación 244 para el mismo periodo. Sobre los 74 km del corredor completo la tasa es 4,56. La ponencia no aporta ninguna tasa: la documenta de forma cualitativa con casos de prensa entre 2022 y 2025 (diapositivas 11 y 12). La línea base es anterior al Túnel de La Línea y sobrestima el riesgo actual.' },
   pendienteVia:    { valor: 'Pendiente de verificación', marca: 'DA' as Marca,
                      fuente: 'Pendiente: cartera de diseño geométrico de la Ruta 40 (INVÍAS)',
                      nota: 'La ponencia no declara la pendiente de la vía actual. La Ruta 40 es vía nacional primaria, con pendientes máximas de diseño del orden del 6 al 8 %.' },
@@ -227,6 +227,7 @@ export const SEGURIDAD_VIAL = {
     'Que la tasa de hoy sea esta. La línea base es anterior al Túnel de La Línea (4 sep 2020) y sobrestima el riesgo del corredor actual.',
     'Que el lado tolimense sea más seguro. Ninguno de los dos conjuntos de la ANSV reporta sectores críticos en Cajamarca ni en el tramo Cajamarca – Ibagué, pero la ANSV sí cubre el Tolima en otras partes (10 sectores y 137 fallecidos en Ibagué, Alvarado, Coyaima, Espinal y Flandes). La ausencia en el paso queda abierta y se dirime con Forensis.',
     'Comparar la participación de carga pesada entre la serie por estación (54–56 %) y los peajes (18–33 %). La clase «camiones» de INVÍAS incluye los de dos ejes, que en peaje caen en categoría II. Las dos lecturas se publican por separado y no se promedian.',
+    'Que el Túnel de La Línea haya resuelto el riesgo del paso. La propia ponencia lo documenta con recortes de prensa en las diapositivas 11 y 12: siete siniestros entre 2022 y 2025 -dos en 2022, uno en 2023, uno en 2024 (tres hermanos, túnel Las Mariposas) y tres en 2025 (túnel Los Azulejos, el puente helicoidal y una tractomula que cayó a un abismo descendiendo a Calarcá)-, a los que el semillero suma uno más verificado por su cuenta (22 de mayo de 2024, un fallecido, Infobae). El recorte de la tractomula al abismo se publica en la ponencia sin fecha visible; el semillero la fechó el 14 de abril de 2025 abriendo la noticia original de El Tiempo, que no reporta fallecidos ni heridos de consideración. El más grave es el bus de la Universidad Alexander von Humboldt, que cayó del puente helicoidal el 24 de mayo de 2025: 10 muertos según El Tiempo el mismo día, 11 según Infobae al día siguiente; se documenta el rango porque ninguna fuente posterior lo fija. Ninguno entra en la tasa: son de prensa, sin PR ni Gi* de la ANSV, y mezclarlos con ese dataset repetiría el error ya corregido de comparar los peajes Cocora y Cajamarca. El túnel reduce la exposición, no la elimina.',
   ],
 
   /* Por qué no hay mapa de calor. Se pidió y se rechazó, con razones. */
@@ -524,10 +525,10 @@ export const PLAN_ACCION: ObjetivoEspecifico[] = [
     titulo: 'Desarrollar una plataforma web geoespacial que visualice el trazado y los indicadores del proyecto, y que aloje un instrumento de consulta ciudadana sobre percepción de riesgo vial en el corredor.',
     actividades: [
       A(1, 'Configuración del repositorio y del entorno de desarrollo de la plataforma web.', '1 sep 2026', '7 sep 2026', 'Verificador', 'Repositorio de control de versiones', 'Enlace (URL)', 'completado'),
-      A(2, 'Integración del visor cartográfico con el trazado georreferenciado del objetivo 1.', '8 sep 2026', '14 sep 2026', 'Producto', 'Módulo de mapa interactivo', 'Enlace (URL)', 'en_curso'),
+      A(2, 'Integración del visor cartográfico con el trazado georreferenciado del objetivo 1.', '8 sep 2026', '14 sep 2026', 'Producto', 'Módulo de mapa interactivo', 'Enlace (URL)', 'completado'),
       A(3, 'Diseño y validación del instrumento de consulta ciudadana sobre percepción de riesgo vial.', '15 sep 2026', '21 sep 2026', 'Verificador', 'Cuestionario validado', 'Documento PDF'),
-      A(4, 'Integración del formulario de consulta y despliegue público de la plataforma.', '22 sep 2026', '28 sep 2026', 'Producto', 'Plataforma web publicada', 'Enlace Web (URL)'),
-      A(5, 'Difusión del instrumento y apertura de la ventana de recolección de respuestas.', '29 sep 2026', '3 oct 2026', 'Verificador', 'Registro de difusión y respuestas', 'Archivo Excel'),
+      A(4, 'Integración del formulario de consulta y despliegue público de la plataforma.', '22 sep 2026', '28 sep 2026', 'Producto', 'Plataforma web publicada', 'Enlace Web (URL)', 'completado'),
+      A(5, 'Difusión del instrumento y apertura de la ventana de recolección de respuestas.', '29 sep 2026', '3 oct 2026', 'Verificador', 'Registro de difusión y respuestas', 'Archivo Excel', 'en_curso'),
     ],
   },
   {

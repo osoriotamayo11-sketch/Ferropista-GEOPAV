@@ -1,0 +1,826 @@
+{
+ "_fuente": "Generado desde OE5_SeguridadVial/ por la sesión 11. NO editar a mano: regenerar desde los CSV.",
+ "cocora": {
+  "serie": [
+   {
+    "mes": "2021-10",
+    "dias": 31,
+    "tpd": 1022.7,
+    "tpd_pes": 294.3,
+    "t": 2021.75
+   },
+   {
+    "mes": "2021-11",
+    "dias": 30,
+    "tpd": 2673.6,
+    "tpd_pes": 690.4,
+    "t": 2021.8333
+   },
+   {
+    "mes": "2021-12",
+    "dias": 31,
+    "tpd": 4067.7,
+    "tpd_pes": 623.2,
+    "t": 2021.9167
+   },
+   {
+    "mes": "2022-01",
+    "dias": 31,
+    "tpd": 3220.1,
+    "tpd_pes": 583.4,
+    "t": 2022.0
+   },
+   {
+    "mes": "2022-02",
+    "dias": 28,
+    "tpd": 2196.7,
+    "tpd_pes": 567.1,
+    "t": 2022.0833
+   },
+   {
+    "mes": "2022-03",
+    "dias": 31,
+    "tpd": 2262.9,
+    "tpd_pes": 569.6,
+    "t": 2022.1667
+   },
+   {
+    "mes": "2022-04",
+    "dias": 30,
+    "tpd": 2850.4,
+    "tpd_pes": 532.5,
+    "t": 2022.25
+   },
+   {
+    "mes": "2022-05",
+    "dias": 31,
+    "tpd": 1527.7,
+    "tpd_pes": 452.5,
+    "t": 2022.3333
+   },
+   {
+    "mes": "2022-06",
+    "dias": 30,
+    "tpd": 2182.7,
+    "tpd_pes": 525.2,
+    "t": 2022.4167
+   },
+   {
+    "mes": "2022-07",
+    "dias": 31,
+    "tpd": 2346.1,
+    "tpd_pes": 505.0,
+    "t": 2022.5
+   },
+   {
+    "mes": "2022-08",
+    "dias": 31,
+    "tpd": 2299.6,
+    "tpd_pes": 518.2,
+    "t": 2022.5833
+   },
+   {
+    "mes": "2022-09",
+    "dias": 30,
+    "tpd": 2195.9,
+    "tpd_pes": 530.6,
+    "t": 2022.6667
+   },
+   {
+    "mes": "2022-10",
+    "dias": 31,
+    "tpd": 2538.0,
+    "tpd_pes": 505.2,
+    "t": 2022.75
+   },
+   {
+    "mes": "2022-11",
+    "dias": 30,
+    "tpd": 2420.0,
+    "tpd_pes": 502.5,
+    "t": 2022.8333
+   },
+   {
+    "mes": "2022-12",
+    "dias": 31,
+    "tpd": 3404.3,
+    "tpd_pes": 464.5,
+    "t": 2022.9167
+   },
+   {
+    "mes": "2023-01",
+    "dias": 31,
+    "tpd": 3208.6,
+    "tpd_pes": 447.5,
+    "t": 2023.0
+   },
+   {
+    "mes": "2023-02",
+    "dias": 28,
+    "tpd": 2155.5,
+    "tpd_pes": 513.9,
+    "t": 2023.0833
+   },
+   {
+    "mes": "2023-03",
+    "dias": 31,
+    "tpd": 2337.0,
+    "tpd_pes": 488.9,
+    "t": 2023.1667
+   },
+   {
+    "mes": "2023-04",
+    "dias": 30,
+    "tpd": 4781.6,
+    "tpd_pes": 717.1,
+    "t": 2023.25
+   },
+   {
+    "mes": "2023-05",
+    "dias": 31,
+    "tpd": 3613.1,
+    "tpd_pes": 659.6,
+    "t": 2023.3333
+   },
+   {
+    "mes": "2023-06",
+    "dias": 30,
+    "tpd": 4325.0,
+    "tpd_pes": 631.1,
+    "t": 2023.4167
+   },
+   {
+    "mes": "2023-07",
+    "dias": 31,
+    "tpd": 4492.3,
+    "tpd_pes": 604.5,
+    "t": 2023.5
+   },
+   {
+    "mes": "2023-08",
+    "dias": 31,
+    "tpd": 4137.3,
+    "tpd_pes": 619.9,
+    "t": 2023.5833
+   },
+   {
+    "mes": "2023-09",
+    "dias": 30,
+    "tpd": 3654.7,
+    "tpd_pes": 628.2,
+    "t": 2023.6667
+   },
+   {
+    "mes": "2023-10",
+    "dias": 31,
+    "tpd": 4290.0,
+    "tpd_pes": 643.9,
+    "t": 2023.75
+   },
+   {
+    "mes": "2023-11",
+    "dias": 30,
+    "tpd": 4261.1,
+    "tpd_pes": 689.0,
+    "t": 2023.8333
+   },
+   {
+    "mes": "2023-12",
+    "dias": 31,
+    "tpd": 5899.5,
+    "tpd_pes": 662.4,
+    "t": 2023.9167
+   },
+   {
+    "mes": "2024-01",
+    "dias": 31,
+    "tpd": 6028.5,
+    "tpd_pes": 625.1,
+    "t": 2024.0
+   },
+   {
+    "mes": "2024-02",
+    "dias": 29,
+    "tpd": 3624.1,
+    "tpd_pes": 650.3,
+    "t": 2024.0833
+   },
+   {
+    "mes": "2024-03",
+    "dias": 31,
+    "tpd": 4697.5,
+    "tpd_pes": 590.3,
+    "t": 2024.1667
+   },
+   {
+    "mes": "2024-04",
+    "dias": 30,
+    "tpd": 3539.9,
+    "tpd_pes": 646.4,
+    "t": 2024.25
+   },
+   {
+    "mes": "2024-05",
+    "dias": 31,
+    "tpd": 3707.0,
+    "tpd_pes": 679.2,
+    "t": 2024.3333
+   },
+   {
+    "mes": "2024-06",
+    "dias": 30,
+    "tpd": 4474.1,
+    "tpd_pes": 634.4,
+    "t": 2024.4167
+   },
+   {
+    "mes": "2024-07",
+    "dias": 31,
+    "tpd": 4224.2,
+    "tpd_pes": 667.7,
+    "t": 2024.5
+   },
+   {
+    "mes": "2024-08",
+    "dias": 31,
+    "tpd": 4258.3,
+    "tpd_pes": 668.5,
+    "t": 2024.5833
+   },
+   {
+    "mes": "2024-09",
+    "dias": 30,
+    "tpd": 3682.0,
+    "tpd_pes": 670.2,
+    "t": 2024.6667
+   },
+   {
+    "mes": "2024-10",
+    "dias": 31,
+    "tpd": 4682.1,
+    "tpd_pes": 765.5,
+    "t": 2024.75
+   },
+   {
+    "mes": "2024-11",
+    "dias": 30,
+    "tpd": 4460.0,
+    "tpd_pes": 742.7,
+    "t": 2024.8333
+   },
+   {
+    "mes": "2024-12",
+    "dias": 31,
+    "tpd": 6103.4,
+    "tpd_pes": 736.7,
+    "t": 2024.9167
+   },
+   {
+    "mes": "2025-01",
+    "dias": 31,
+    "tpd": 6290.7,
+    "tpd_pes": 734.1,
+    "t": 2025.0
+   },
+   {
+    "mes": "2025-02",
+    "dias": 28,
+    "tpd": 3891.5,
+    "tpd_pes": 804.8,
+    "t": 2025.0833
+   },
+   {
+    "mes": "2025-03",
+    "dias": 31,
+    "tpd": 4329.4,
+    "tpd_pes": 972.2,
+    "t": 2025.1667
+   },
+   {
+    "mes": "2025-04",
+    "dias": 30,
+    "tpd": 5115.1,
+    "tpd_pes": 795.2,
+    "t": 2025.25
+   },
+   {
+    "mes": "2025-05",
+    "dias": 31,
+    "tpd": 4103.4,
+    "tpd_pes": 895.5,
+    "t": 2025.3333
+   },
+   {
+    "mes": "2025-06",
+    "dias": 30,
+    "tpd": 4911.7,
+    "tpd_pes": 840.4,
+    "t": 2025.4167
+   },
+   {
+    "mes": "2025-07",
+    "dias": 31,
+    "tpd": 4601.3,
+    "tpd_pes": 889.4,
+    "t": 2025.5
+   },
+   {
+    "mes": "2025-08",
+    "dias": 31,
+    "tpd": 4797.8,
+    "tpd_pes": 864.0,
+    "t": 2025.5833
+   },
+   {
+    "mes": "2025-09",
+    "dias": 30,
+    "tpd": 4216.1,
+    "tpd_pes": 869.0,
+    "t": 2025.6667
+   },
+   {
+    "mes": "2025-10",
+    "dias": 31,
+    "tpd": 4990.0,
+    "tpd_pes": 894.4,
+    "t": 2025.75
+   },
+   {
+    "mes": "2025-11",
+    "dias": 30,
+    "tpd": 4735.3,
+    "tpd_pes": 919.6,
+    "t": 2025.8333
+   },
+   {
+    "mes": "2025-12",
+    "dias": 31,
+    "tpd": 6368.0,
+    "tpd_pes": 853.7,
+    "t": 2025.9167
+   },
+   {
+    "mes": "2026-01",
+    "dias": 31,
+    "tpd": 6653.5,
+    "tpd_pes": 880.7,
+    "t": 2026.0
+   },
+   {
+    "mes": "2026-02",
+    "dias": 28,
+    "tpd": 4168.1,
+    "tpd_pes": 915.5,
+    "t": 2026.0833
+   },
+   {
+    "mes": "2026-03",
+    "dias": 31,
+    "tpd": 4691.1,
+    "tpd_pes": 919.9,
+    "t": 2026.1667
+   },
+   {
+    "mes": "2026-04",
+    "dias": 30,
+    "tpd": 4949.5,
+    "tpd_pes": 908.0,
+    "t": 2026.25
+   },
+   {
+    "mes": "2026-05",
+    "dias": 31,
+    "tpd": 4256.2,
+    "tpd_pes": 893.5,
+    "t": 2026.3333
+   }
+  ],
+  "resumen": {
+   "desde": "2021-10",
+   "hasta": "2026-05",
+   "n_meses": 56,
+   "ventana_12m": "2025-06 a 2026-05",
+   "dias_ventana": 365,
+   "tpd_medio_12m": 4953.9,
+   "tpd_pesado_medio_12m": 887.1,
+   "pct_pesada_12m": 17.9,
+   "metodo": "Media ponderada por días: el total de vehículos de los últimos doce meses dividido entre los días de esos meses. No es el promedio de los doce TPD mensuales.",
+   "eje_t": "Año fraccional: año + (mes − 1)/12. Se usa como eje X numérico continuo.",
+   "ventana_12m_texto": "junio de 2025 a mayo de 2026"
+  }
+ },
+ "invias": {
+  "estaciones": [
+   {
+    "estacion": "243",
+    "sector": "Cajamarca – Ibagué",
+    "longitud_km": 29,
+    "en_corredor": true,
+    "serie": [
+     {
+      "anio": 1997,
+      "tpd": 3803,
+      "pct_pesada": 52
+     },
+     {
+      "anio": 1998,
+      "tpd": 3877,
+      "pct_pesada": 51
+     },
+     {
+      "anio": 1999,
+      "tpd": 3449,
+      "pct_pesada": 63
+     },
+     {
+      "anio": 2000,
+      "tpd": 3579,
+      "pct_pesada": 55
+     },
+     {
+      "anio": 2001,
+      "tpd": 4027,
+      "pct_pesada": 56
+     },
+     {
+      "anio": 2002,
+      "tpd": 3597,
+      "pct_pesada": 57
+     },
+     {
+      "anio": 2003,
+      "tpd": 4019,
+      "pct_pesada": 56
+     },
+     {
+      "anio": 2004,
+      "tpd": 4567,
+      "pct_pesada": 58
+     },
+     {
+      "anio": 2005,
+      "tpd": 4961,
+      "pct_pesada": 57
+     },
+     {
+      "anio": 2006,
+      "tpd": 5206,
+      "pct_pesada": 57
+     },
+     {
+      "anio": 2007,
+      "tpd": 5475,
+      "pct_pesada": 54
+     },
+     {
+      "anio": 2008,
+      "tpd": 5326,
+      "pct_pesada": 53
+     },
+     {
+      "anio": 2010,
+      "tpd": 4013,
+      "pct_pesada": 62
+     },
+     {
+      "anio": 2011,
+      "tpd": 6143,
+      "pct_pesada": 60
+     },
+     {
+      "anio": 2012,
+      "tpd": 5721,
+      "pct_pesada": 64
+     },
+     {
+      "anio": 2013,
+      "tpd": 5757,
+      "pct_pesada": 61
+     },
+     {
+      "anio": 2014,
+      "tpd": 6234,
+      "pct_pesada": 63
+     },
+     {
+      "anio": 2015,
+      "tpd": 6899,
+      "pct_pesada": 62
+     },
+     {
+      "anio": 2016,
+      "tpd": 7150,
+      "pct_pesada": 51
+     },
+     {
+      "anio": 2017,
+      "tpd": 7080,
+      "pct_pesada": 50
+     }
+    ],
+    "sector_csv": "CAJAMARCA-IBAGUE"
+   },
+   {
+    "estacion": "244",
+    "sector": "Calarcá – Cajamarca",
+    "longitud_km": 45,
+    "en_corredor": true,
+    "serie": [
+     {
+      "anio": 1997,
+      "tpd": 3194,
+      "pct_pesada": 60
+     },
+     {
+      "anio": 1998,
+      "tpd": 3546,
+      "pct_pesada": 63
+     },
+     {
+      "anio": 1999,
+      "tpd": 2932,
+      "pct_pesada": 63
+     },
+     {
+      "anio": 2000,
+      "tpd": 3147,
+      "pct_pesada": 62
+     },
+     {
+      "anio": 2001,
+      "tpd": 3093,
+      "pct_pesada": 63
+     },
+     {
+      "anio": 2002,
+      "tpd": 3374,
+      "pct_pesada": 68
+     },
+     {
+      "anio": 2003,
+      "tpd": 3412,
+      "pct_pesada": 58
+     },
+     {
+      "anio": 2004,
+      "tpd": 3600,
+      "pct_pesada": 59
+     },
+     {
+      "anio": 2005,
+      "tpd": 4670,
+      "pct_pesada": 63
+     },
+     {
+      "anio": 2006,
+      "tpd": 4498,
+      "pct_pesada": 65
+     },
+     {
+      "anio": 2007,
+      "tpd": 4898,
+      "pct_pesada": 56
+     },
+     {
+      "anio": 2008,
+      "tpd": 4773,
+      "pct_pesada": 58
+     },
+     {
+      "anio": 2011,
+      "tpd": 5741,
+      "pct_pesada": 67
+     },
+     {
+      "anio": 2012,
+      "tpd": 4801,
+      "pct_pesada": 66
+     },
+     {
+      "anio": 2013,
+      "tpd": 5669,
+      "pct_pesada": 64
+     },
+     {
+      "anio": 2014,
+      "tpd": 5781,
+      "pct_pesada": 69
+     },
+     {
+      "anio": 2015,
+      "tpd": 6500,
+      "pct_pesada": 66
+     },
+     {
+      "anio": 2016,
+      "tpd": 6220,
+      "pct_pesada": 55
+     },
+     {
+      "anio": 2017,
+      "tpd": 6450,
+      "pct_pesada": 59
+     },
+     {
+      "anio": 2018,
+      "tpd": 7535,
+      "pct_pesada": 44
+     }
+    ],
+    "sector_csv": "CALARCA - CAJAMARCA"
+   },
+   {
+    "estacion": "245",
+    "sector": "Armenia – Calarcá",
+    "longitud_km": 5,
+    "en_corredor": false,
+    "serie": [
+     {
+      "anio": 1997,
+      "tpd": 12502,
+      "pct_pesada": 9
+     },
+     {
+      "anio": 1998,
+      "tpd": 12896,
+      "pct_pesada": 9
+     },
+     {
+      "anio": 1999,
+      "tpd": 12305,
+      "pct_pesada": 8
+     },
+     {
+      "anio": 2000,
+      "tpd": 11348,
+      "pct_pesada": 11
+     },
+     {
+      "anio": 2001,
+      "tpd": 12358,
+      "pct_pesada": 12
+     },
+     {
+      "anio": 2002,
+      "tpd": 12434,
+      "pct_pesada": 9
+     },
+     {
+      "anio": 2003,
+      "tpd": 14053,
+      "pct_pesada": null
+     },
+     {
+      "anio": 2004,
+      "tpd": 11276,
+      "pct_pesada": 12
+     },
+     {
+      "anio": 2005,
+      "tpd": 11474,
+      "pct_pesada": 9
+     },
+     {
+      "anio": 2006,
+      "tpd": 9925,
+      "pct_pesada": 11
+     },
+     {
+      "anio": 2007,
+      "tpd": 16348,
+      "pct_pesada": 10
+     },
+     {
+      "anio": 2008,
+      "tpd": 11412,
+      "pct_pesada": 9
+     },
+     {
+      "anio": 2009,
+      "tpd": 10821,
+      "pct_pesada": 8
+     },
+     {
+      "anio": 2010,
+      "tpd": 11283,
+      "pct_pesada": 7
+     },
+     {
+      "anio": 2011,
+      "tpd": 12347,
+      "pct_pesada": 7
+     },
+     {
+      "anio": 2012,
+      "tpd": 10679,
+      "pct_pesada": 9
+     },
+     {
+      "anio": 2013,
+      "tpd": 10976,
+      "pct_pesada": 8
+     },
+     {
+      "anio": 2014,
+      "tpd": 9785,
+      "pct_pesada": 8
+     },
+     {
+      "anio": 2015,
+      "tpd": 11084,
+      "pct_pesada": 8
+     },
+     {
+      "anio": 2016,
+      "tpd": 11291,
+      "pct_pesada": 8
+     },
+     {
+      "anio": 2017,
+      "tpd": 11977,
+      "pct_pesada": 8
+     },
+     {
+      "anio": 2018,
+      "tpd": 13519,
+      "pct_pesada": 8
+     }
+    ],
+    "sector_csv": "ARMENIA - CALARCA"
+   }
+  ],
+  "resumen": {
+   "desde": 1997,
+   "hasta": 2018,
+   "est244_tpd_2015_2018": 6676.2,
+   "est244_n": 4,
+   "est243_tpd_2015_2017": 7043.0,
+   "est243_n": 3,
+   "metodo": "Media aritmética de los TPD anuales que publica INVÍAS en su serie histórica de volúmenes de tránsito."
+  }
+ },
+ "sectores": {
+  "lista": [
+   {
+    "pr": "PR 86",
+    "fallecidos": 21,
+    "entidad": "INVÍAS",
+    "tramo": "Calarcá - Ibagué",
+    "en_paso": true,
+    "gi_z": 4.512,
+    "gi_p": 6e-06
+   },
+   {
+    "pr": "PR 6",
+    "fallecidos": 11,
+    "entidad": "INVÍAS",
+    "tramo": "Calarcá - Ibagué",
+    "en_paso": true,
+    "gi_z": 4.512,
+    "gi_p": 6e-06
+   },
+   {
+    "pr": "PR 10",
+    "fallecidos": 9,
+    "entidad": "INVÍAS",
+    "tramo": "Calarcá - Ibagué",
+    "en_paso": true,
+    "gi_z": 2.113,
+    "gi_p": 0.034595
+   },
+   {
+    "pr": "PR 85",
+    "fallecidos": 9,
+    "entidad": "ANI",
+    "tramo": "La Paila - Calarcá",
+    "en_paso": false,
+    "gi_z": 3.328,
+    "gi_p": 0.000874
+   },
+   {
+    "pr": "PR 85",
+    "fallecidos": 1,
+    "entidad": "ANI",
+    "tramo": "—",
+    "en_paso": false,
+    "gi_z": 3.822,
+    "gi_p": 0.000132
+   },
+   {
+    "pr": "PR 10",
+    "fallecidos": 1,
+    "entidad": "INVÍAS",
+    "tramo": "Calarcá - Ibagué",
+    "en_paso": true,
+    "gi_z": 2.113,
+    "gi_p": 0.034595
+   }
+  ],
+  "resumen": {
+   "n": 6,
+   "fallecidos_total": 52,
+   "fallecidos_en_paso": 42,
+   "periodo": "2015-2019"
+  }
+ }
+}

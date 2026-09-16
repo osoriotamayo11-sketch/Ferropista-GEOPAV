@@ -16,12 +16,9 @@ const ENLACES = [
   { href: '#impactos',     texto: 'Impactos',            corto: 'Impactos' },
   { href: '#dashboard',    texto: 'Dashboard',           corto: 'Dashboard' },
   { href: '#mapa',         texto: 'Mapa',                corto: 'Mapa' },
-  { href: '#perfil',       texto: 'Perfil',              corto: 'Perfil' },
+  { href: '#plan',         texto: 'Plan de Acción',      corto: 'Plan' },
   { href: '#oe1',          texto: 'Síntesis OE 1',       corto: 'OE 1' },
   { href: '#oe5',          texto: 'Síntesis OE 5',       corto: 'OE 5' },
-  { href: '#plan',         texto: 'Plan de Acción',      corto: 'Plan' },
-  { href: '#entregables',  texto: 'Entregables',         corto: 'Entregables' },
-  { href: '#contacto',     texto: 'Contacto',            corto: 'Contacto' },
 ];
 
 export const Header: React.FC<HeaderProps> = ({ onOpenSpecs }) => {
@@ -50,6 +47,18 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSpecs }) => {
               height={179}
               priority
               className="h-9 sm:h-10 w-auto shrink-0"
+            />
+
+            {/* Logo del semillero: la Universidad es la institucion, GEOPAV el
+                autor del analisis. Van juntos y separados por un filete. */}
+            <span className="hidden h-8 w-px shrink-0 bg-slate-200 sm:block" />
+            <Image
+              src="/logo-geopav.png"
+              alt="Semillero de Investigación GEOPAV"
+              width={256}
+              height={256}
+              priority
+              className="hidden h-9 w-auto shrink-0 sm:block"
             />
           </a>
 

@@ -12,14 +12,27 @@ interface ImpactItem {
   badge: string;
   badgeStyle: string;
   borderHover: string;
-  icon: React.ElementType;
+  icon: React.ComponentType<{ className?: string }>;
   iconColor: string;
   iconBg: string;
   summary: string;
   points: string[];
   detailedSpecs: string[];
-  imageUrl: string;
-  imageAlt: string;
+  /* Cabecera del detalle. Antes eran fotos tomadas de un servicio externo por
+     enlace directo: no estaban bajo control del semillero y dejaron de cargar,
+     de modo que la ficha se abria con el hueco de una imagen rota. Las de ahora
+     son generadas para el proyecto y viven en el propio repositorio, en
+     public/impactos/, reducidas a 1.400 px de ancho.
+     No documentan nada: ilustran el tema de la ficha y por eso no llevan pie
+     de fuente ni marca de origen. */
+  panelImagen: string;
+  panelDegradado: string;
+  panelRotulo: string;
+  /* Acento del pie de la tarjeta. Antes solo la ficha ambiental lo tenia, por
+     una condicion escrita a mano sobre su id; ahora cada una lleva el suyo. */
+  pieFondo: string;
+  pieCifra: string;
+  tituloHover: string;
   highlightStat: string;
   highlightLabel: string;
 }
@@ -53,8 +66,12 @@ export const ImpactsGrid: React.FC = () => {
         `Inversión estimada (CAPEX): ${ECONOMICO.capex.valor}. [Fuente, dia. 20]`,
         'Reducción porcentual del flete: NO reportada por la fuente. Debe calcularla el semillero en el objetivo específico 6.',
       ],
-      imageUrl: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80',
-      imageAlt: 'Logística de carga pesada e intermodalidad',
+      panelImagen: '/impactos/economico.webp',
+      panelDegradado: 'from-uni-800 via-uni-700 to-uni-500',
+      pieFondo: 'bg-uni-50 border-t-uni-200',
+      pieCifra: 'text-uni-700',
+      tituloHover: 'group-hover:text-uni-700',
+      panelRotulo: 'Logística de carga pesada e intermodalidad',
       highlightStat: ECONOMICO.ahorroTransporte2030.valor,
       highlightLabel: 'de ahorro para el sector transporte en 2030 (dia. 28)',
     },
@@ -82,8 +99,12 @@ export const ImpactsGrid: React.FC = () => {
         'Atribuir esas cifras a la Ferropista infla el proyecto en un orden de magnitud.',
         'La percepción de la comunidad del corredor es dato primario que este semillero recoge mediante consulta ciudadana (objetivo específico 2).',
       ],
-      imageUrl: 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?auto=format&fit=crop&w=800&q=80',
-      imageAlt: 'Ingeniería y desarrollo social regional',
+      panelImagen: '/impactos/social.webp',
+      panelDegradado: 'from-uni-700 via-uni-500 to-uni-300',
+      pieFondo: 'bg-sky-50 border-t-sky-200',
+      pieCifra: 'text-sky-700',
+      tituloHover: 'group-hover:text-sky-700',
+      panelRotulo: 'Población y desarrollo del área de influencia',
       highlightStat: SOCIAL.poblacionEje.valor,
       highlightLabel: 'de habitantes en el eje Ibagué – Cajamarca – Armenia (dia. 27)',
     },
@@ -111,8 +132,12 @@ export const ImpactsGrid: React.FC = () => {
         'El balance neto real es la diferencia entre las emisiones evitadas en operación y las incorporadas en la construcción. Ese balance no está publicado.',
         'Estimar el orden de magnitud del material sobrante y su disposición es un aporte propio del objetivo específico 7.',
       ],
-      imageUrl: 'https://images.unsplash.com/photo-1511497584788-876761c1598f?auto=format&fit=crop&w=800&q=80',
-      imageAlt: 'Ecosistema de montaña y conservación hídrica',
+      panelImagen: '/impactos/ambiental.webp',
+      panelDegradado: 'from-gmae-800 via-gmae-600 to-gmae-400',
+      pieFondo: 'bg-gmae-50 border-t-gmae-200',
+      pieCifra: 'text-gmae-600',
+      tituloHover: 'group-hover:text-gmae-600',
+      panelRotulo: 'Ecosistema de alta montaña y descarbonización',
       highlightStat: AMBIENTAL.reduccionGEI.valor,
       highlightLabel: 'de reducción de emisiones GEI del cruce (dia. 25)',
     },
@@ -140,8 +165,12 @@ export const ImpactsGrid: React.FC = () => {
         'Marco normativo de referencia: NFPA 130 y fichas UIC. La NFPA 130 está orientada a transporte de pasajeros y no cubre directamente una autopista rodante de carga.',
         'En Colombia no existe norma técnica específica para túneles ferroviarios de esta tipología. Ese vacío normativo es un hallazgo del semillero.',
       ],
-      imageUrl: 'https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=800&q=80',
-      imageAlt: 'Infraestructura de tunelería y seguridad',
+      panelImagen: '/impactos/seguridad.webp',
+      panelDegradado: 'from-acred-600 via-acred-500 to-acred-400',
+      pieFondo: 'bg-amber-50 border-t-amber-200',
+      pieCifra: 'text-acred-600',
+      tituloHover: 'group-hover:text-acred-600',
+      panelRotulo: 'Tunelería, operación protegida y seguridad vial',
       highlightStat: AMBIENTAL.costosExternos.valor,
       highlightLabel: 'en costos externos evitados a 50 años (dia. 26)',
     },
@@ -178,7 +207,6 @@ export const ImpactsGrid: React.FC = () => {
         <div className="grid md:grid-cols-2 gap-8">
           {impacts.map((item, index) => {
             const Icon = item.icon;
-            const isEmerald = item.id === 'ambiental';
 
             return (
               <motion.div
@@ -205,7 +233,7 @@ export const ImpactsGrid: React.FC = () => {
                   <span className="text-xs font-mono font-medium text-slate-500 uppercase tracking-wider">
                     {item.category}
                   </span>
-                  <h3 className={`text-2xl font-extrabold text-uni-900 mb-3 mt-1 ${isEmerald ? 'group-hover:text-gmae-600' : 'group-hover:text-uni-600'} transition-colors`}>
+                  <h3 className={`mb-3 mt-1 text-2xl font-extrabold text-uni-900 transition-colors ${item.tituloHover}`}>
                     {item.title}
                   </h3>
 
@@ -226,9 +254,9 @@ export const ImpactsGrid: React.FC = () => {
                 </div>
 
                 {/* Card Footer Metric */}
-                <div className={`pt-6 border-t border-slate-900 flex items-center justify-between ${isEmerald ? 'bg-gmae-50 -mx-8 -mb-8 p-8 rounded-b-3xl border-t-gmae-200' : ''}`}>
+                <div className={`-mx-8 -mb-8 flex items-center justify-between rounded-b-3xl border-t p-8 ${item.pieFondo}`}>
                   <div>
-                    <div className={`text-3xl font-black ${isEmerald ? 'text-gmae-600' : 'text-uni-900'}`}>
+                    <div className={`text-3xl font-black ${item.pieCifra}`}>
                       {item.highlightStat}
                     </div>
                     <div className="text-xs text-slate-500 font-medium">{item.highlightLabel}</div>
@@ -283,19 +311,35 @@ export const ImpactsGrid: React.FC = () => {
             {/* Modal Content Body */}
             <div className="p-6 sm:p-8 space-y-6 max-h-[75vh] overflow-y-auto">
               
-              {/* Representative Image Container */}
-              <div className="relative w-full h-56 rounded-2xl overflow-hidden border border-slate-200 shadow-inner group">
+              {/* Cabecera del detalle: imagen propia del repositorio.
+                  El degradado del color de la ficha queda de fondo mientras
+                  carga y como tinte bajo el rotulo. */}
+              <div className={`relative h-56 w-full overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-br ${selectedImpact.panelDegradado}`}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={selectedImpact.imageUrl}
-                  alt={selectedImpact.imageAlt}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  src={selectedImpact.panelImagen}
+                  alt={selectedImpact.panelRotulo}
+                  width={1400}
+                  height={515}
+                  loading="lazy"
+                  className="h-full w-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-50 via-slate-100/60 to-transparent" />
-                <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end">
-                  <span className="text-xs font-mono text-slate-600 bg-white/80 px-3 py-1 rounded-lg border border-slate-200">
-                    {selectedImpact.imageAlt}
+
+                <div className="absolute left-5 top-5 flex items-center gap-3">
+                  <div className="rounded-2xl border border-white/25 bg-slate-900/35 p-2.5 backdrop-blur-sm">
+                    <selectedImpact.icon className="h-6 w-6 text-white" />
+                  </div>
+                  <span className="rounded-full bg-slate-900/35 px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-widest text-white backdrop-blur-sm">
+                    {selectedImpact.category}
                   </span>
-                  <span className="text-xl font-black text-white bg-blue-600/80 px-3 py-1 rounded-lg">
+                </div>
+
+                <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-slate-900/75 via-slate-900/35 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-3">
+                  <span className="rounded-lg bg-slate-900/45 px-3 py-1 font-mono text-xs text-white backdrop-blur-sm">
+                    {selectedImpact.panelRotulo}
+                  </span>
+                  <span className="whitespace-nowrap rounded-lg border border-white/25 bg-slate-900/55 px-3 py-1 text-xl font-black text-white backdrop-blur-sm">
                     {selectedImpact.highlightStat}
                   </span>
                 </div>

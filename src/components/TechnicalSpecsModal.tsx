@@ -30,7 +30,7 @@ const Spec: React.FC<{ etiqueta: string; dato: Dato }> = ({ etiqueta, dato }) =>
   </div>
 );
 
-const Grid: React.FC<{ icon: React.ElementType; color: string; titulo: string; children: React.ReactNode }> =
+const Grid: React.FC<{ icon: React.ComponentType<{ className?: string }>; color: string; titulo: string; children: React.ReactNode }> =
   ({ icon: Icon, color, titulo, children }) => (
   <div className="space-y-4 pt-4 first:pt-0 border-t first:border-t-0 border-slate-200">
     <h4 className="text-sm font-bold text-slate-600 uppercase tracking-wider flex items-center gap-2">

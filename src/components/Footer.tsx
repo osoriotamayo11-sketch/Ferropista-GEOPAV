@@ -27,6 +27,13 @@ export const Footer: React.FC<FooterProps> = ({ onOpenSpecs }) => {
             </div>
 
             <div className="flex items-center gap-3">
+              <Image
+                src="/logo-geopav.png"
+                alt="Semillero de Investigación GEOPAV"
+                width={256}
+                height={256}
+                className="h-11 w-11 shrink-0 rounded-lg bg-white/95 p-1"
+              />
               <div>
                 <span className="text-base font-bold text-white tracking-tight block leading-tight">
                   Semillero de Investigación GEOPAV
