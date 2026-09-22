@@ -17,9 +17,23 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import {
   Users, CheckCircle2, Circle, Loader2, ArrowRight, ShieldCheck, ListChecks, Clock,
+  FolderOpen, ExternalLink,
 } from 'lucide-react';
 import { PLAN_ACCION, EQUIPO, type EstadoItem } from '@/data/proyecto';
 import Acordeon from './Acordeon';
+
+/**
+ * Carpetas de Google Drive de las cinco actividades del OE 2, en orden de actividad.
+ * Son las mismas que el Google Sheet oficial referencia en su columna
+ * «Carpeta de Google Drive». Verificadas abiertas sin sesión el 18 sep 2026.
+ */
+const DRIVE_URLS_OE2 = [
+  'https://drive.google.com/drive/folders/1Uc76S1A3TmD2-JeTnOtIvp6m_0Q-Lc2v',
+  'https://drive.google.com/drive/folders/1tjaDUkU04ZWvX1MJH0XkPW2ZC0N7DDOB',
+  'https://drive.google.com/drive/folders/1AJJXG6WE2qvNJ0cYZ_7_HOOXxNpmGTkH',
+  'https://drive.google.com/drive/folders/1oU26wwyBRw1DdW8M_H1sQpqBcyyB8XRd',
+  'https://drive.google.com/drive/folders/1avkuU9JmbhRok1t_EEgyH4hBSkaEi0AW',
+];
 
 const ESTADO_UI: Record<EstadoItem, { texto: string; clase: string; Icono: React.ComponentType<{ className?: string }> }> = {
   completado: { texto: 'Completado', clase: 'bg-gmae-50 text-gmae-700 border-gmae-300', Icono: CheckCircle2 },
@@ -91,19 +105,30 @@ export const SintesisOE2: React.FC = () => {
           </div>
           <p className="text-sm text-slate-700 leading-relaxed mb-5">{oe2.titulo}</p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-3">
-            {oe2.actividades.map((a) => {
+            {oe2.actividades.map((a, i) => {
               const { Icono } = ESTADO_UI[a.estado];
               const tinte = a.estado === 'completado' ? 'text-gmae-600'
                 : a.estado === 'en_curso' ? 'text-uni-600' : 'text-slate-400';
               return (
-                <div key={a.n} className="rounded-xl bg-slate-50 border border-slate-200 p-3 space-y-1.5">
+                <a
+                  key={a.n}
+                  href={DRIVE_URLS_OE2[i]}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex flex-col rounded-xl bg-slate-50 border border-slate-200 p-3 space-y-1.5 hover:border-uni-300 hover:bg-white transition-colors"
+                >
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] font-mono text-slate-500">Act {a.n}</span>
                     <Icono className={`w-3.5 h-3.5 ${tinte} ${a.estado === 'en_curso' ? 'animate-spin' : ''}`} />
                   </div>
                   <p className="text-[11px] text-slate-600 leading-snug">{a.entregable}</p>
                   <p className="text-[10px] font-mono text-slate-400">{a.inicio} → {a.fin}</p>
-                </div>
+                  <span className="flex items-center gap-1.5 pt-1.5 mt-auto border-t border-slate-200 text-[10px] font-semibold text-uni-700">
+                    <FolderOpen className="w-3 h-3 shrink-0" />
+                    Ver evidencia en Drive
+                    <ExternalLink className="w-2.5 h-2.5 shrink-0 text-slate-400 group-hover:text-uni-600" />
+                  </span>
+                </a>
               );
             })}
           </div>

@@ -18,6 +18,7 @@ const ENLACES = [
   { href: '#mapa',         texto: 'Mapa',                corto: 'Mapa' },
   { href: '#plan',         texto: 'Plan de Acción',      corto: 'Plan' },
   { href: '#oe1',          texto: 'Síntesis OE 1',       corto: 'OE 1' },
+  { href: '#oe2',          texto: 'Síntesis OE 2',       corto: 'OE 2' },
   { href: '#oe5',          texto: 'Síntesis OE 5',       corto: 'OE 5' },
 ];
 

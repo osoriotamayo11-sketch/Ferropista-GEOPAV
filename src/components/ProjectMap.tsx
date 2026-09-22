@@ -90,7 +90,7 @@ export const ProjectMap: React.FC = () => {
                 <span className="font-mono text-[10px] font-bold uppercase text-uni-600">Portal oriental</span>
                 <span className="font-mono text-[10px] text-slate-500">{GEO.cotaPortalIbague} msnm [CP]</span>
               </div>
-              <h4 className="text-sm font-bold text-uni-900">Terminal Intermodal Ibagué</h4>
+              <h4 className="text-sm font-bold text-uni-900">Portal de Ibagué</h4>
               <p className="text-xs leading-relaxed text-slate-600">
                 Portal oriental, en jurisdicción de Ibagué, Tolima (DANE 73001). Localizado sobre el DEM buscando la cota de 950 msnm que declara la ponencia, con tolerancia de 2 m. Criterio geométrico: pendiente de verificación geotécnica en el OE 3.
               </p>
@@ -101,7 +101,7 @@ export const ProjectMap: React.FC = () => {
                 <span className="font-mono text-[10px] font-bold uppercase text-gmae-600">Portal occidental</span>
                 <span className="font-mono text-[10px] text-slate-500">{GEO.cotaPortalArmenia} msnm [CP]</span>
               </div>
-              <h4 className="text-sm font-bold text-uni-900">Terminal Intermodal Armenia</h4>
+              <h4 className="text-sm font-bold text-uni-900">Portal de Calarcá</h4>
               <p className="text-xs leading-relaxed text-slate-600">
                 Portal occidental hacia el Eje Cafetero y Buenaventura, en jurisdicción de Calarcá, Quindío (DANE 63130) y no de Armenia, como se publicó al principio. Localizado sobre el DEM buscando la cota de 1.450 msnm de la ponencia, con tolerancia de 2 m.
               </p>

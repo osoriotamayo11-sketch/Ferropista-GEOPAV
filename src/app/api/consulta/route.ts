@@ -84,11 +84,18 @@ export async function POST(req: NextRequest) {
    *
    * El valor correcto es la raíz del proyecto, sin ruta y sin barra final.
    */
+  /*
+   * SUPABASE_SECRET_KEY (formato `sb_secret_…`) desde el 16 sep 2026. Sustituye a la
+   * `service_role` legacy, que Supabase retira a finales de 2026 y que ya no se
+   * regenera cuando un proyecto pausado se restaura. Va sin respaldo a la clave vieja
+   * a propósito: si falta, la ruta falla a la vista en vez de seguir dependiendo de
+   * una clave en retirada. Solo servidor: Supabase rechaza esta clave desde un navegador.
+   */
   const url = process.env.SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const key = process.env.SUPABASE_SECRET_KEY;
 
   if (!url || !key) {
-    console.error('Falta SUPABASE_URL o SUPABASE_SERVICE_ROLE_KEY en el entorno.');
+    console.error('Falta SUPABASE_URL o SUPABASE_SECRET_KEY en el entorno.');
     return NextResponse.json(
       { error: 'No se pudo guardar la respuesta. Inténtelo de nuevo más tarde.', almacenado: false },
       { status: 500 }
