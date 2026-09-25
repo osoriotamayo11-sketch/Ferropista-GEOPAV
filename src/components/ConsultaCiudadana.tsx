@@ -1,24 +1,77 @@
 'use client';
 
 /**
- * Consulta ciudadana de percepción de riesgo vial — objetivo específico 2.
+ * Consulta ciudadana sobre la Ferropista — objetivo específico 2.
  *
  * Único instrumento de dato primario del proyecto. Alimenta el OE 5 y el OE 7.
  *
  * Estado: ABIERTA desde el 15 sep 2026. Las respuestas se guardan en Supabase y
  * quedan marcadas con la versión del cuestionario (ver src/app/api/consulta/route.ts).
  *
- * El instrumento vigente es el borrador propio del semillero: el oficial, avalado
- * por la interlocutora, todavía no ha llegado. Eso se declara en pantalla, porque
- * quien responde tiene derecho a saber en qué estado está lo que está contestando.
- * Cuando llegue el oficial se sustituyen las preguntas y se cambia la versión; las
- * respuestas ya recogidas no se tocan ni se mezclan en silencio.
+ * Instrumento vigente: el OFICIAL, avalado por la entidad receptora (versión
+ * 'oficial-2026-09'). Las preguntas se importan de
+ * OE2_Plataforma/Act3_Instrumento/instrumento_oficial_2026-09.json —fuente única,
+ * nunca transcritas a mano— y las respuestas se guardan en la tabla
+ * consulta_oe2_oficial, separada de la tabla del instrumento borrador anterior
+ * (consulta_oe2), que se conserva intacta y nunca se mezcla en silencio con esta.
  */
 
 import React, { useState } from 'react';
 import { ShieldAlert, Check, AlertTriangle, Send, Info } from 'lucide-react';
+import { TRAZADO, OPERACION, ACTUAL, ECONOMICO } from '@/data/proyecto';
+import instrumentoRaw from '../../OE2_Plataforma/Act3_Instrumento/instrumento_oficial_2026-09.json';
 
 export const ALMACENAMIENTO_ACTIVO = true;
+
+/* ----------------------------------------------------------------------
+   Instrumento oficial: tipado propio sobre el JSON importado. El JSON es
+   la fuente única de los textos de pregunta; aquí solo se define la forma.
+   ---------------------------------------------------------------------- */
+interface ItemInstrumento {
+  n: number;
+  texto: string;
+  solo_para: string | null;
+  opciones: string[];
+  tipo: 'radio' | 'likert5' | 'texto';
+}
+interface InstrumentoOficial {
+  version: string;
+  fuente: string;
+  escala_likert5: string[];
+  items: ItemInstrumento[];
+}
+const instrumento = instrumentoRaw as InstrumentoOficial;
+const ESCALA = instrumento.escala_likert5;
+
+/* Códigos de las respuestas cerradas de las preguntas 1 y 2. No están en el
+   JSON (que solo trae los textos que ve la persona); vienen del esquema de
+   la tabla consulta_oe2_oficial (OE2_Plataforma/esquema_consulta_oficial.sql)
+   y se emparejan por posición con las opciones del JSON, en su mismo orden. */
+const RELACION_VALORES = ['carga', 'particular', 'comerciante', 'residente', 'trabajador', 'otro'] as const;
+type RelacionValor = (typeof RELACION_VALORES)[number];
+const PERFILES_CON_BLOQUE: RelacionValor[] = ['carga', 'particular', 'residente', 'comerciante'];
+
+const FRECUENCIA_VALORES = ['diario', 'varias_semana', 'una_semana', 'algunas_mes', 'ocasional', 'nunca'] as const;
+
+const item = (n: number, soloPara: string | null = null) =>
+  instrumento.items.find((i) => i.n === n && i.solo_para === soloPara)!;
+
+const Q1 = item(1);
+const Q2 = item(2);
+const LIKERT_COMUNES = instrumento.items
+  .filter((i) => i.tipo === 'likert5' && i.solo_para === null)
+  .sort((a, b) => a.n - b.n);
+const BLOQUE_PERFIL: Record<RelacionValor, ItemInstrumento[]> = PERFILES_CON_BLOQUE.reduce(
+  (acc, perfil) => {
+    acc[perfil] = instrumento.items.filter((i) => i.solo_para === perfil).sort((a, b) => a.n - b.n);
+    return acc;
+  },
+  {} as Record<RelacionValor, ItemInstrumento[]>
+);
+const Q16 = item(16);
+const Q17 = item(17);
+
+const limpiarOtro = (texto: string) => texto.replace(/[:\s]*_+\s*$/, '').trim();
 
 /*
  * Los controles de opción se dibujan aquí en vez de usar los nativos: el preflight
@@ -42,185 +95,54 @@ const Casilla: React.FC<{ marcada: boolean; redonda?: boolean }> = ({ marcada, r
   </span>
 );
 
-type Opcion = { v: string; t: string };
-type Item = {
-  id: string;
-  n: number;
-  pregunta: string;
-  tipo: 'radio' | 'multi' | 'escala' | 'texto';
-  opciones?: Opcion[];
-  max?: number;
-  obligatorio?: boolean;
-  nota?: string;
+const TarjetaPregunta: React.FC<{ n: number; texto: string; obligatoria?: boolean; children: React.ReactNode }> = ({
+  n,
+  texto,
+  obligatoria = true,
+  children,
+}) => (
+  <div className="rounded-2xl bg-white border border-slate-200 p-5">
+    <p className="text-sm font-semibold text-uni-900 leading-snug">
+      <span className="text-slate-400 mr-2">{n}.</span>
+      {texto}
+      {obligatoria && <span className="text-acred-600 ml-1">*</span>}
+    </p>
+    {children}
+  </div>
+);
+
+const ListaLikert: React.FC<{ valor: number | undefined; onCambiar: (n: number) => void }> = ({
+  valor,
+  onCambiar,
+}) => (
+  <div className="mt-3 space-y-1.5">
+    {ESCALA.map((etiqueta, idx) => {
+      const n = idx + 1;
+      return (
+        <button
+          key={n}
+          type="button"
+          role="radio"
+          aria-checked={valor === n}
+          onClick={() => onCambiar(n)}
+          className="flex items-center gap-3 text-sm text-slate-700 py-1.5 w-full text-left hover:text-uni-800"
+        >
+          <Casilla redonda marcada={valor === n} />
+          {etiqueta}
+        </button>
+      );
+    })}
+  </div>
+);
+
+type Respuestas = {
+  relacion?: RelacionValor;
+  relacionOtro?: string;
+  frecuencia?: (typeof FRECUENCIA_VALORES)[number];
+  [preguntaLikertOTexto: string]: string | number | undefined;
 };
 
-const o = (...pares: [string, string][]): Opcion[] => pares.map(([v, t]) => ({ v, t }));
-
-const BLOQUES: { titulo: string; descripcion?: string; items: Item[] }[] = [
-  {
-    titulo: 'A · Su relación con el paso',
-    items: [
-      {
-        id: 'perfil', n: 1, tipo: 'radio', obligatorio: true,
-        pregunta: '¿Cuál describe mejor su relación con el paso del Alto de La Línea?',
-        opciones: o(
-          ['carga', 'Conductor de carga pesada'],
-          ['pasajeros', 'Conductor de transporte de pasajeros'],
-          ['particular', 'Conductor particular'],
-          ['habitante', 'Habitante de la zona, no conduzco por el paso'],
-          ['otro', 'Otro'],
-        ),
-      },
-      {
-        id: 'municipio', n: 2, tipo: 'radio', obligatorio: true,
-        pregunta: 'Municipio donde vive o tiene su base de operación',
-        opciones: o(
-          ['ibague', 'Ibagué'], ['coello', 'Coello'], ['cajamarca', 'Cajamarca'],
-          ['calarca', 'Calarcá'], ['otro_tolima', 'Otro del Tolima'],
-          ['otro_quindio', 'Otro del Quindío'], ['fuera', 'Fuera de ambos departamentos'],
-        ),
-      },
-      {
-        id: 'frecuencia', n: 3, tipo: 'radio', obligatorio: true,
-        pregunta: '¿Con qué frecuencia cruza el paso?',
-        opciones: o(
-          ['diario', 'A diario'], ['semana', 'Varias veces por semana'],
-          ['mes', 'Varias veces al mes'], ['anio', 'Pocas veces al año'], ['nunca', 'Nunca'],
-        ),
-      },
-      {
-        id: 'franja', n: 4, tipo: 'radio',
-        pregunta: '¿En qué franja lo cruza con más frecuencia?',
-        opciones: o(
-          ['madrugada', 'Madrugada'], ['manana', 'Mañana'], ['tarde', 'Tarde'],
-          ['noche', 'Noche'], ['varia', 'Varía'],
-        ),
-      },
-    ],
-  },
-  {
-    titulo: 'B · Percepción de riesgo',
-    items: [
-      {
-        id: 'riesgo', n: 5, tipo: 'escala', obligatorio: true,
-        pregunta: '¿Qué tan riesgoso considera el paso?',
-        nota: '1 = nada riesgoso · 5 = extremadamente riesgoso',
-      },
-      {
-        id: 'sectores', n: 6, tipo: 'multi', max: 3,
-        pregunta: '¿Qué sectores percibe como los más peligrosos?',
-        nota: 'Máximo tres',
-        opciones: o(
-          ['subida_cajamarca', 'Subida desde Cajamarca'],
-          ['cima', 'Cima del Alto de La Línea'],
-          ['descenso_calarca', 'Descenso hacia Calarcá'],
-          ['urbano_calarca', 'Casco urbano de Calarcá'],
-          ['ibague_coello', 'Tramo Ibagué – Coello'],
-          ['no_sabe', 'No sabría decir'],
-        ),
-      },
-      {
-        id: 'causas', n: 7, tipo: 'multi', max: 3,
-        pregunta: '¿A qué atribuye principalmente el riesgo?',
-        nota: 'Máximo tres',
-        opciones: o(
-          ['geometria', 'Geometría de la vía'], ['pavimento', 'Estado del pavimento'],
-          ['clima', 'Niebla o lluvia'], ['velocidad', 'Velocidad de otros vehículos'],
-          ['adelantamientos', 'Adelantamientos indebidos'],
-          ['carga_lenta', 'Vehículos de carga lentos o averiados'],
-          ['senalizacion', 'Falta de señalización'], ['derrumbes', 'Derrumbes'],
-          ['otro', 'Otro'],
-        ),
-      },
-      {
-        id: 'accidente', n: 8, tipo: 'radio',
-        pregunta: '¿Ha presenciado o estado involucrado en un accidente en este paso?',
-        nota: 'No se piden detalles',
-        opciones: o(['si', 'Sí'], ['no', 'No']),
-      },
-      {
-        id: 'cambio', n: 9, tipo: 'radio',
-        pregunta: '¿Qué tanto ha cambiado el riesgo en los últimos cinco años?',
-        opciones: o(
-          ['empeoro_mucho', 'Empeoró mucho'], ['empeoro_algo', 'Empeoró algo'],
-          ['igual', 'Sigue igual'], ['mejoro_algo', 'Mejoró algo'],
-          ['mejoro_mucho', 'Mejoró mucho'], ['no_sabe', 'No sabe'],
-        ),
-      },
-    ],
-  },
-  {
-    titulo: 'C · Operación y vida diaria',
-    items: [
-      {
-        id: 'tiempo', n: 10, tipo: 'radio',
-        pregunta: '¿Cuánto tarda normalmente en cruzar?',
-        opciones: o(
-          ['menos2', 'Menos de 2 horas'], ['2a3', 'Entre 2 y 3 horas'],
-          ['3a4', 'Entre 3 y 4 horas'], ['4a6', 'Entre 4 y 6 horas'],
-          ['mas6', 'Más de 6 horas'],
-        ),
-      },
-      {
-        id: 'impredecible', n: 11, tipo: 'escala',
-        pregunta: '¿Qué tan impredecible es ese tiempo?',
-        nota: '1 = siempre igual · 5 = completamente impredecible',
-      },
-      {
-        id: 'afectacion', n: 12, tipo: 'multi', max: 2,
-        pregunta: '¿Qué es lo que más le afecta?',
-        nota: 'Máximo dos',
-        opciones: o(
-          ['costos', 'Costos de operación'], ['entregas', 'Tiempos de entrega'],
-          ['fatiga', 'Descanso y fatiga'], ['familia', 'Vida familiar'],
-          ['precios', 'Precio de lo que compro'], ['ninguna', 'Ninguna'],
-        ),
-      },
-    ],
-  },
-  {
-    titulo: 'D · Sobre la propuesta de túnel',
-    descripcion:
-      'El semillero analiza esta iniciativa de forma independiente. No la representa ni la promueve.',
-    items: [
-      {
-        id: 'conocia', n: 13, tipo: 'radio',
-        pregunta: '¿Había oído hablar de una propuesta de túnel ferroviario para este paso?',
-        opciones: o(['si', 'Sí'], ['no', 'No']),
-      },
-      {
-        id: 'efecto', n: 14, tipo: 'radio',
-        pregunta: 'Si se construyera, ¿qué efecto esperaría sobre el riesgo vial del paso?',
-        opciones: o(
-          ['reduce_mucho', 'Lo reduciría mucho'], ['reduce_algo', 'Lo reduciría algo'],
-          ['ninguno', 'Ningún efecto'], ['aumenta', 'Lo aumentaría'], ['no_sabe', 'No sabe'],
-        ),
-      },
-      {
-        id: 'preocupacion', n: 15, tipo: 'radio',
-        pregunta: '¿Cuál sería su principal preocupación frente a una obra así?',
-        opciones: o(
-          ['ambiental', 'Impacto ambiental'],
-          ['predios', 'Afectación a predios y comunidades'],
-          ['empleo', 'Empleo local'], ['costo', 'Costo público'],
-          ['inconclusa', 'Que no se termine'], ['ninguna', 'Ninguna'], ['otra', 'Otra'],
-        ),
-      },
-    ],
-  },
-  {
-    titulo: 'E · Lo que quiera agregar',
-    items: [
-      {
-        id: 'comentario', n: 16, tipo: 'texto',
-        pregunta: '¿Algo que deba saberse sobre este paso y que no le hayamos preguntado?',
-        nota: 'Opcional, máximo 300 caracteres',
-      },
-    ],
-  },
-];
-
-type Respuestas = Record<string, string | string[] | number | undefined>;
+const claveLikert = (n: number) => `p${n < 10 ? '0' + n : n}`;
 
 export const ConsultaCiudadana: React.FC = () => {
   const [consentimiento, setConsentimiento] = useState(false);
@@ -228,19 +150,32 @@ export const ConsultaCiudadana: React.FC = () => {
   const [enviando, setEnviando] = useState(false);
   const [resultado, setResultado] = useState<'ok' | 'pendiente' | 'error' | null>(null);
 
-  const obligatorios = BLOQUES.flatMap((b) => b.items).filter((i) => i.obligatorio);
-  const faltantes = obligatorios.filter((i) => r[i.id] === undefined);
-  const puedeEnviar = consentimiento && faltantes.length === 0 && !enviando;
+  const enviado = resultado === 'ok';
+  const necesitaBloquePerfil = !!r.relacion && PERFILES_CON_BLOQUE.includes(r.relacion);
 
-  const setRadio = (id: string, v: string) => setR((p) => ({ ...p, [id]: v }));
+  const faltantes: number[] = [];
+  if (!r.relacion) faltantes.push(1);
+  if (!r.frecuencia) faltantes.push(2);
+  LIKERT_COMUNES.forEach((it) => {
+    if (r[claveLikert(it.n)] === undefined) faltantes.push(it.n);
+  });
+  if (necesitaBloquePerfil) {
+    if (r.p14 === undefined) faltantes.push(14);
+    if (r.p15 === undefined) faltantes.push(15);
+  }
 
-  const setMulti = (id: string, v: string, max: number) =>
-    setR((p) => {
-      const actual = Array.isArray(p[id]) ? (p[id] as string[]) : [];
-      if (actual.includes(v)) return { ...p, [id]: actual.filter((x) => x !== v) };
-      if (actual.length >= max) return p;
-      return { ...p, [id]: [...actual, v] };
-    });
+  const puedeEnviar = consentimiento && faltantes.length === 0 && !enviando && !enviado;
+
+  const setRelacion = (v: RelacionValor) =>
+    setR((p) => ({
+      ...p,
+      relacion: v,
+      relacionOtro: v === 'otro' ? p.relacionOtro : undefined,
+      p14: undefined,
+      p15: undefined,
+    }));
+
+  const setLikert = (n: number, v: number) => setR((p) => ({ ...p, [claveLikert(n)]: v }));
 
   const enviar = async () => {
     setEnviando(true);
@@ -249,7 +184,18 @@ export const ConsultaCiudadana: React.FC = () => {
       const res = await fetch('/api/consulta', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ consentimiento, ...r }),
+        body: JSON.stringify({
+          consentimiento,
+          relacion: r.relacion,
+          relacion_otro: r.relacion === 'otro' ? r.relacionOtro || null : null,
+          frecuencia: r.frecuencia,
+          p03: r.p03, p04: r.p04, p05: r.p05, p06: r.p06, p07: r.p07,
+          p08: r.p08, p09: r.p09, p10: r.p10, p11: r.p11, p12: r.p12, p13: r.p13,
+          p14: necesitaBloquePerfil ? r.p14 ?? null : null,
+          p15: necesitaBloquePerfil ? r.p15 ?? null : null,
+          p16_beneficio: typeof r.p16 === 'string' && r.p16.length > 0 ? r.p16 : null,
+          p17_impacto: typeof r.p17 === 'string' && r.p17.length > 0 ? r.p17 : null,
+        }),
       });
       if (res.status === 501) setResultado('pendiente');
       else if (res.ok) setResultado('ok');
@@ -264,16 +210,12 @@ export const ConsultaCiudadana: React.FC = () => {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
 
-      {/* Estado real del instrumento. Se retira —no se reescribe— cuando entre el
-          cuestionario oficial avalado por la interlocutora. */}
       {ALMACENAMIENTO_ACTIVO ? (
         <div className="rounded-2xl border border-uni-200 bg-uni-50 p-4 mb-8 flex gap-3">
           <Info className="w-5 h-5 text-uni-600 shrink-0 mt-0.5" />
           <p className="text-sm text-slate-700 leading-relaxed">
-            <strong>La consulta está abierta y su respuesta sí se guarda.</strong> El
-            cuestionario es la versión del semillero; está pendiente del aval de la
-            entidad receptora. Si esa revisión cambia alguna pregunta, las respuestas
-            recogidas hasta entonces se analizan aparte y no se mezclan con las nuevas.
+            <strong>La consulta está abierta y su respuesta sí se guarda.</strong> Instrumento
+            oficial, avalado por la entidad receptora.
           </p>
         </div>
       ) : (
@@ -293,12 +235,13 @@ export const ConsultaCiudadana: React.FC = () => {
           Objetivo específico 2 · Consulta ciudadana
         </div>
         <h1 className="text-3xl sm:text-4xl font-black text-uni-900 leading-tight">
-          Percepción de riesgo vial en el paso del Alto de La Línea
+          Conocimiento y percepción ciudadana de la Ferropista
         </h1>
         <p className="text-sm text-slate-600 leading-relaxed mt-4">
           Semillero de Investigación GEOPAV · Ingeniería Civil · Universidad de Ibagué ·
-          Semestre Paz y Región 2026B. Esta consulta recoge cómo perciben el riesgo quienes
-          usan y habitan el corredor Ibagué – Armenia. Toma unos cinco minutos.
+          Semestre Paz y Región 2026B. Esta consulta recoge qué tanto conocen y qué opinan
+          de la propuesta de túnel ferroviario quienes usan y habitan el corredor
+          Ibagué – Armenia. Toma unos cinco minutos.
         </p>
       </header>
 
@@ -316,7 +259,7 @@ export const ConsultaCiudadana: React.FC = () => {
           type="button"
           role="checkbox"
           aria-checked={consentimiento}
-          onClick={() => setConsentimiento((v) => !v)}
+          onClick={() => { if (!enviado) setConsentimiento((v) => !v); }}
           className="flex items-start gap-3 text-left w-full"
         >
           <span className="mt-0.5">
@@ -328,104 +271,157 @@ export const ConsultaCiudadana: React.FC = () => {
         </button>
       </section>
 
-      {/* Bloques */}
-      <fieldset disabled={!consentimiento} className={consentimiento ? '' : 'opacity-40'}>
-        {BLOQUES.map((b) => (
-          <section key={b.titulo} className="mb-8">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-1">
-              {b.titulo}
+      <fieldset disabled={!consentimiento || enviado} className={consentimiento ? '' : 'opacity-40'}>
+
+        {/* Bloque 1: relación con el corredor */}
+        <section className="mb-8">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-4">
+            Su relación con el corredor
+          </h2>
+          <div className="space-y-4">
+            <TarjetaPregunta n={Q1.n} texto={Q1.texto}>
+              <div className="mt-3 space-y-1.5">
+                {Q1.opciones.map((texto, idx) => {
+                  const valor = RELACION_VALORES[idx];
+                  return (
+                    <button
+                      key={valor}
+                      type="button"
+                      role="radio"
+                      aria-checked={r.relacion === valor}
+                      onClick={() => setRelacion(valor)}
+                      className="flex items-center gap-3 text-sm text-slate-700 py-1.5 w-full text-left hover:text-uni-800"
+                    >
+                      <Casilla redonda marcada={r.relacion === valor} />
+                      {valor === 'otro' ? limpiarOtro(texto) : texto}
+                    </button>
+                  );
+                })}
+              </div>
+              {r.relacion === 'otro' && (
+                <input
+                  type="text"
+                  maxLength={100}
+                  value={r.relacionOtro ?? ''}
+                  onChange={(e) => setR((p) => ({ ...p, relacionOtro: e.target.value }))}
+                  placeholder="Especifique (opcional)"
+                  className="mt-3 w-full rounded-xl border border-slate-200 p-3 text-sm text-slate-700 focus:outline-none focus:border-uni-400 bg-white placeholder:text-slate-400 [color-scheme:light]"
+                />
+              )}
+            </TarjetaPregunta>
+
+            <TarjetaPregunta n={Q2.n} texto={Q2.texto}>
+              <div className="mt-3 space-y-1.5">
+                {Q2.opciones.map((texto, idx) => {
+                  const valor = FRECUENCIA_VALORES[idx];
+                  return (
+                    <button
+                      key={valor}
+                      type="button"
+                      role="radio"
+                      aria-checked={r.frecuencia === valor}
+                      onClick={() => setR((p) => ({ ...p, frecuencia: valor }))}
+                      className="flex items-center gap-3 text-sm text-slate-700 py-1.5 w-full text-left hover:text-uni-800"
+                    >
+                      <Casilla redonda marcada={r.frecuencia === valor} />
+                      {texto}
+                    </button>
+                  );
+                })}
+              </div>
+            </TarjetaPregunta>
+          </div>
+        </section>
+
+        {/* Bloque 2: conocimiento y opinión */}
+        <section className="mb-8">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-4">
+            Conocimiento y opinión sobre la Ferropista
+          </h2>
+          <div className="space-y-4">
+            {LIKERT_COMUNES.filter((it) => it.n === 3).map((it) => (
+              <TarjetaPregunta key={it.n} n={it.n} texto={it.texto}>
+                <ListaLikert valor={r[claveLikert(it.n)] as number | undefined} onCambiar={(v) => setLikert(it.n, v)} />
+              </TarjetaPregunta>
+            ))}
+
+            {/* Recuadro informativo, antes de la pregunta 4 */}
+            <div className="rounded-2xl border border-uni-200 bg-uni-50 p-5">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-uni-700 mb-2">
+                Qué propone la iniciativa
+              </h3>
+              <p className="text-sm text-slate-700 leading-relaxed">
+                Una iniciativa privada propone un túnel ferroviario bajo la Cordillera
+                Central entre Ibagué y Calarcá: {TRAZADO.longitudTotal.n} km de trazado, con
+                un túnel principal de {TRAZADO.tunelPrincipal.n} km. Funcionaría como
+                autopista rodante: los camiones suben con sus conductores a un tren
+                eléctrico y cruzan en unos {OPERACION.tCicloTotal.n} minutos, incluidas
+                carga y descarga, frente a unas {ACTUAL.tiempoCruce.valor} por el Alto de
+                La Línea hoy. El proponente estima su costo en {ECONOMICO.capex.valor}. Son
+                cifras del proponente, no verificadas por un tercero. El semillero GEOPAV
+                analiza la iniciativa de forma independiente; no la representa ni la
+                promueve.
+              </p>
+              <p className="text-[11px] text-slate-500 mt-3">
+                Fuente: Fernández Ordóñez (2025), ponencia SAI, dia. 20, 23 y 29.
+              </p>
+            </div>
+
+            {LIKERT_COMUNES.filter((it) => it.n !== 3).map((it) => (
+              <TarjetaPregunta key={it.n} n={it.n} texto={it.texto}>
+                <ListaLikert valor={r[claveLikert(it.n)] as number | undefined} onCambiar={(v) => setLikert(it.n, v)} />
+              </TarjetaPregunta>
+            ))}
+          </div>
+        </section>
+
+        {/* Bloque 3: preguntas según el perfil */}
+        {necesitaBloquePerfil && r.relacion && (
+          <section className="mb-8">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-4">
+              Preguntas según su perfil
             </h2>
-            {b.descripcion && (
-              <p className="text-xs text-slate-500 leading-relaxed mb-4">{b.descripcion}</p>
-            )}
-
-            <div className="space-y-4 mt-4">
-              {b.items.map((item) => (
-                <div key={item.id} className="rounded-2xl bg-white border border-slate-200 p-5">
-                  <p className="text-sm font-semibold text-uni-900 leading-snug">
-                    <span className="text-slate-400 mr-2">{item.n}.</span>
-                    {item.pregunta}
-                    {item.obligatorio && <span className="text-acred-600 ml-1">*</span>}
-                  </p>
-                  {item.nota && (
-                    <p className="text-[11px] text-slate-500 mt-1">{item.nota}</p>
-                  )}
-
-                  {item.tipo === 'escala' && (
-                    <div className="flex gap-2 mt-4">
-                      {[1, 2, 3, 4, 5].map((n) => (
-                        <button
-                          key={n}
-                          type="button"
-                          onClick={() => setR((p) => ({ ...p, [item.id]: n }))}
-                          className={`w-11 h-11 rounded-xl border text-sm font-bold transition ${
-                            r[item.id] === n
-                              ? 'bg-uni-700 border-uni-700 text-white'
-                              : 'bg-white border-slate-200 text-slate-600 hover:border-uni-400'
-                          }`}
-                        >
-                          {n}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-
-                  {item.tipo === 'radio' && item.opciones && (
-                    <div className="mt-3 space-y-1.5">
-                      {item.opciones.map((op) => (
-                        <button
-                          key={op.v}
-                          type="button"
-                          role="radio"
-                          aria-checked={r[item.id] === op.v}
-                          onClick={() => setRadio(item.id, op.v)}
-                          className="flex items-center gap-3 text-sm text-slate-700 py-1.5 w-full text-left hover:text-uni-800"
-                        >
-                          <Casilla redonda marcada={r[item.id] === op.v} />
-                          {op.t}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-
-                  {item.tipo === 'multi' && item.opciones && (
-                    <div className="mt-3 space-y-1.5">
-                      {item.opciones.map((op) => {
-                        const sel = Array.isArray(r[item.id])
-                          ? (r[item.id] as string[]).includes(op.v)
-                          : false;
-                        return (
-                          <button
-                            key={op.v}
-                            type="button"
-                            role="checkbox"
-                            aria-checked={sel}
-                            onClick={() => setMulti(item.id, op.v, item.max ?? 99)}
-                            className="flex items-center gap-3 text-sm text-slate-700 py-1.5 w-full text-left hover:text-uni-800"
-                          >
-                            <Casilla marcada={sel} />
-                            {op.t}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  )}
-
-                  {item.tipo === 'texto' && (
-                    <textarea
-                      maxLength={300}
-                      rows={3}
-                      value={typeof r[item.id] === 'string' ? (r[item.id] as string) : ''}
-                      onChange={(e) => setR((p) => ({ ...p, [item.id]: e.target.value }))}
-                      className="mt-3 w-full rounded-xl border border-slate-200 p-3 text-sm text-slate-700 focus:outline-none focus:border-uni-400"
-                      placeholder="Opcional"
+            <div className="space-y-4">
+              {BLOQUE_PERFIL[r.relacion].map((it) => {
+                const clave = it.n === 14 ? 'p14' : 'p15';
+                return (
+                  <TarjetaPregunta key={clave} n={it.n} texto={it.texto}>
+                    <ListaLikert
+                      valor={r[clave] as number | undefined}
+                      onCambiar={(v) => setR((p) => ({ ...p, [clave]: v }))}
                     />
-                  )}
-                </div>
-              ))}
+                  </TarjetaPregunta>
+                );
+              })}
             </div>
           </section>
-        ))}
+        )}
+
+        {/* Bloque 4: para terminar */}
+        <section className="mb-8">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-4">
+            Para terminar
+          </h2>
+          <div className="space-y-4">
+            {[Q16, Q17].map((it) => {
+              const clave = it.n === 16 ? 'p16' : 'p17';
+              const valor = typeof r[clave] === 'string' ? (r[clave] as string) : '';
+              return (
+                <TarjetaPregunta key={clave} n={it.n} texto={it.texto} obligatoria={false}>
+                  <textarea
+                    maxLength={500}
+                    rows={3}
+                    value={valor}
+                    onChange={(e) => setR((p) => ({ ...p, [clave]: e.target.value }))}
+                    className="mt-3 w-full rounded-xl border border-slate-200 p-3 text-sm text-slate-700 focus:outline-none focus:border-uni-400 bg-white placeholder:text-slate-400 [color-scheme:light]"
+                    placeholder="Opcional"
+                  />
+                  <p className="text-[11px] text-slate-400 mt-1 text-right">{valor.length} / 500</p>
+                </TarjetaPregunta>
+              );
+            })}
+          </div>
+        </section>
       </fieldset>
 
       {/* Envío */}
@@ -433,7 +429,7 @@ export const ConsultaCiudadana: React.FC = () => {
         {faltantes.length > 0 && consentimiento && (
           <p className="text-xs text-slate-500 mb-3">
             Faltan por responder las preguntas obligatorias:{' '}
-            {faltantes.map((f) => f.n).join(', ')}.
+            {faltantes.slice().sort((a, b) => a - b).join(', ')}.
           </p>
         )}
         <button
@@ -443,7 +439,7 @@ export const ConsultaCiudadana: React.FC = () => {
           className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-uni-700 text-white text-sm font-bold disabled:bg-slate-300 disabled:cursor-not-allowed hover:bg-uni-800 transition"
         >
           <Send className="w-4 h-4" />
-          {enviando ? 'Enviando…' : 'Enviar respuestas'}
+          {enviado ? 'Respuesta enviada' : enviando ? 'Enviando…' : 'Enviar respuestas'}
         </button>
 
         {resultado === 'ok' && (
@@ -476,11 +472,10 @@ export const ConsultaCiudadana: React.FC = () => {
           </li>
           <li>· Deja por fuera a quien no usa canales digitales.</li>
           <li>
-            · Mide percepción, no riesgo medido. La tasa de siniestralidad del corredor es
-            resultado del objetivo específico 5 y se calcula con datos de la ANSV y aforos;
-            las dos cosas no se mezclan.
+            · Mide percepción y opinión declaradas, no verifica técnicamente la propuesta.
+            Esa verificación —geotecnia, excavación, tránsito, siniestralidad— es el objeto
+            de los demás objetivos específicos del semillero, con sus propias fuentes.
           </li>
-          <li>· La pregunta 8 es autorreporte y no se verifica.</li>
         </ul>
       </section>
     </div>

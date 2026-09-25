@@ -3,9 +3,9 @@ import type { Metadata } from 'next';
 import { ConsultaCiudadana } from '@/components/ConsultaCiudadana';
 
 export const metadata: Metadata = {
-  title: 'Consulta ciudadana · Percepción de riesgo vial | Semillero GEOPAV',
+  title: 'Consulta ciudadana · Percepción de la Ferropista | Semillero GEOPAV',
   description:
-    'Consulta ciudadana del Semillero GEOPAV sobre percepción de riesgo vial en el paso del Alto de La Línea, corredor Ibagué – Armenia. Objetivo específico 2, Paz y Región 2026B.',
+    'Consulta ciudadana del Semillero GEOPAV sobre conocimiento y percepción de la propuesta de túnel ferroviario Ferropista, corredor Ibagué – Armenia. Objetivo específico 2, Paz y Región 2026B.',
   /* Indexable desde que la consulta está abierta: el OE 2 la difunde por canales
      digitales y tiene que ser encontrable. */
   robots: { index: true, follow: true },

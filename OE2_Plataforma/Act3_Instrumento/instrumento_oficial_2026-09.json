@@ -1,0 +1,188 @@
+{
+  "version": "oficial-2026-09",
+  "fuente": "Preguntas geopav .docx (instrumento oficial avalado)",
+  "escala_likert5": [
+    "Totalmente en desacuerdo",
+    "En desacuerdo",
+    "Ni de acuerdo ni en desacuerdo",
+    "De acuerdo",
+    "Totalmente de acuerdo"
+  ],
+  "items": [
+    {
+      "n": 1,
+      "texto": "¿Cuál es su relación principal con el corredor Ibagué–Armenia?",
+      "solo_para": null,
+      "opciones": [
+        "Conductor(a) de vehículo de carga",
+        "Conductor(a) de vehículo particular",
+        "Comerciante o vendedor(a)",
+        "Residente de la zona",
+        "Trabajador(a) de la zona",
+        "Otro: ________"
+      ],
+      "tipo": "radio"
+    },
+    {
+      "n": 2,
+      "texto": "¿Con qué frecuencia utiliza el corredor Ibagué–Armenia?",
+      "solo_para": null,
+      "opciones": [
+        "Diariamente",
+        "Varias veces por semana",
+        "Una vez por semana",
+        "Algunas veces al mes",
+        "Ocasionalmente",
+        "Nunca"
+      ],
+      "tipo": "radio"
+    },
+    {
+      "n": 3,
+      "texto": "¿Considera que conoce suficientemente la propuesta de la Ferropista?",
+      "solo_para": null,
+      "opciones": [],
+      "tipo": "likert5"
+    },
+    {
+      "n": 4,
+      "texto": "Considero que la Ferropista mejoraría las condiciones de movilidad entre Ibagué y Armenia.",
+      "solo_para": null,
+      "opciones": [],
+      "tipo": "likert5"
+    },
+    {
+      "n": 5,
+      "texto": "Considero que la Ferropista contribuiría a mejorar la seguridad vial del corredor.",
+      "solo_para": null,
+      "opciones": [],
+      "tipo": "likert5"
+    },
+    {
+      "n": 6,
+      "texto": "Considero que la Ferropista contribuiría al desarrollo económico de la región.",
+      "solo_para": null,
+      "opciones": [],
+      "tipo": "likert5"
+    },
+    {
+      "n": 7,
+      "texto": "Considero que el proyecto generaría nuevas oportunidades de empleo para la población de la región.",
+      "solo_para": null,
+      "opciones": [],
+      "tipo": "likert5"
+    },
+    {
+      "n": 8,
+      "texto": "Considero que la disminución del tránsito de vehículos de carga podría afectar algunas actividades económicas de la zona.",
+      "solo_para": null,
+      "opciones": [],
+      "tipo": "likert5"
+    },
+    {
+      "n": 9,
+      "texto": "Considero necesario implementar medidas de apoyo para las personas o actividades económicas que puedan verse afectadas por el proyecto.",
+      "solo_para": null,
+      "opciones": [],
+      "tipo": "likert5"
+    },
+    {
+      "n": 10,
+      "texto": "Considero que los beneficios de la Ferropista podrían superar sus posibles impactos negativos.",
+      "solo_para": null,
+      "opciones": [],
+      "tipo": "likert5"
+    },
+    {
+      "n": 11,
+      "texto": "Estoy de acuerdo con la implementación de la Ferropista en el corredor Ibagué–Armenia.",
+      "solo_para": null,
+      "opciones": [],
+      "tipo": "likert5"
+    },
+    {
+      "n": 12,
+      "texto": "Estaría dispuesto(a) a apoyar la ejecución del proyecto.",
+      "solo_para": null,
+      "opciones": [],
+      "tipo": "likert5"
+    },
+    {
+      "n": 13,
+      "texto": "Confío en que los responsables del proyecto tendrán en cuenta las necesidades de la comunidad y de los diferentes usuarios del corredor.",
+      "solo_para": null,
+      "opciones": [],
+      "tipo": "likert5"
+    },
+    {
+      "n": 14,
+      "texto": "Estaría dispuesto(a) a utilizar la Ferropista para transportar mi vehículo.",
+      "solo_para": "carga",
+      "opciones": [],
+      "tipo": "likert5"
+    },
+    {
+      "n": 15,
+      "texto": "Considero que la reducción del tiempo de recorrido sería beneficiosa para mi actividad como transportador(a).",
+      "solo_para": "carga",
+      "opciones": [],
+      "tipo": "likert5"
+    },
+    {
+      "n": 14,
+      "texto": "Considero positivo que el transporte de carga sea trasladado a la Ferropista.",
+      "solo_para": "particular",
+      "opciones": [],
+      "tipo": "likert5"
+    },
+    {
+      "n": 15,
+      "texto": "Considero que la Ferropista podría mejorar las condiciones de circulación para los vehículos particulares.",
+      "solo_para": "particular",
+      "opciones": [],
+      "tipo": "likert5"
+    },
+    {
+      "n": 14,
+      "texto": "Considero que la Ferropista podría mejorar la calidad de vida de los habitantes de la zona.",
+      "solo_para": "residente",
+      "opciones": [],
+      "tipo": "likert5"
+    },
+    {
+      "n": 15,
+      "texto": "Me preocupa que la construcción u operación del proyecto pueda afectar las condiciones de vida de los residentes.",
+      "solo_para": "residente",
+      "opciones": [],
+      "tipo": "likert5"
+    },
+    {
+      "n": 14,
+      "texto": "Una parte importante de mis clientes depende del tránsito actual de vehículos por esta zona.",
+      "solo_para": "comerciante",
+      "opciones": [],
+      "tipo": "likert5"
+    },
+    {
+      "n": 15,
+      "texto": "La disminución del tránsito de vehículos de carga podría afectar negativamente los ingresos de mi actividad económica.",
+      "solo_para": "comerciante",
+      "opciones": [],
+      "tipo": "likert5"
+    },
+    {
+      "n": 16,
+      "texto": "¿Cuál considera que sería el principal beneficio de la Ferropista para usted o para la comunidad?",
+      "solo_para": null,
+      "opciones": [],
+      "tipo": "texto"
+    },
+    {
+      "n": 17,
+      "texto": "¿Cuál considera que sería el principal impacto negativo que podría generar el proyecto?",
+      "solo_para": null,
+      "opciones": [],
+      "tipo": "texto"
+    }
+  ]
+}

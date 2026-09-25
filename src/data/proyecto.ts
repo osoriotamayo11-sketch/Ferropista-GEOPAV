@@ -439,7 +439,6 @@ export const EQUIPO = {
   semillero: 'Semillero de Investigación GEOPAV',
   universidad: 'Universidad de Ibagué',
   programa: 'Semestre Paz y Región 2026B',
-  interlocutora: 'Ing. María Paula Salazar Susunaga',
   asesorRegional: 'Juan Sebastián Rojas Penagos',
   integrantes: [
     { nombre: 'Castaño Cifuentes Maicol Stiven', linea: 'Diagnóstico vial y métodos de obra subterránea' },

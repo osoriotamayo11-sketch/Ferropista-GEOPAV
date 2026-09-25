@@ -8,9 +8,9 @@
  * los hay— sino una invitación a participar y la declaración de qué se pregunta y
  * qué no se guarda. Los resultados llegarán cuando cierre la ventana de recolección.
  *
- * Honestidad sobre el estado: el cuestionario vigente es el borrador del semillero,
- * pendiente del aval de la interlocutora. Eso se dice aquí y se repite en la propia
- * página de la consulta. No se anuncia como definitivo lo que no lo es.
+ * Instrumento vigente: el OFICIAL, avalado por la entidad receptora (versión
+ * 'oficial-2026-09'). Eso se dice aquí y se repite en la propia página de la
+ * consulta.
  */
 
 import React from 'react';
@@ -51,21 +51,19 @@ const BadgeEstado: React.FC<{ estado: EstadoItem }> = ({ estado }) => {
   );
 };
 
-/* Los cinco bloques del cuestionario, en el mismo orden en que se presentan en
+/* Los bloques del cuestionario oficial, en el mismo orden en que se presentan en
    /consulta. Si allí cambian, aquí también: es la promesa que se le hace a quien
-   decide si entra o no. */
+   decide si entra o no. Preguntas: OE2_Plataforma/Act3_Instrumento/instrumento_oficial_2026-09.json */
 const BLOQUES_CONSULTA = [
-  { letra: 'A', titulo: 'Su relación con el paso', detalle: 'Si conduce carga, viaja o vive en el corredor; en qué municipio; con qué frecuencia cruza.' },
-  { letra: 'B', titulo: 'Percepción de riesgo', detalle: 'Qué tan riesgoso le parece el paso, en qué sectores, por qué causas, y si ha vivido o presenciado un siniestro.' },
-  { letra: 'C', titulo: 'Operación y vida diaria', detalle: 'Cuánto tarda el cruce, qué tan impredecible es y en qué le afecta.' },
-  { letra: 'D', titulo: 'Sobre la propuesta de túnel', detalle: 'Si conocía la iniciativa, qué efecto espera y qué le preocupa.' },
-  { letra: 'E', titulo: 'Lo que quiera añadir', detalle: 'Una pregunta abierta, opcional, de hasta 300 caracteres.' },
+  { letra: 'A', titulo: 'Su relación con el corredor', detalle: 'Si conduce carga, es particular, comerciante, residente o trabajador de la zona; con qué frecuencia usa el corredor.' },
+  { letra: 'B', titulo: 'Conocimiento y opinión sobre la Ferropista', detalle: 'Qué tanto conoce la propuesta y su opinión sobre movilidad, seguridad vial, economía, empleo y confianza en el proyecto.' },
+  { letra: 'C', titulo: 'Preguntas según su perfil', detalle: 'Dos preguntas adicionales para transportadores de carga, particulares, residentes o comerciantes.' },
+  { letra: 'D', titulo: 'Lo que quiera añadir', detalle: 'Dos preguntas abiertas y opcionales sobre el principal beneficio y el principal impacto negativo que espera.' },
 ];
 
 const NO_SE_GUARDA = [
   'Nombre, cédula, teléfono o correo: no se piden en ninguna pregunta.',
   'Dirección IP o identificador de dispositivo: el servidor no lee ninguna cabecera de red, y así está escrito en el código publicado.',
-  'Municipio de ubicación: la pregunta es por el de residencia o base de operación, no por dónde está usted al responder.',
 ];
 
 export const SintesisOE2: React.FC = () => {
@@ -90,9 +88,10 @@ export const SintesisOE2: React.FC = () => {
           </h2>
           <p className="text-base sm:text-lg text-slate-500 leading-relaxed">
             Todo lo demás de este sitio se calcula sobre datos publicados por INVÍAS, la ANSV,
-            la ANI y un modelo de elevación. Falta lo que ninguna entidad mide: cómo perciben
-            el riesgo quienes cruzan el paso todos los días. Esta consulta lo pregunta
-            directamente, y es el único dato primario del proyecto.
+            la ANI y un modelo de elevación. Falta lo que ninguna entidad mide: qué tanto
+            conocen y qué opinan de la propuesta de la Ferropista quienes usan y habitan el
+            corredor. Esta consulta lo pregunta directamente, y es el único dato primario
+            del proyecto.
           </p>
         </div>
 
@@ -160,7 +159,7 @@ export const SintesisOE2: React.FC = () => {
                   <ShieldCheck className="w-3.5 h-3.5 text-gmae-600 shrink-0" /> Anónima, sin datos de contacto
                 </span>
                 <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-slate-600">
-                  <ListChecks className="w-3.5 h-3.5 text-uni-600 shrink-0" /> Cinco bloques de preguntas
+                  <ListChecks className="w-3.5 h-3.5 text-uni-600 shrink-0" /> 17 preguntas, según su perfil
                 </span>
               </div>
             </div>
@@ -175,10 +174,10 @@ export const SintesisOE2: React.FC = () => {
           </div>
 
           <p className="mt-6 border-t border-uni-200 pt-4 text-[11px] leading-relaxed text-slate-500">
-            El cuestionario vigente es la versión del semillero y está pendiente del aval de
-            la entidad receptora. Se declara aquí y en la propia consulta: cada respuesta
-            queda marcada con la versión que la produjo, de modo que si esa revisión cambia
-            alguna pregunta, lo recogido hasta entonces se analiza aparte en vez de mezclarse.
+            El cuestionario vigente es el instrumento oficial, avalado por la entidad
+            receptora. Cada respuesta queda marcada con la versión que la produjo, de modo
+            que las respuestas recogidas con el instrumento anterior se analizan aparte y
+            nunca se mezclan en silencio con estas.
           </p>
         </motion.div>
 
@@ -186,7 +185,7 @@ export const SintesisOE2: React.FC = () => {
         <div className="mb-4">
           <Acordeon
             titulo="Qué se pregunta"
-            resumen="Los cinco bloques del cuestionario, en el mismo orden en que aparecen."
+            resumen="Los bloques del cuestionario, en el mismo orden en que aparecen."
             icono={<ListChecks className="h-5 w-5 text-uni-600" />}
             contador={`${BLOQUES_CONSULTA.length} bloques`}
           >
