@@ -223,23 +223,23 @@ export const SEGURIDAD_VIAL = {
 
   /* Lo que el objetivo NO puede afirmar. Se publica junto al resultado. */
   limites: [
-    'Cuántas muertes evitaría la Ferropista. Eso exige un modelo de siniestralidad calibrado con microdatos por siniestro — tipo de vehículo, causa, condición de la víctima — que no están publicados para este corredor.',
-    'Que la tasa de hoy sea esta. La línea base es anterior al Túnel de La Línea (4 sep 2020) y sobrestima el riesgo del corredor actual.',
-    'Que el lado tolimense sea más seguro. Ninguno de los dos conjuntos de la ANSV reporta sectores críticos en Cajamarca ni en el tramo Cajamarca – Ibagué, pero la ANSV sí cubre el Tolima en otras partes (10 sectores y 137 fallecidos en Ibagué, Alvarado, Coyaima, Espinal y Flandes). La ausencia en el paso queda abierta y se dirime con Forensis.',
+    'Cuántas muertes evitaría la Ferropista. Eso exige un modelo de siniestralidad calibrado con microdatos por siniestro — tipo de vehículo, causa, condición de la víctima — que no están publicados para este corredor. El microdato que la ANSV entregó por solicitud (oficio 20265000140371, 22 sep 2026) solo incluye lo que pudo georreferenciarse: de los siniestros fatales de prensa de 2022 a 2025 contiene dos. Con ese subregistro no se calibra un modelo.',
+    'Que la tasa de hoy sea esta. La línea base es anterior al Túnel de La Línea (4 sep 2020) y sobrestima el riesgo del corredor actual. Con el microdato posterior al túnel, la tasa del paso 2021–2025 da 3,65 a 3,83 fallecidos por 10⁸ veh-km, pero es una cota inferior (subregistro y TPD supuesto, sin aforo del paso después de 2019) y no se compara con 7,66: otra fuente y otro criterio.',
+    'Que el lado tolimense sea más seguro. El conjunto de sectores críticos 2015–2019 no marca ninguno en Cajamarca ni en el tramo Cajamarca – Ibagué, pero el microdato 2021 – mar 2026 que entregó la ANSV sí registra en ese tramo 35 hechos, con 7 fallecidos y 58 lesionados. La ausencia era de sector crítico, no de siniestros. Que ese lado tenga menos mortalidad por kilómetro no puede afirmarse: el microdato tiene subregistro.',
     'Comparar la participación de carga pesada entre la serie por estación (54–56 %) y los peajes (18–33 %). La clase «camiones» de INVÍAS incluye los de dos ejes, que en peaje caen en categoría II. Las dos lecturas se publican por separado y no se promedian.',
-    'Que el Túnel de La Línea haya resuelto el riesgo del paso. La propia ponencia lo documenta con recortes de prensa en las diapositivas 11 y 12: siete siniestros entre 2022 y 2025 -dos en 2022, uno en 2023, uno en 2024 (tres hermanos, túnel Las Mariposas) y tres en 2025 (túnel Los Azulejos, el puente helicoidal y una tractomula que cayó a un abismo descendiendo a Calarcá)-, a los que el semillero suma uno más verificado por su cuenta (22 de mayo de 2024, un fallecido, Infobae). El recorte de la tractomula al abismo se publica en la ponencia sin fecha visible; el semillero la fechó el 14 de abril de 2025 abriendo la noticia original de El Tiempo, que no reporta fallecidos ni heridos de consideración. El más grave es el bus de la Universidad Alexander von Humboldt, que cayó del puente helicoidal el 24 de mayo de 2025: 10 muertos según El Tiempo el mismo día, 11 según Infobae al día siguiente; se documenta el rango porque ninguna fuente posterior lo fija. Ninguno entra en la tasa: son de prensa, sin PR ni Gi* de la ANSV, y mezclarlos con ese dataset repetiría el error ya corregido de comparar los peajes Cocora y Cajamarca. El túnel reduce la exposición, no la elimina.',
+    'Que el Túnel de La Línea haya resuelto el riesgo del paso. La propia ponencia lo documenta con recortes de prensa en las diapositivas 11 y 12: siete siniestros entre 2022 y 2025 -dos en 2022, uno en 2023, uno en 2024 (tres hermanos, túnel Las Mariposas) y tres en 2025 (túnel Los Azulejos, el puente helicoidal y una tractomula que cayó a un abismo descendiendo a Calarcá)-, a los que el semillero suma uno más verificado por su cuenta (22 de mayo de 2024, un fallecido, Infobae). El recorte de la tractomula al abismo se publica en la ponencia sin fecha visible; el semillero la fechó el 14 de abril de 2025 abriendo la noticia original de El Tiempo, que no reporta fallecidos ni heridos de consideración. El más grave es el bus de la Universidad Alexander von Humboldt, que cayó del puente helicoidal el 24 de mayo de 2025: 10 muertos según El Tiempo el mismo día, 11 según Infobae al día siguiente; se documenta el rango porque ninguna fuente posterior lo fija. El microdato que la ANSV entregó en septiembre de 2026 solo contiene dos de estos hechos: el bus del 14 de diciembre de 2023 (2 fallecidos) y el del puente helicoidal (9 fallecidos georreferenciados, frente a 10–11 en prensa). Ninguno entra en la tasa: son de prensa, sin PR ni Gi* de la ANSV, y mezclarlos con ese dataset repetiría el error ya corregido de comparar los peajes Cocora y Cajamarca. El túnel reduce la exposición, no la elimina.',
   ],
 
-  /* Por qué no hay mapa de calor. Se pidió y se rechazó, con razones. */
+  /* Mapa de calor: por qué es lineal y no en 2D. */
   porQueNoKde:
-    'No se publica un mapa de calor de siniestralidad. Primero, no hay insumo: el único dato ' +
-    'georreferenciado público para este corredor son seis puntos. Segundo, ya está hecho por la ' +
-    'fuente: el conjunto de la ANSV trae GiZScore y GiPValue, que son el estadístico Getis-Ord Gi* ' +
-    'de puntos calientes; un mapa de calor encima sería el mapa de calor de un mapa de calor. ' +
-    'Tercero, la estimación de densidad reparte en dos dimensiones y una carretera es una línea: ' +
-    'las manchas se salen de la vía y sugieren riesgo donde solo hay monte. En su lugar se publica ' +
-    'el mapa de sectores críticos sobre el trazado, con el color tomado de los niveles de confianza ' +
-    'de la propia fuente.',
+    'El mapa de calor clásico no se publica; en su lugar se publica una densidad lineal. El insumo ' +
+    'ya existe: la ANSV entregó por solicitud el microdato georreferenciado 2021 – mar 2026 de la ' +
+    'Ruta 4003 (118 víctimas en 70 hechos). Pero un estimador de densidad en dos dimensiones reparte ' +
+    'sobre el monte lo que ocurre en una línea, así que la densidad se calcula a lo largo de la vía, ' +
+    'contando hechos y no víctimas. Y se lee con una advertencia: el microdato solo trae lo que se ' +
+    'pudo georreferenciar, y el ascenso al Alto de La Línea está subrepresentado: de ocho siniestros ' +
+    'fatales de prensa, figuran dos. La figura muestra dónde se pudo georreferenciar, no dónde está ' +
+    'el riesgo. Para 2015–2019 se mantiene el mapa de sectores críticos con el Gi* de la propia fuente.',
 } as const;
 
 /* ================================================================

@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Layers, Zap, ShieldCheck, ArrowRight } from 'lucide-react';
 import { TRAZADO, OPERACION, ACTUAL, AMBIENTAL } from '@/data/proyecto';
+import PasoAutopista3D from './PasoAutopista3D';
 
 /* ---------------------------------------------------------------------------
  * Esquemas del proceso operativo.
@@ -161,7 +162,7 @@ export const Solution: React.FC = () => {
       bgColor: 'bg-blue-600/10',
       borderColor: 'border-blue-500/30',
       hoverBorder: 'hover:border-blue-500/50',
-      title: 'Túnel de Base de 58 km',
+      title: 'Túnel de Base: 58 km de Trazado',
       description:
         `Túnel de base de montaña que evita el ascenso a los ${TRAZADO.cotaPasoActual.valor} del Alto de La Línea. La construcción se plantea en ${TRAZADO.configuracion.valor}, con excavación mixta entre tuneladora y método convencional. [Ponencia, dia. 20 y 22]`,
       bullets: [
@@ -229,7 +230,7 @@ export const Solution: React.FC = () => {
             La Solución Intermodal de Baja Cota
           </h2>
           <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-light">
-            Sustituimos el ascenso de 3,300 msnm por un <strong className="text-uni-900 font-medium">túnel de base de 58 km</strong> a baja altura (~1,250 msnm). Un sistema ferroviario eléctrico continuo que transfiere vehículos pesados entre Ibagué y Armenia.
+            La propuesta analizada sustituye el ascenso a los {TRAZADO.cotaPasoActual.valor} del Alto de La Línea por <strong className="text-uni-900 font-medium">{TRAZADO.longitudTotal.valor} de trazado con un túnel principal de {TRAZADO.tunelPrincipal.valor}</strong>, entre portales a {TRAZADO.cotaIbague.valor} y {TRAZADO.cotaArmenia.valor}: un sistema ferroviario eléctrico que transporta los camiones entre Ibagué y Armenia. [Ponencia, dia. 20]
           </p>
         </motion.div>
 
@@ -277,10 +278,10 @@ export const Solution: React.FC = () => {
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 pb-6 border-b border-slate-200">
             <div>
               <span className="text-xs font-mono font-semibold text-gmae-600 tracking-wider uppercase">Proceso Operativo</span>
-              <h3 className="text-2xl sm:text-3xl font-bold text-uni-900 mt-1">¿Cómo funciona el Sistema Intermodal Piggyback?</h3>
+              <h3 className="text-2xl sm:text-3xl font-bold text-uni-900 mt-1">¿Cómo funciona la autopista rodante?</h3>
             </div>
             <p className="text-sm text-slate-500 max-w-md mt-4 md:mt-0">
-              Integración fluida de la flota vehicular pesada nacional al sistema ferroviario de alta capacidad.
+              El camión completo sube a una plataforma ferroviaria y el conductor viaja en un vagón aparte. La fuente llama al sistema «autopista rodante». [Ponencia, dia. 19 y 23]
             </p>
           </div>
 
@@ -289,7 +290,7 @@ export const Solution: React.FC = () => {
               <div key={idx} className="relative space-y-3">
                 {/* Esquema del paso. Ilustrativo, sin escala ni cifras. */}
                 <div className="relative overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
-                  <EsquemaPaso paso={step.number} />
+                  <PasoAutopista3D paso={step.number} respaldo={<EsquemaPaso paso={step.number} />} />
                   <span className="absolute left-3 top-2 font-mono text-2xl font-black text-uni-900/70">
                     {step.number}
                   </span>
@@ -305,10 +306,39 @@ export const Solution: React.FC = () => {
             ))}
           </div>
 
+          {/* Tiempos de operación [F, dia. 23] frente al paso actual [F, dia. 29] */}
+          <div className="mt-10 space-y-3">
+            <div className="flex items-baseline justify-between gap-4">
+              <span className="text-xs font-mono font-semibold uppercase tracking-wider text-gmae-600">Tiempos de operación</span>
+              <span className="text-xs text-slate-500">[Ponencia, dia. 23]</span>
+            </div>
+            <div className="flex h-12 w-full overflow-hidden rounded-lg text-[11px] font-semibold text-white sm:text-xs">
+              {[
+                { t: 'Peaje y carga', v: OPERACION.tPeajeCarga, c: 'bg-gmae-600' },
+                { t: 'Desplazamiento', v: OPERACION.tDesplazamiento, c: 'bg-uni-700' },
+                { t: 'Descarga', v: OPERACION.tDescarga, c: 'bg-amber-600' },
+              ].map((f) => (
+                <div key={f.t} className={`flex flex-col items-center justify-center px-1 text-center ${f.c}`}
+                     style={{ width: `${(f.v.n / OPERACION.tCicloTotal.n) * 100}%` }}>
+                  <span className="leading-tight">{f.t}</span>
+                  <span className="font-mono">{f.v.valor}</span>
+                </div>
+              ))}
+            </div>
+            <p className="text-xs leading-relaxed text-slate-600">
+              Total <strong className="text-uni-900">{OPERACION.tCicloTotal.valor}</strong> por cruce, frente a
+              {' '}<strong className="text-uni-900">{ACTUAL.tiempoCruce.valor}</strong> del paso actual como valor medio
+              [Ponencia, dia. 29]. Solo {OPERACION.tDesplazamiento.valor} son desplazamiento: el resto es operación
+              en terminal. Las cifras son del proponente, no auditadas.
+            </p>
+          </div>
+
           <p className="mt-8 border-t border-slate-200 pt-4 font-mono text-[11px] leading-relaxed text-slate-500">
-            Los cuatro esquemas son pictogramas propios del semillero, sin escala ni medida:
-            ilustran la secuencia operativa que describe la ponencia. Los valores de cada paso
-            van en su texto, con la diapositiva de origen.
+            Los cuatro esquemas son escenas 3D ilustrativas, sin escala ni medida, adaptadas por el
+            semillero de un boceto propio: ilustran la secuencia operativa que describe la ponencia.
+            El convoy real mide {OPERACION.longitudTren.valor} y lleva {OPERACION.tractomulasTren.valor}; aquí
+            se dibujan unas pocas plataformas. Los valores van en el texto de cada paso y en la
+            barra de tiempos, con su diapositiva de origen.
           </p>
         </motion.div>
 

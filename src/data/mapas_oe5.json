@@ -1,0 +1,2083 @@
+{
+ "_fuente": "Generado por OE5_SeguridadVial/Act4_Analisis/exportar_web_OE5.py. NO editar a mano.",
+ "corredor": {
+  "bounds": [
+   -75.7,
+   4.33,
+   -75.15,
+   4.58
+  ],
+  "img": "/oe5/relieve_corredor.jpg"
+ },
+ "descenso": {
+  "bounds": [
+   -75.648,
+   4.509,
+   -75.59,
+   4.541
+  ],
+  "img": "/oe5/relieve_descenso.jpg"
+ },
+ "trazado": [
+  [
+   -75.196,
+   4.364
+  ],
+  [
+   -75.20037,
+   4.36511
+  ],
+  [
+   -75.20473,
+   4.36622
+  ],
+  [
+   -75.2091,
+   4.36734
+  ],
+  [
+   -75.21346,
+   4.36845
+  ],
+  [
+   -75.21783,
+   4.36956
+  ],
+  [
+   -75.2222,
+   4.37067
+  ],
+  [
+   -75.22656,
+   4.37179
+  ],
+  [
+   -75.23093,
+   4.3729
+  ],
+  [
+   -75.2353,
+   4.37401
+  ],
+  [
+   -75.23966,
+   4.37512
+  ],
+  [
+   -75.24403,
+   4.37623
+  ],
+  [
+   -75.2484,
+   4.37735
+  ],
+  [
+   -75.25276,
+   4.37846
+  ],
+  [
+   -75.25713,
+   4.37957
+  ],
+  [
+   -75.26149,
+   4.38068
+  ],
+  [
+   -75.26586,
+   4.38179
+  ],
+  [
+   -75.27023,
+   4.3829
+  ],
+  [
+   -75.27459,
+   4.38401
+  ],
+  [
+   -75.27896,
+   4.38513
+  ],
+  [
+   -75.28333,
+   4.38624
+  ],
+  [
+   -75.28769,
+   4.38735
+  ],
+  [
+   -75.29206,
+   4.38846
+  ],
+  [
+   -75.29642,
+   4.38957
+  ],
+  [
+   -75.30079,
+   4.39069
+  ],
+  [
+   -75.30516,
+   4.3918
+  ],
+  [
+   -75.30952,
+   4.39291
+  ],
+  [
+   -75.31389,
+   4.39402
+  ],
+  [
+   -75.31826,
+   4.39513
+  ],
+  [
+   -75.32262,
+   4.39624
+  ],
+  [
+   -75.32699,
+   4.39736
+  ],
+  [
+   -75.33136,
+   4.39847
+  ],
+  [
+   -75.33572,
+   4.39958
+  ],
+  [
+   -75.34009,
+   4.40069
+  ],
+  [
+   -75.34446,
+   4.4018
+  ],
+  [
+   -75.34882,
+   4.40291
+  ],
+  [
+   -75.35319,
+   4.40402
+  ],
+  [
+   -75.35756,
+   4.40513
+  ],
+  [
+   -75.36192,
+   4.40625
+  ],
+  [
+   -75.36629,
+   4.40736
+  ],
+  [
+   -75.37066,
+   4.40847
+  ],
+  [
+   -75.37502,
+   4.40958
+  ],
+  [
+   -75.37939,
+   4.41069
+  ],
+  [
+   -75.38376,
+   4.4118
+  ],
+  [
+   -75.38812,
+   4.41291
+  ],
+  [
+   -75.39249,
+   4.41402
+  ],
+  [
+   -75.39686,
+   4.41513
+  ],
+  [
+   -75.40122,
+   4.41624
+  ],
+  [
+   -75.40559,
+   4.41736
+  ],
+  [
+   -75.40996,
+   4.41847
+  ],
+  [
+   -75.41432,
+   4.41958
+  ],
+  [
+   -75.41869,
+   4.42069
+  ],
+  [
+   -75.42306,
+   4.4218
+  ],
+  [
+   -75.42742,
+   4.42291
+  ],
+  [
+   -75.43179,
+   4.42402
+  ],
+  [
+   -75.43616,
+   4.42513
+  ],
+  [
+   -75.44052,
+   4.42624
+  ],
+  [
+   -75.44489,
+   4.42735
+  ],
+  [
+   -75.44926,
+   4.42847
+  ],
+  [
+   -75.45363,
+   4.42957
+  ],
+  [
+   -75.45799,
+   4.43069
+  ],
+  [
+   -75.46236,
+   4.4318
+  ],
+  [
+   -75.46673,
+   4.43291
+  ],
+  [
+   -75.47109,
+   4.43402
+  ],
+  [
+   -75.47546,
+   4.43513
+  ],
+  [
+   -75.47983,
+   4.43624
+  ],
+  [
+   -75.48419,
+   4.43735
+  ],
+  [
+   -75.48856,
+   4.43846
+  ],
+  [
+   -75.49293,
+   4.43957
+  ],
+  [
+   -75.49729,
+   4.44068
+  ],
+  [
+   -75.50166,
+   4.44179
+  ],
+  [
+   -75.50603,
+   4.4429
+  ],
+  [
+   -75.5104,
+   4.44401
+  ],
+  [
+   -75.51476,
+   4.44512
+  ],
+  [
+   -75.51913,
+   4.44623
+  ],
+  [
+   -75.5235,
+   4.44734
+  ],
+  [
+   -75.52787,
+   4.44845
+  ],
+  [
+   -75.53223,
+   4.44956
+  ],
+  [
+   -75.5366,
+   4.45067
+  ],
+  [
+   -75.54097,
+   4.45178
+  ],
+  [
+   -75.54533,
+   4.45289
+  ],
+  [
+   -75.5497,
+   4.454
+  ],
+  [
+   -75.55407,
+   4.45511
+  ],
+  [
+   -75.55844,
+   4.45622
+  ],
+  [
+   -75.5628,
+   4.45733
+  ],
+  [
+   -75.56717,
+   4.45844
+  ],
+  [
+   -75.57154,
+   4.45955
+  ],
+  [
+   -75.5759,
+   4.46066
+  ],
+  [
+   -75.58027,
+   4.46177
+  ],
+  [
+   -75.58464,
+   4.46288
+  ],
+  [
+   -75.58901,
+   4.46399
+  ],
+  [
+   -75.59337,
+   4.4651
+  ],
+  [
+   -75.59774,
+   4.46621
+  ],
+  [
+   -75.60211,
+   4.46732
+  ],
+  [
+   -75.60648,
+   4.46843
+  ],
+  [
+   -75.61084,
+   4.46954
+  ],
+  [
+   -75.61521,
+   4.47065
+  ],
+  [
+   -75.61958,
+   4.47176
+  ],
+  [
+   -75.62395,
+   4.47287
+  ],
+  [
+   -75.62831,
+   4.47398
+  ],
+  [
+   -75.63268,
+   4.47509
+  ],
+  [
+   -75.63705,
+   4.4762
+  ],
+  [
+   -75.64141,
+   4.47731
+  ],
+  [
+   -75.64578,
+   4.47842
+  ],
+  [
+   -75.65015,
+   4.47953
+  ],
+  [
+   -75.652,
+   4.48
+  ]
+ ],
+ "portales": {
+  "oriental": [
+   -75.196,
+   4.364
+  ],
+  "occidental": [
+   -75.652,
+   4.48
+  ]
+ },
+ "sectores": [
+  {
+   "pr": "PR 86",
+   "fallecidos": 21,
+   "lon": -75.632733,
+   "lat": 4.529347,
+   "gi_z": 4.512465,
+   "confianza": "99 %",
+   "entidad": "INVÍAS",
+   "tramo": "Calarcá - Ibagué",
+   "en_tasa": true
+  },
+  {
+   "pr": "PR 6",
+   "fallecidos": 11,
+   "lon": -75.620722,
+   "lat": 4.525523,
+   "gi_z": 4.512465,
+   "confianza": "99 %",
+   "entidad": "INVÍAS",
+   "tramo": "Calarcá - Ibagué",
+   "en_tasa": true
+  },
+  {
+   "pr": "PR 10",
+   "fallecidos": 9,
+   "lon": -75.60247,
+   "lat": 4.527243,
+   "gi_z": 2.113062,
+   "confianza": "95 %",
+   "entidad": "INVÍAS",
+   "tramo": "Calarcá - Ibagué",
+   "en_tasa": true
+  },
+  {
+   "pr": "PR 85",
+   "fallecidos": 9,
+   "lon": -75.634918,
+   "lat": 4.528841,
+   "gi_z": 3.328315,
+   "confianza": "99 %",
+   "entidad": "ANI",
+   "tramo": "La Paila - Calarcá",
+   "en_tasa": false
+  },
+  {
+   "pr": "PR 85",
+   "fallecidos": 1,
+   "lon": -75.634098,
+   "lat": 4.530654,
+   "gi_z": 3.822062,
+   "confianza": "99 %",
+   "entidad": "ANI",
+   "tramo": "",
+   "en_tasa": false
+  },
+  {
+   "pr": "PR 10",
+   "fallecidos": 1,
+   "lon": -75.606768,
+   "lat": 4.51878,
+   "gi_z": 2.113062,
+   "confianza": "95 %",
+   "entidad": "INVÍAS",
+   "tramo": "Calarcá - Ibagué",
+   "en_tasa": true
+  }
+ ],
+ "microdato": {
+  "resumen": {
+   "fallecidos": 36,
+   "fuente": "ANSV-ONSV oficio 20265000140371 (22 sep 2026), anexo Ruta 4003, 2021 - mar 2026",
+   "hechos": 70,
+   "lesionados": 82,
+   "limites_tramo_km": {
+    "cajamarca": 50.365,
+    "calarca": 5.0,
+    "fin": 80.194
+   },
+   "paso_km_11_a_41": {
+    "fallecidos": 1,
+    "hechos": 5,
+    "hechos_fatales": 1,
+    "lesionados": 4
+   },
+   "paso_por_anio": {
+    "2021": {
+     "fallecidos": 6,
+     "hechos": 7,
+     "hechos_fatales": 6,
+     "lesionados": 1
+    },
+    "2022": {
+     "fallecidos": 1,
+     "hechos": 1,
+     "hechos_fatales": 1,
+     "lesionados": 0
+    },
+    "2023": {
+     "fallecidos": 2,
+     "hechos": 2,
+     "hechos_fatales": 1,
+     "lesionados": 1
+    },
+    "2024": {
+     "fallecidos": 0,
+     "hechos": 2,
+     "hechos_fatales": 0,
+     "lesionados": 2
+    },
+    "2025": {
+     "fallecidos": 11,
+     "hechos": 2,
+     "hechos_fatales": 2,
+     "lesionados": 2
+    },
+    "2026": {
+     "fallecidos": 0,
+     "hechos": 0,
+     "hechos_fatales": 0,
+     "lesionados": 0
+    }
+   },
+   "periodo": [
+    "2021-01-20",
+    "2026-03-28"
+   ],
+   "por_tramo": {
+    "Armenia – Calarcá (fuera)": {
+     "fallecidos": 9,
+     "hechos": 21,
+     "hechos_fatales": 8,
+     "lesionados": 18
+    },
+    "Cajamarca – Ibagué": {
+     "fallecidos": 7,
+     "hechos": 35,
+     "hechos_fatales": 5,
+     "lesionados": 58
+    },
+    "Paso Calarcá – Cajamarca": {
+     "fallecidos": 20,
+     "hechos": 14,
+     "hechos_fatales": 10,
+     "lesionados": 6
+    }
+   },
+   "prensa": {
+    "en_anexo": 2,
+    "total": 8
+   },
+   "punto_mas_cargado_hechos": {
+    "hechos": 16,
+    "lon_lat": [
+     -75.656447,
+     4.536317
+    ]
+   },
+   "puntos_distintos_hechos": 28,
+   "puntos_distintos_victimas": 28,
+   "victimas": 118
+  },
+  "tasa_post_tunel": {
+   "L_km": 45,
+   "anios": 5,
+   "comparable_con_7_66": false,
+   "fallecidos_paso_2021_2025": 20,
+   "fallecidos_si_se_excluye_km_5_0": 18,
+   "naturaleza": "cota inferior: subregistro de georreferenciacion (2 de 8 fatales de prensa)",
+   "tasa_H1": 3.65,
+   "tasa_H1_sin_borde": 3.28,
+   "tasa_H2": 3.83,
+   "tpd_H1_est244_media_2015_2018": 6676.2,
+   "tpd_H2_peaje_cajamarca_2019": 6351.3
+  },
+  "puntos": [
+   {
+    "lon": -75.656447,
+    "lat": 4.536317,
+    "km": 1.992,
+    "tramo": "Armenia – Calarcá (fuera)",
+    "municipio": "Calarca",
+    "hechos": 16,
+    "hechos_fatales": 8,
+    "fallecidos": 9,
+    "lesionados": 11
+   },
+   {
+    "lon": -75.334521,
+    "lat": 4.40637,
+    "km": 65.0,
+    "tramo": "Cajamarca – Ibagué",
+    "municipio": "Ibague",
+    "hechos": 11,
+    "hechos_fatales": 1,
+    "fallecidos": 1,
+    "lesionados": 11
+   },
+   {
+    "lon": -75.268074,
+    "lat": 4.410911,
+    "km": 79.0,
+    "tramo": "Cajamarca – Ibagué",
+    "municipio": "Ibague",
+    "hechos": 4,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 4
+   },
+   {
+    "lon": -75.4269,
+    "lat": 4.44164,
+    "km": 51.964,
+    "tramo": "Cajamarca – Ibagué",
+    "municipio": "Cajamarca",
+    "hechos": 4,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 30
+   },
+   {
+    "lon": -75.569169,
+    "lat": 4.497411,
+    "km": 21.0,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "municipio": "Calarca",
+    "hechos": 3,
+    "hechos_fatales": 1,
+    "fallecidos": 1,
+    "lesionados": 2
+   },
+   {
+    "lon": -75.663246,
+    "lat": 4.532979,
+    "km": 1.0,
+    "tramo": "Armenia – Calarcá (fuera)",
+    "municipio": "Armenia",
+    "hechos": 3,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 4
+   },
+   {
+    "lon": -75.297864,
+    "lat": 4.400493,
+    "km": 74.0,
+    "tramo": "Cajamarca – Ibagué",
+    "municipio": "Ibague",
+    "hechos": 3,
+    "hechos_fatales": 2,
+    "fallecidos": 4,
+    "lesionados": 1
+   },
+   {
+    "lon": -75.660884,
+    "lat": 4.533045,
+    "km": 1.992,
+    "tramo": "Armenia – Calarcá (fuera)",
+    "municipio": "Calarca",
+    "hechos": 2,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 3
+   },
+   {
+    "lon": -75.263836,
+    "lat": 4.414577,
+    "km": 80.0,
+    "tramo": "Cajamarca – Ibagué",
+    "municipio": "Ibague",
+    "hechos": 2,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 2
+   },
+   {
+    "lon": -75.26355,
+    "lat": 4.41472,
+    "km": 80.0,
+    "tramo": "Cajamarca – Ibagué",
+    "municipio": "Ibague",
+    "hechos": 2,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 3
+   },
+   {
+    "lon": -75.268072,
+    "lat": 4.410912,
+    "km": 79.0,
+    "tramo": "Cajamarca – Ibagué",
+    "municipio": "Ibague",
+    "hechos": 2,
+    "hechos_fatales": 1,
+    "fallecidos": 1,
+    "lesionados": 1
+   },
+   {
+    "lon": -75.26565,
+    "lat": 4.412529,
+    "km": 80.0,
+    "tramo": "Cajamarca – Ibagué",
+    "municipio": "Ibague",
+    "hechos": 2,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 2
+   },
+   {
+    "lon": -75.620499,
+    "lat": 4.5255,
+    "km": 7.0,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "municipio": "Calarca",
+    "hechos": 1,
+    "hechos_fatales": 1,
+    "fallecidos": 1,
+    "lesionados": 0
+   },
+   {
+    "lon": -75.612292,
+    "lat": 4.526181,
+    "km": 9.0,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "municipio": "Calarca",
+    "hechos": 1,
+    "hechos_fatales": 1,
+    "fallecidos": 1,
+    "lesionados": 0
+   },
+   {
+    "lon": -75.607284,
+    "lat": 4.523403,
+    "km": 10.0,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "municipio": "Calarca",
+    "hechos": 1,
+    "hechos_fatales": 1,
+    "fallecidos": 1,
+    "lesionados": 0
+   },
+   {
+    "lon": -75.481545,
+    "lat": 4.439011,
+    "km": 42.981,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "municipio": "Cajamarca",
+    "hechos": 1,
+    "hechos_fatales": 1,
+    "fallecidos": 1,
+    "lesionados": 0
+   },
+   {
+    "lon": -75.614764,
+    "lat": 4.525703,
+    "km": 9.0,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "municipio": "Calarca",
+    "hechos": 1,
+    "hechos_fatales": 1,
+    "fallecidos": 1,
+    "lesionados": 0
+   },
+   {
+    "lon": -75.5378,
+    "lat": 4.465039,
+    "km": 30.0,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "municipio": "Cajamarca",
+    "hechos": 1,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 1
+   },
+   {
+    "lon": -75.484869,
+    "lat": 4.440162,
+    "km": 42.981,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "municipio": "Cajamarca",
+    "hechos": 1,
+    "hechos_fatales": 1,
+    "fallecidos": 1,
+    "lesionados": 0
+   },
+   {
+    "lon": -75.35593,
+    "lat": 4.412087,
+    "km": 62.0,
+    "tramo": "Cajamarca – Ibagué",
+    "municipio": "Ibague",
+    "hechos": 1,
+    "hechos_fatales": 1,
+    "fallecidos": 1,
+    "lesionados": 0
+   },
+   {
+    "lon": -75.26511,
+    "lat": 4.413456,
+    "km": 80.0,
+    "tramo": "Cajamarca – Ibagué",
+    "municipio": "Ibague",
+    "hechos": 1,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 1
+   },
+   {
+    "lon": -75.26481,
+    "lat": 4.41393,
+    "km": 80.0,
+    "tramo": "Cajamarca – Ibagué",
+    "municipio": "Ibague",
+    "hechos": 1,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 1
+   },
+   {
+    "lon": -75.42626,
+    "lat": 4.44161,
+    "km": 51.964,
+    "tramo": "Cajamarca – Ibagué",
+    "municipio": "Cajamarca",
+    "hechos": 1,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 1
+   },
+   {
+    "lon": -75.637489,
+    "lat": 4.532695,
+    "km": 5.0,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "municipio": "Calarca",
+    "hechos": 1,
+    "hechos_fatales": 1,
+    "fallecidos": 2,
+    "lesionados": 0
+   },
+   {
+    "lon": -75.534547,
+    "lat": 4.461814,
+    "km": 31.972,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "municipio": "Cajamarca",
+    "hechos": 1,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 1
+   },
+   {
+    "lon": -75.43226,
+    "lat": 4.43963,
+    "km": 50.007,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "municipio": "Cajamarca",
+    "hechos": 1,
+    "hechos_fatales": 1,
+    "fallecidos": 2,
+    "lesionados": 0
+   },
+   {
+    "lon": -75.635712,
+    "lat": 4.526763,
+    "km": 6.0,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "municipio": "Calarca",
+    "hechos": 1,
+    "hechos_fatales": 1,
+    "fallecidos": 9,
+    "lesionados": 2
+   },
+   {
+    "lon": -75.290861,
+    "lat": 4.400614,
+    "km": 75.0,
+    "tramo": "Cajamarca – Ibagué",
+    "municipio": "Ibague",
+    "hechos": 1,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 1
+   }
+  ],
+  "por_km": [
+   {
+    "km_desde": 0,
+    "km_hasta": 1,
+    "tramo": "Armenia – Calarcá (fuera)",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 1,
+    "km_hasta": 2,
+    "tramo": "Armenia – Calarcá (fuera)",
+    "hechos": 21,
+    "hechos_fatales": 8,
+    "fallecidos": 9,
+    "lesionados": 18
+   },
+   {
+    "km_desde": 2,
+    "km_hasta": 3,
+    "tramo": "Armenia – Calarcá (fuera)",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 3,
+    "km_hasta": 4,
+    "tramo": "Armenia – Calarcá (fuera)",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 4,
+    "km_hasta": 5,
+    "tramo": "Armenia – Calarcá (fuera)",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 5,
+    "km_hasta": 6,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 1,
+    "hechos_fatales": 1,
+    "fallecidos": 2,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 6,
+    "km_hasta": 7,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 1,
+    "hechos_fatales": 1,
+    "fallecidos": 9,
+    "lesionados": 2
+   },
+   {
+    "km_desde": 7,
+    "km_hasta": 8,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 1,
+    "hechos_fatales": 1,
+    "fallecidos": 1,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 8,
+    "km_hasta": 9,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 9,
+    "km_hasta": 10,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 2,
+    "hechos_fatales": 2,
+    "fallecidos": 2,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 10,
+    "km_hasta": 11,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 1,
+    "hechos_fatales": 1,
+    "fallecidos": 1,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 11,
+    "km_hasta": 12,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 12,
+    "km_hasta": 13,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 13,
+    "km_hasta": 14,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 14,
+    "km_hasta": 15,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 15,
+    "km_hasta": 16,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 16,
+    "km_hasta": 17,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 17,
+    "km_hasta": 18,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 18,
+    "km_hasta": 19,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 19,
+    "km_hasta": 20,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 20,
+    "km_hasta": 21,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 21,
+    "km_hasta": 22,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 3,
+    "hechos_fatales": 1,
+    "fallecidos": 1,
+    "lesionados": 2
+   },
+   {
+    "km_desde": 22,
+    "km_hasta": 23,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 23,
+    "km_hasta": 24,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 24,
+    "km_hasta": 25,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 25,
+    "km_hasta": 26,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 26,
+    "km_hasta": 27,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 27,
+    "km_hasta": 28,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 28,
+    "km_hasta": 29,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 29,
+    "km_hasta": 30,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 30,
+    "km_hasta": 31,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 1,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 1
+   },
+   {
+    "km_desde": 31,
+    "km_hasta": 32,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 1,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 1
+   },
+   {
+    "km_desde": 32,
+    "km_hasta": 33,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 33,
+    "km_hasta": 34,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 34,
+    "km_hasta": 35,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 35,
+    "km_hasta": 36,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 36,
+    "km_hasta": 37,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 37,
+    "km_hasta": 38,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 38,
+    "km_hasta": 39,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 39,
+    "km_hasta": 40,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 40,
+    "km_hasta": 41,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 41,
+    "km_hasta": 42,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 42,
+    "km_hasta": 43,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 2,
+    "hechos_fatales": 2,
+    "fallecidos": 2,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 43,
+    "km_hasta": 44,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 44,
+    "km_hasta": 45,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 45,
+    "km_hasta": 46,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 46,
+    "km_hasta": 47,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 47,
+    "km_hasta": 48,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 48,
+    "km_hasta": 49,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 49,
+    "km_hasta": 50,
+    "tramo": "Paso Calarcá – Cajamarca",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 50,
+    "km_hasta": 51,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 1,
+    "hechos_fatales": 1,
+    "fallecidos": 2,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 51,
+    "km_hasta": 52,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 5,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 31
+   },
+   {
+    "km_desde": 52,
+    "km_hasta": 53,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 53,
+    "km_hasta": 54,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 54,
+    "km_hasta": 55,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 55,
+    "km_hasta": 56,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 56,
+    "km_hasta": 57,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 57,
+    "km_hasta": 58,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 58,
+    "km_hasta": 59,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 59,
+    "km_hasta": 60,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 60,
+    "km_hasta": 61,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 61,
+    "km_hasta": 62,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 62,
+    "km_hasta": 63,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 1,
+    "hechos_fatales": 1,
+    "fallecidos": 1,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 63,
+    "km_hasta": 64,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 64,
+    "km_hasta": 65,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 65,
+    "km_hasta": 66,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 11,
+    "hechos_fatales": 1,
+    "fallecidos": 1,
+    "lesionados": 11
+   },
+   {
+    "km_desde": 66,
+    "km_hasta": 67,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 67,
+    "km_hasta": 68,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 68,
+    "km_hasta": 69,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 69,
+    "km_hasta": 70,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 70,
+    "km_hasta": 71,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 71,
+    "km_hasta": 72,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 72,
+    "km_hasta": 73,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 73,
+    "km_hasta": 74,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 74,
+    "km_hasta": 75,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 3,
+    "hechos_fatales": 2,
+    "fallecidos": 4,
+    "lesionados": 1
+   },
+   {
+    "km_desde": 75,
+    "km_hasta": 76,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 1,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 1
+   },
+   {
+    "km_desde": 76,
+    "km_hasta": 77,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 77,
+    "km_hasta": 78,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 78,
+    "km_hasta": 79,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 0,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 0
+   },
+   {
+    "km_desde": 79,
+    "km_hasta": 80,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 6,
+    "hechos_fatales": 1,
+    "fallecidos": 1,
+    "lesionados": 5
+   },
+   {
+    "km_desde": 80,
+    "km_hasta": 81,
+    "tramo": "Cajamarca – Ibagué",
+    "hechos": 8,
+    "hechos_fatales": 0,
+    "fallecidos": 0,
+    "lesionados": 9
+   }
+  ],
+  "prensa": [
+   {
+    "fecha": "2022-03-31",
+    "hecho": "Villa del Cacique, tres tractomulas",
+    "muertos_prensa": "1",
+    "medio": "Infobae",
+    "citado_en_ponencia": "no",
+    "en_anexo_ANSV": "no",
+    "fallecidos_anexo": "",
+    "km_anexo": ""
+   },
+   {
+    "fecha": "2022-09-22",
+    "hecho": "La Línea, chiva volcada",
+    "muertos_prensa": "2",
+    "medio": "El Tiempo",
+    "citado_en_ponencia": "si",
+    "en_anexo_ANSV": "no",
+    "fallecidos_anexo": "",
+    "km_anexo": ""
+   },
+   {
+    "fecha": "2022-11-02",
+    "hecho": "La Línea, tractomula incendiada",
+    "muertos_prensa": "no indicado",
+    "medio": "El Espectador",
+    "citado_en_ponencia": "si",
+    "en_anexo_ANSV": "no",
+    "fallecidos_anexo": "",
+    "km_anexo": ""
+   },
+   {
+    "fecha": "2023-12-14",
+    "hecho": "Descenso a Calarcá, bus volcado",
+    "muertos_prensa": "2",
+    "medio": "El Tiempo",
+    "citado_en_ponencia": "si",
+    "en_anexo_ANSV": "si",
+    "fallecidos_anexo": "2",
+    "km_anexo": "5.0"
+   },
+   {
+    "fecha": "2024-05-22",
+    "hecho": "Alto de La Línea, tractomula",
+    "muertos_prensa": "1",
+    "medio": "Infobae",
+    "citado_en_ponencia": "no",
+    "en_anexo_ANSV": "no",
+    "fallecidos_anexo": "",
+    "km_anexo": ""
+   },
+   {
+    "fecha": "2024-09-30",
+    "hecho": "Túnel Las Mariposas, auto con tres hermanos",
+    "muertos_prensa": "3",
+    "medio": "El Tiempo",
+    "citado_en_ponencia": "si",
+    "en_anexo_ANSV": "no",
+    "fallecidos_anexo": "",
+    "km_anexo": ""
+   },
+   {
+    "fecha": "2025-05-16",
+    "hecho": "Túnel Los Azulejos, camión",
+    "muertos_prensa": "1",
+    "medio": "El Tiempo",
+    "citado_en_ponencia": "si",
+    "en_anexo_ANSV": "no",
+    "fallecidos_anexo": "",
+    "km_anexo": ""
+   },
+   {
+    "fecha": "2025-05-24",
+    "hecho": "Puente helicoidal, bus universitario",
+    "muertos_prensa": "10-11",
+    "medio": "El Tiempo / Infobae",
+    "citado_en_ponencia": "si",
+    "en_anexo_ANSV": "si",
+    "fallecidos_anexo": "9",
+    "km_anexo": "6.0"
+   }
+  ],
+  "densidad": {
+   "bw_km": 1.5,
+   "paso_km": 0.25,
+   "valores": [
+    2.6222,
+    3.1452,
+    3.6772,
+    4.1903,
+    4.6536,
+    5.0365,
+    5.3121,
+    5.4604,
+    5.4708,
+    5.3439,
+    5.0912,
+    4.7341,
+    4.3009,
+    3.8232,
+    3.3329,
+    2.8585,
+    2.4226,
+    2.0407,
+    1.721,
+    1.4649,
+    1.2683,
+    1.1238,
+    1.022,
+    0.9535,
+    0.9094,
+    0.8826,
+    0.8679,
+    0.8616,
+    0.8614,
+    0.8659,
+    0.8739,
+    0.8842,
+    0.8952,
+    0.9046,
+    0.91,
+    0.9086,
+    0.8979,
+    0.8759,
+    0.8415,
+    0.7947,
+    0.7365,
+    0.669,
+    0.595,
+    0.5177,
+    0.4404,
+    0.3661,
+    0.2972,
+    0.2357,
+    0.1825,
+    0.1378,
+    0.1016,
+    0.0731,
+    0.0513,
+    0.0351,
+    0.0234,
+    0.0152,
+    0.0097,
+    0.006,
+    0.0037,
+    0.0022,
+    0.0015,
+    0.0012,
+    0.0013,
+    0.0019,
+    0.0032,
+    0.0054,
+    0.0089,
+    0.0144,
+    0.0228,
+    0.0351,
+    0.0524,
+    0.0763,
+    0.108,
+    0.1486,
+    0.199,
+    0.259,
+    0.328,
+    0.404,
+    0.4839,
+    0.5638,
+    0.6389,
+    0.7041,
+    0.7548,
+    0.7869,
+    0.7979,
+    0.7869,
+    0.7548,
+    0.7041,
+    0.6389,
+    0.5638,
+    0.4839,
+    0.404,
+    0.328,
+    0.259,
+    0.199,
+    0.1487,
+    0.1081,
+    0.0765,
+    0.0528,
+    0.0356,
+    0.0238,
+    0.0162,
+    0.0118,
+    0.0102,
+    0.0108,
+    0.0136,
+    0.0188,
+    0.0266,
+    0.0374,
+    0.0516,
+    0.0695,
+    0.0914,
+    0.1173,
+    0.1469,
+    0.1796,
+    0.2144,
+    0.2503,
+    0.286,
+    0.32,
+    0.3511,
+    0.378,
+    0.3999,
+    0.4159,
+    0.4256,
+    0.4286,
+    0.4248,
+    0.4144,
+    0.3977,
+    0.3753,
+    0.3478,
+    0.3163,
+    0.282,
+    0.2463,
+    0.2104,
+    0.1758,
+    0.1434,
+    0.1142,
+    0.0888,
+    0.0672,
+    0.0496,
+    0.0357,
+    0.025,
+    0.0171,
+    0.0113,
+    0.0073,
+    0.0046,
+    0.0029,
+    0.0018,
+    0.0012,
+    0.0009,
+    0.001,
+    0.0014,
+    0.0022,
+    0.0037,
+    0.0062,
+    0.01,
+    0.0157,
+    0.0241,
+    0.036,
+    0.0523,
+    0.0738,
+    0.1014,
+    0.1355,
+    0.176,
+    0.2224,
+    0.2733,
+    0.3267,
+    0.3798,
+    0.4295,
+    0.4724,
+    0.5053,
+    0.5257,
+    0.5319,
+    0.5234,
+    0.501,
+    0.4665,
+    0.4224,
+    0.3721,
+    0.3189,
+    0.2659,
+    0.216,
+    0.1712,
+    0.1329,
+    0.1018,
+    0.0782,
+    0.062,
+    0.053,
+    0.051,
+    0.0559,
+    0.0679,
+    0.0874,
+    0.1148,
+    0.1511,
+    0.1971,
+    0.2536,
+    0.3215,
+    0.4012,
+    0.493,
+    0.5963,
+    0.7095,
+    0.8303,
+    0.9547,
+    1.0779,
+    1.1937,
+    1.2953,
+    1.376,
+    1.4297,
+    1.4517,
+    1.4394,
+    1.3928,
+    1.3144,
+    1.2092,
+    1.084,
+    0.9465,
+    0.8049,
+    0.6664,
+    0.537,
+    0.4212,
+    0.3215,
+    0.2388,
+    0.1725,
+    0.1213,
+    0.083,
+    0.0552,
+    0.0358,
+    0.0227,
+    0.0141,
+    0.0088,
+    0.0058,
+    0.0044,
+    0.0044,
+    0.0056,
+    0.0081,
+    0.012,
+    0.0178,
+    0.026,
+    0.037,
+    0.0514,
+    0.0698,
+    0.0927,
+    0.1207,
+    0.1541,
+    0.1938,
+    0.2408,
+    0.2965,
+    0.3633,
+    0.4439,
+    0.5421,
+    0.6619,
+    0.8072,
+    0.9811,
+    1.1845,
+    1.4157,
+    1.6693,
+    1.9358,
+    2.202,
+    2.452,
+    2.6682,
+    2.8338,
+    2.9348,
+    2.9616,
+    2.9107,
+    2.785,
+    2.5935,
+    2.3502,
+    2.0722,
+    1.7774,
+    1.4831,
+    1.2038,
+    0.9504,
+    0.7299,
+    0.5453,
+    0.3963,
+    0.2804,
+    0.1933,
+    0.1303,
+    0.0867,
+    0.0583,
+    0.0417,
+    0.0344,
+    0.0351,
+    0.0432,
+    0.0589,
+    0.083,
+    0.1166,
+    0.1608,
+    0.2167,
+    0.2846,
+    0.3641,
+    0.4536,
+    0.5504,
+    0.6505,
+    0.7488,
+    0.8399,
+    0.9182,
+    0.9787,
+    1.0177,
+    1.0336,
+    1.0266,
+    0.9999,
+    0.9587,
+    0.9104,
+    0.8641,
+    0.8298,
+    0.8177,
+    0.8377,
+    0.898,
+    1.0048,
+    1.1613,
+    1.367,
+    1.6172,
+    1.903,
+    2.2113,
+    2.5254,
+    2.8264,
+    3.0943,
+    3.3102,
+    3.458,
+    3.5262,
+    3.5089,
+    3.4068
+   ]
+  }
+ }
+}

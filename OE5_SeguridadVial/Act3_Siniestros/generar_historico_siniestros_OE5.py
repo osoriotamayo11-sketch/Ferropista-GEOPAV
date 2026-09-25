@@ -31,7 +31,11 @@ from reportlab.platypus import (BaseDocTemplate, Frame, PageTemplate, Paragraph,
 # El script vive en Act3_Siniestros/ y escribe el PDF y los CSV en esa misma carpeta.
 BASE = os.path.dirname(os.path.abspath(__file__))
 DATOS = BASE
-SALIDA = os.path.join(BASE, "Historico_siniestros_OE5.pdf")
+SALIDA = os.path.join(BASE, "Historico_siniestros_OE5_v2.pdf")
+
+# Microdato georreferenciado por solicitud (oficio 20265000140371), 2021 - mar 2026 [F/CP]
+RESUMEN_MICRODATO = os.path.join(BASE, "microdato_ANSV_resumen.json")
+CRUCE_PRENSA = os.path.join(BASE, "cruce_prensa_ANSV.csv")
 
 API = "https://www.datos.gov.co/resource"
 REC_SINIESTROS = "rs3u-8r4q"
@@ -76,6 +80,24 @@ def confianza(z):
 def es_co(v, dec=0):
     s = f"{v:,.{dec}f}"
     return s.replace(",", "@").replace(".", ",").replace("@", ".")
+
+
+MESES_ES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio",
+            "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
+
+
+def es_fecha(iso):
+    """'2021-01-20' -> '20 de enero de 2021'."""
+    a, m, d = iso.split("-")
+    return f"{int(d)} de {MESES_ES[int(m) - 1]} de {a}"
+
+
+def cargar_microdato():
+    with open(RESUMEN_MICRODATO, encoding="utf-8") as fh:
+        microdato = json.load(fh)
+    with open(CRUCE_PRENSA, encoding="utf-8-sig") as fh:
+        cruce = list(csv.DictReader(fh))
+    return microdato, cruce
 
 
 # ------------------------------------------------------------------ estilos
@@ -133,6 +155,7 @@ def encabezado_pie(canv, doc):
 def main():
     sin = descargar(REC_SINIESTROS)
     vel = descargar(REC_VELOCIDAD)
+    microdato, cruce = cargar_microdato()
 
     guardar_csv(sin, os.path.join(DATOS, "ansv_sectores_criticos_nacional.csv"),
                 ["departamento", "municipio", "divipola", "entidad", "tramo", "pr",
@@ -246,12 +269,10 @@ def main():
         "fallecidos es mayor de lo que cabría esperar por azar. La confianza se lee con los umbrales "
         "estándar del estadístico: |z| ≥ 2,58 → 99 %; |z| ≥ 1,96 → 95 %; |z| ≥ 1,65 → 90 %. <b>[CP]</b>", P))
     A(Paragraph(
-        "<b>Consecuencia metodológica:</b> el semillero no calcula ningún mapa de calor propio. "
-        "Hacer una estimación de densidad sobre estos puntos sería el mapa de calor de un mapa de "
-        "calor. Además, con seis puntos ningún estimador de densidad tiene sentido estadístico, y el "
-        "método clásico reparte densidad en dos dimensiones mientras que una carretera es una línea: "
-        "las manchas se saldrían de la vía. La visualización del objetivo usa el Gi* que la fuente ya "
-        "publica.", DEST))
+        "<b>Consecuencia metodológica:</b> sobre estos seis puntos el semillero no calcula un mapa de "
+        "calor propio: sería el mapa de calor de un mapa de calor, y con seis puntos ningún estimador "
+        "de densidad tiene sentido estadístico. La densidad se estima sobre el microdato 2021 – mar "
+        "2026 de la sección siguiente, a lo largo de la vía y no en dos dimensiones.", DEST))
 
     # ---------------------------------------------------------- 3
     A(Paragraph("3. Revisión municipio por municipio", H2))
@@ -313,6 +334,74 @@ def main():
         "Se dirime contrastando con las cifras municipales de Forensis para Cajamarca e Ibagué del "
         "mismo periodo 2015 – 2019: si allí aparecen fallecidos en vía que la ANSV no georreferenció, "
         "manda la segunda lectura. <b>[DA]</b>", P))
+    A(Paragraph(
+        "El microdato 2021 – mar 2026 registra en el tramo Cajamarca – Ibagué siniestros que el "
+        "conjunto de sectores críticos no marca, lo que favorece la segunda lectura para el periodo "
+        "reciente. No la prueba para 2015 – 2019: eso sigue pidiendo Forensis. <b>[F]</b>", P))
+
+    # ---------------------------------------------------------- 4bis
+    A(Paragraph("Microdato georreferenciado por solicitud, 2021 – marzo 2026", H2))
+    A(Paragraph(
+        "La ANSV entregó por solicitud (oficio 20265000140371, 22 sep 2026; solicitud radicada por "
+        "Daniel Torrente el 9 de septiembre de 2026) un anexo con el microdato georreferenciado de "
+        "siniestros en la Ruta 4003, fuente primaria Instituto Nacional de Medicina Legal y Ciencias "
+        "Forenses (INMLCF). El anexo solo contiene lo que pudo georreferenciarse: no es el universo de "
+        "siniestros del tramo. <b>[F]</b>", P))
+    A(Paragraph(
+        f"<b>{es_co(microdato['victimas'])} víctimas</b> en <b>{es_co(microdato['hechos'])} hechos</b> "
+        f"distintos ({es_co(microdato['puntos_distintos_hechos'])} puntos georreferenciados distintos), "
+        f"entre <b>{es_fecha(microdato['periodo'][0])}</b> y <b>{es_fecha(microdato['periodo'][1])}</b>: "
+        f"<b>{es_co(microdato['fallecidos'])} fallecidos</b> y "
+        f"<b>{es_co(microdato['lesionados'])} lesionados</b>. <b>[F]</b>", P))
+
+    filas_tramo = [[Paragraph(x, CELDA_B) for x in
+                    ["Tramo", "Hechos", "Hechos fatales", "Fallecidos", "Lesionados"]]]
+    for nombre_tramo, d in microdato["por_tramo"].items():
+        filas_tramo.append([
+            Paragraph(nombre_tramo, CELDA),
+            Paragraph(es_co(d["hechos"]), CELDA),
+            Paragraph(es_co(d["hechos_fatales"]), CELDA),
+            Paragraph(f"<b>{es_co(d['fallecidos'])}</b>", CELDA),
+            Paragraph(es_co(d["lesionados"]), CELDA),
+        ])
+    A(KeepTogether([
+        Paragraph("Por tramo", H3),
+        tabla(filas_tramo, [55 * mm, 22 * mm, 30 * mm, 25 * mm, 25 * mm]),
+    ]))
+
+    A(Spacer(1, 5))
+    n_figuran = sum(1 for f in cruce if f["en_anexo_ANSV"].strip().lower() == "si")
+    n_total = len(cruce)
+    filas_prensa = [[Paragraph(x, CELDA_B) for x in
+                     ["Fecha", "Hecho", "Muertos en prensa", "En el anexo"]]]
+    for f in cruce:
+        en_anexo = f["en_anexo_ANSV"].strip().lower() == "si"
+        filas_prensa.append([
+            Paragraph(f["fecha"], CELDA),
+            Paragraph(f["hecho"], CELDA),
+            Paragraph(f["muertos_prensa"], CELDA),
+            Paragraph(f"<b>Sí ({f['fallecidos_anexo']})</b>" if en_anexo else "No", CELDA),
+        ])
+    A(KeepTogether([
+        Paragraph("Cruce con la prensa", H3),
+        tabla(filas_prensa, [22 * mm, 68 * mm, 30 * mm, 37 * mm]),
+    ]))
+    A(Spacer(1, 4))
+    A(Paragraph(f"Figuran {n_figuran} de {n_total}. <b>[F]</b>", NOTA))
+
+    A(Paragraph("Hipótesis de construcción y advertencia", H3))
+    A(Paragraph(
+        "<b>[H]</b> Un «hecho» agrupa registros por víctima que comparten fecha, municipio y punto de "
+        "referencia (PR). El límite del tramo de Calarcá se fija en el km 5,0 (estación INVÍAS 245) y "
+        "la abscisa de cada hecho es PR + distancia/1000.", P))
+    px, py = microdato["punto_mas_cargado_hechos"]["lon_lat"]
+    A(Paragraph(
+        f"El punto con más hechos del anexo ({es_co(microdato['punto_mas_cargado_hechos']['hechos'])} "
+        f"hechos, lon {px} / lat {py}) parece un punto por defecto de la georreferenciación y no una "
+        "concentración real: se reporta tal como llega, sin editarlo.", NOTA))
+    A(Paragraph(
+        "Los crudos por víctima no se publican; se publican los agregados y el script que los "
+        "produce.", NOTA))
 
     # ---------------------------------------------------------- 5
     A(Paragraph("5. Limitaciones declaradas", H2))
@@ -321,8 +410,9 @@ def main():
         "daños materiales. La línea base es de mortalidad, no de siniestralidad total.",
         "Es un <b>producto derivado</b> de análisis espacial, no el microdato por siniestro. No permite "
         "reconstruir cada evento ni conocer el tipo de vehículo implicado. Se buscó el microdato "
-        "georreferenciado por siniestro y solo se encontró publicado para Bogotá; para carreteras "
-        "nacionales no se localizó ninguno de acceso abierto. <b>[DA]</b>",
+        "georreferenciado por siniestro en fuentes abiertas y solo se encontró publicado para Bogotá. "
+        "Para este corredor la ANSV lo entregó por solicitud (oficio 20265000140371, 22 sep 2026), con "
+        "el subregistro que se describe en la sección del microdato. <b>[F]</b>",
         "El periodo <b>2015 – 2019 es anterior</b> a la entrada en operación del Túnel de La Línea "
         "(4 de septiembre de 2020, 8,6 km), que cambió la geometría, la velocidad de operación y la "
         "composición del tránsito. La línea base describe un corredor que ya no es el actual y "

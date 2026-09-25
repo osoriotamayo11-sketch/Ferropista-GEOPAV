@@ -1,0 +1,71 @@
+fecha,anio,municipio,km,tramo,sector_ansv,lon,lat,fallecidos,lesionados,usuario_predominante,circunstancia,zona
+2021-01-20,2021,Calarca,7.0,Paso Calarcá – Cajamarca,Armenia - La Línea,-75.620499,4.5255,1,0,Usuario T.Carga,Sin Informacion,Rural
+2021-02-14,2021,Ibague,65.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.334521,4.40637,0,2,Peaton,Exceso De Velocidad,Rural
+2021-02-22,2021,Ibague,79.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.268074,4.410911,0,1,Usuario de moto,Desobedecer Normas Y/o Señales De Transito,Rural
+2021-02-27,2021,Calarca,9.0,Paso Calarcá – Cajamarca,Armenia - La Línea,-75.612292,4.526181,1,0,Usuario de moto,Sin Informacion,Rural
+2021-03-13,2021,Calarca,10.0,Paso Calarcá – Cajamarca,Armenia - La Línea,-75.607284,4.523403,1,0,Usuario de moto,Sin Informacion,Rural
+2021-03-15,2021,Cajamarca,42.981,Paso Calarcá – Cajamarca,Armenia - La Línea,-75.481545,4.439011,1,0,Usuario de moto,Sin Informacion,Rural
+2021-03-23,2021,Calarca,9.0,Paso Calarcá – Cajamarca,Armenia - La Línea,-75.614764,4.525703,1,0,Usuario de bicicleta,Sin Informacion,Rural
+2021-03-27,2021,Ibague,65.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.334521,4.40637,0,1,Usuario de V.Individual,Exceso De Velocidad,Rural
+2021-03-28,2021,Calarca,1.992,Armenia – Calarcá (fuera),Armenia - La Línea,-75.656447,4.536317,1,0,Usuario de moto,Sin Informacion,Rural
+2021-04-05,2021,Calarca,1.992,Armenia – Calarcá (fuera),Armenia - La Línea,-75.656447,4.536317,0,1,Usuario de V.Individual,Posibles Fallas Mecanicas,Rural
+2021-04-05,2021,Ibague,65.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.334521,4.40637,0,1,Usuario de moto,Desobedecer Normas Y/o Señales De Transito,Rural
+2021-04-16,2021,Ibague,65.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.334521,4.40637,0,1,Usuario de moto,Desobedecer Normas Y/o Señales De Transito,Rural
+2021-04-21,2021,Ibague,65.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.334521,4.40637,0,1,Usuario de bicicleta,Desobedecer Normas Y/o Señales De Transito,Rural
+2021-04-24,2021,Calarca,1.992,Armenia – Calarcá (fuera),Armenia - La Línea,-75.656447,4.536317,1,0,Usuario de V.Individual,Sin Informacion,Rural
+2021-05-12,2021,Ibague,79.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.268074,4.410911,0,1,Usuario de moto,Desobedecer Normas Y/o Señales De Transito,Rural
+2021-06-01,2021,Cajamarca,30.0,Paso Calarcá – Cajamarca,Armenia - La Línea,-75.5378,4.465039,0,1,Usuario de moto,Desobedecer Normas Y/o Señales De Transito,Rural
+2021-06-07,2021,Cajamarca,42.981,Paso Calarcá – Cajamarca,Armenia - La Línea,-75.484869,4.440162,1,0,Peaton,Sin Informacion,Rural
+2021-07-09,2021,Ibague,65.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.334521,4.40637,0,1,Usuario de moto,Desobedecer Normas Y/o Señales De Transito,Rural
+2021-07-21,2021,Calarca,1.992,Armenia – Calarcá (fuera),Armenia - La Línea,-75.656447,4.536317,0,1,Usuario T.Pasajeros,Exceso De Velocidad,Rural
+2021-07-23,2021,Ibague,79.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.268074,4.410911,0,1,Usuario de moto,Desobedecer Normas Y/o Señales De Transito,Rural
+2021-07-29,2021,Ibague,79.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.268074,4.410911,0,1,Usuario de moto,Exceso De Velocidad,Rural
+2021-08-18,2021,Ibague,65.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.334521,4.40637,0,1,Usuario de moto,Desobedecer Normas Y/o Señales De Transito,Rural
+2021-08-28,2021,Ibague,65.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.334521,4.40637,0,1,Usuario de moto,Desobedecer Normas Y/o Señales De Transito,Rural
+2021-09-01,2021,Ibague,65.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.334521,4.40637,0,1,Usuario de moto,Desobedecer Normas Y/o Señales De Transito,Rural
+2021-09-16,2021,Calarca,1.992,Armenia – Calarcá (fuera),Armenia - La Línea,-75.656447,4.536317,0,3,Usuario de V.Individual,Otra,Rural
+2021-09-25,2021,Calarca,1.992,Armenia – Calarcá (fuera),Armenia - La Línea,-75.656447,4.536317,1,0,Usuario de moto,Sin Informacion,Rural
+2021-10-20,2021,Calarca,1.992,Armenia – Calarcá (fuera),Armenia - La Línea,-75.656447,4.536317,2,0,Usuario de bicicleta,Sin Informacion,Rural
+2021-10-21,2021,Ibague,62.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.35593,4.412087,1,0,Usuario T.Carga,Sin Informacion,Rural
+2021-10-26,2021,Calarca,1.992,Armenia – Calarcá (fuera),Armenia - La Línea,-75.660884,4.533045,0,2,Usuario de moto,Exceso De Velocidad,Rural
+2021-12-02,2021,Calarca,1.992,Armenia – Calarcá (fuera),Armenia - La Línea,-75.656447,4.536317,0,1,Usuario de moto,Exceso De Velocidad,Rural
+2021-12-17,2021,Calarca,1.992,Armenia – Calarcá (fuera),Armenia - La Línea,-75.656447,4.536317,1,0,Usuario de moto,Sin Informacion,Rural
+2022-01-04,2022,Cajamarca,51.964,Cajamarca – Ibagué,Armenia - La Línea,-75.4269,4.44164,0,24,Usuario T.Pasajeros,Exceso De Velocidad,Urbana
+2022-01-26,2022,Calarca,1.992,Armenia – Calarcá (fuera),Armenia - La Línea,-75.656447,4.536317,1,0,Peaton,Sin Informacion,Rural
+2022-03-06,2022,Ibague,65.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.334521,4.40637,1,0,Usuario de moto,Sin Informacion,Rural
+2022-03-09,2022,Ibague,80.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.26511,4.413456,0,1,Peaton,Desobedecer Normas Y/o Señales De Transito,Urbana
+2022-04-13,2022,Cajamarca,51.964,Cajamarca – Ibagué,Armenia - La Línea,-75.4269,4.44164,0,2,Usuario de moto,Desobedecer Normas Y/o Señales De Transito,Urbana
+2022-04-14,2022,Cajamarca,51.964,Cajamarca – Ibagué,Armenia - La Línea,-75.4269,4.44164,0,2,Usuario de moto,Desobedecer Normas Y/o Señales De Transito,Urbana
+2022-04-17,2022,Cajamarca,51.964,Cajamarca – Ibagué,Armenia - La Línea,-75.4269,4.44164,0,2,Usuario de moto,Exceso De Velocidad,Urbana
+2022-05-03,2022,Calarca,1.992,Armenia – Calarcá (fuera),Armenia - La Línea,-75.656447,4.536317,1,0,Peaton,Sin Informacion,Rural
+2022-06-02,2022,Calarca,1.992,Armenia – Calarcá (fuera),Armenia - La Línea,-75.660884,4.533045,0,1,Usuario de moto,Desobedecer Normas Y/o Señales De Transito,Rural
+2022-06-02,2022,Ibague,80.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.263836,4.414577,0,1,Usuario de moto,Desobedecer Normas Y/o Señales De Transito,Urbana
+2022-07-08,2022,Ibague,80.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.263836,4.414577,0,1,Peaton,Exceso De Velocidad,Urbana
+2022-08-19,2022,Calarca,21.0,Paso Calarcá – Cajamarca,Armenia - La Línea,-75.569169,4.497411,1,0,Usuario T.Carga,Malas Condiciones De La Via,Rural
+2022-10-05,2022,Calarca,1.992,Armenia – Calarcá (fuera),Armenia - La Línea,-75.656447,4.536317,1,0,Peaton,Sin Informacion,Rural
+2022-11-15,2022,Calarca,1.992,Armenia – Calarcá (fuera),Armenia - La Línea,-75.656447,4.536317,0,1,Usuario de moto,Exceso De Velocidad,Rural
+2022-12-06,2022,Ibague,80.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.26355,4.41472,0,1,Usuario de bicicleta,Desobedecer Normas Y/o Señales De Transito,Urbana
+2022-12-21,2022,Ibague,80.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.26481,4.41393,0,1,Peaton,Exceso De Velocidad,Urbana
+2022-12-22,2022,Cajamarca,51.964,Cajamarca – Ibagué,Armenia - La Línea,-75.42626,4.44161,0,1,Usuario de moto,Desobedecer Normas Y/o Señales De Transito,Urbana
+2022-12-23,2022,Ibague,80.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.26355,4.41472,0,2,Usuario de V.Individual,Desobedecer Normas Y/o Señales De Transito,Urbana
+2023-04-08,2023,Ibague,79.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.268072,4.410912,1,0,Peaton,Sin Informacion,Rural
+2023-04-16,2023,Armenia,1.0,Armenia – Calarcá (fuera),Armenia - La Línea,-75.663246,4.532979,0,1,Usuario de V.Individual,Exceso De Velocidad,Urbana
+2023-05-01,2023,Armenia,1.0,Armenia – Calarcá (fuera),Armenia - La Línea,-75.663246,4.532979,0,2,Usuario de V.Individual,Exceso De Velocidad,Urbana
+2023-06-10,2023,Ibague,80.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.26565,4.412529,0,1,Usuario de moto,Cruzar En Diagonal,Urbana
+2023-07-08,2023,Armenia,1.0,Armenia – Calarcá (fuera),Armenia - La Línea,-75.663246,4.532979,0,1,Usuario de moto,Malas Condiciones De La Via,Urbana
+2023-08-13,2023,Calarca,1.992,Armenia – Calarcá (fuera),Armenia - La Línea,-75.656447,4.536317,0,1,Usuario T.Pasajeros,Exceso De Velocidad,Rural
+2023-08-30,2023,Ibague,80.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.26565,4.412529,0,1,Usuario de moto,Cambio De Carril Sin Indicacion E Inadecuado,Urbana
+2023-10-01,2023,Calarca,1.992,Armenia – Calarcá (fuera),Armenia - La Línea,-75.656447,4.536317,0,1,Usuario de moto,Cambio De Carril Sin Indicacion E Inadecuado,Rural
+2023-12-14,2023,Calarca,1.992,Armenia – Calarcá (fuera),Armenia - La Línea,-75.656447,4.536317,0,2,Usuario T.Pasajeros,Evento De Transporte,Rural
+2023-12-14,2023,Calarca,5.0,Paso Calarcá – Cajamarca,Armenia - La Línea,-75.637489,4.532695,2,0,Usuario T.Pasajeros,Sin Informacion,Urbana
+2023-12-14,2023,Calarca,21.0,Paso Calarcá – Cajamarca,Armenia - La Línea,-75.569169,4.497411,0,1,Usuario T.Pasajeros,Evento De Transporte,Rural
+2024-01-23,2024,Calarca,21.0,Paso Calarcá – Cajamarca,Armenia - La Línea,-75.569169,4.497411,0,1,Usuario T.Pasajeros,Exceso De Velocidad,Rural
+2024-02-12,2024,Ibague,79.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.268072,4.410912,0,1,Usuario de moto,De Motociclista O Ciclista,Rural
+2024-03-02,2024,Ibague,65.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.334521,4.40637,0,1,Usuario de moto,Cruzar Sin Observar,Rural
+2024-05-25,2024,Cajamarca,31.972,Paso Calarcá – Cajamarca,Armenia - La Línea,-75.534547,4.461814,0,1,Usuario T.Pasajeros,Adelantar Invadiendo Carril De Sentido Contrario,Rural
+2024-12-26,2024,Ibague,74.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.297864,4.400493,3,0,Usuario de moto,Cruzar Sin Observar,Rural
+2025-03-07,2025,Cajamarca,50.007,Paso Calarcá – Cajamarca,Armenia - La Línea,-75.43226,4.43963,2,0,Usuario de moto,Sin Informacion,Urbana
+2025-05-24,2025,Calarca,6.0,Paso Calarcá – Cajamarca,Armenia - La Línea,-75.635712,4.526763,9,2,Usuario T.Pasajeros,Posibles Fallas Mecanicas,Urbana
+2026-01-20,2026,Ibague,75.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.290861,4.400614,0,1,Usuario de moto,Cruzar Sin Observar,Urbana
+2026-02-06,2026,Ibague,74.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.297864,4.400493,0,1,Usuario de moto,No Respetar Prelacion,Rural
+2026-03-28,2026,Ibague,74.0,Cajamarca – Ibagué,Cajamarca - Puente Cajamarca - Ibagué,-75.297864,4.400493,1,0,Peaton,Sin Informacion,Rural

@@ -31,6 +31,7 @@ import {
   Legend,
   Line,
   LineChart,
+  ReferenceArea,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
@@ -282,6 +283,9 @@ export const TransitoInvias: React.FC = () => (
             }}
           />
 
+          {/* Años sin publicación de INVÍAS: se marcan en vez de dejar la línea cortada sin explicación */}
+          <ReferenceArea x1={2008} x2={2011} fill="#f1f5f9" fillOpacity={0.9}
+                         label={{ value: 'Huecos de la serie · 243: 2009 · 244: 2009–2010', position: 'insideTop', fill: '#64748b', fontSize: 10 }} />
           <Tooltip content={<TipInvias />} cursor={{ stroke: '#94a3b8', strokeDasharray: '4 4' }} />
           <Legend verticalAlign="top" height={30} iconType="plainline" wrapperStyle={{ fontSize: 11 }} />
 

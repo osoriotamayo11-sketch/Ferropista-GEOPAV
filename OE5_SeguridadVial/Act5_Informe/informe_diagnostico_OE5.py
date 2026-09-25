@@ -25,6 +25,7 @@ DEPENDENCIA
 """
 
 import csv
+import json
 import os
 
 import openpyxl
@@ -47,7 +48,7 @@ ACT1 = os.path.join(OE5, "Act1_Aforos")
 ACT3 = os.path.join(OE5, "Act3_Siniestros")
 ACT4 = os.path.join(OE5, "Act4_Analisis")
 VIS = os.path.join(OE5, "Visuales")
-SALIDA = os.path.join(BASE, "Informe_diagnostico_vial_OE5_v2.pdf")
+SALIDA = os.path.join(BASE, "Informe_diagnostico_vial_OE5_v3.pdf")
 RAIZ = os.path.dirname(OE5)
 LOGO_U = os.path.join(RAIZ, "public", "logo-unibague.png")
 LOGO_G = os.path.join(RAIZ, "public", "logo-geopav.png")
@@ -128,6 +129,20 @@ for nombre, calc, libro in (("corredor", ctrl_corr, TASA_CORR), ("paso", ctrl_pa
                          f"resolver cuál manda.")
 print(f"control OK: las dos tasas del libro se reproducen desde los CSV "
       f"({ctrl_corr:.2f} y {ctrl_paso:.2f})")
+
+# microdato ANSV georreferenciado por solicitud (oficio 20265000140371) y tasa posterior al túnel
+with open(os.path.join(ACT3, "microdato_ANSV_resumen.json"), encoding="utf-8") as fh:
+    microdato = json.load(fh)
+with open(os.path.join(ACT4, "tasa_post_tunel_OE5.json"), encoding="utf-8") as fh:
+    post_tunel = json.load(fh)
+
+_ctrl_h1 = (post_tunel["fallecidos_paso_2021_2025"]
+            / (post_tunel["tpd_H1_est244_media_2015_2018"] * 365 * post_tunel["L_km"] * post_tunel["anios"])
+            * 1e8)
+if abs(_ctrl_h1 - post_tunel["tasa_H1"]) > 0.01:
+    raise SystemExit(f"PARADA: tasa_H1 recalculada ({_ctrl_h1:.2f}) no coincide con "
+                     f"tasa_post_tunel_OE5.json ({post_tunel['tasa_H1']:.2f}).")
+print(f"control OK: tasa_H1 posterior al túnel se reproduce desde el JSON ({_ctrl_h1:.2f})")
 
 # ------------------------------------------------------------------ fuentes
 def _registrar_fuente():
@@ -275,7 +290,7 @@ def portada(canv, doc):
     tit = Paragraph("Informe de diagnóstico operacional de la infraestructura vial del paso del Alto de La Línea",
                     ParagraphStyle("pt", fontName=F_BOLD, fontSize=26, leading=32, textColor=AZUL))
     w, h = tit.wrap(W - 2 * MARGEN, 100 * mm); tit.drawOn(canv, MARGEN, H - 88 * mm - h)
-    sub = Paragraph("Corredor Ibagué – Calarcá, Ruta Nacional 40 · Revisión 2",
+    sub = Paragraph("Corredor Ibagué – Calarcá, Ruta Nacional 40 · Revisión 3",
                     ParagraphStyle("ps", fontName=F_REG, fontSize=14, leading=19, textColor=GRIS))
     w2, h2 = sub.wrap(W - 2 * MARGEN, 30 * mm); sub.drawOn(canv, MARGEN, H - 96 * mm - h - h2)
     ficha = [("Objetivo específico", "OE 5 — Diagnóstico vial: tránsito y siniestralidad del paso de La Línea"),
@@ -283,7 +298,7 @@ def portada(canv, doc):
              ("Entregable / formato", "Informe de diagnóstico vial · Documento PDF"),
              ("Periodo en el Plan de Acción", "29 sep 2026 – 3 oct 2026"),
              ("Responsable asignado", "Castaño Cifuentes Maicol Stiven"),
-             ("Revisión", "2 · corrección de presentación solicitada por el tutor")]
+             ("Revisión", "3 · incorpora el microdato ANSV 2021 – mar 2026 (oficio 20265000140371)")]
     t = Table([[Paragraph(f"<b>{k}</b>", CELDA), Paragraph(v, CELDA)] for k, v in ficha],
               colWidths=[52 * mm, W - 2 * MARGEN - 52 * mm])
     t.setStyle(TableStyle([("BACKGROUND", (0, 0), (0, -1), FONDO), ("LINEBELOW", (0, 0), (-1, -1), 0.4, LINEA),
@@ -319,7 +334,7 @@ def construir_documento(cuerpo_fn):
         CONT.update({"T": 0, "F": 0, "A": 0})
         doc = Doc(SALIDA, pagesize=LETRA, leftMargin=MARGEN, rightMargin=MARGEN,
                   topMargin=32 * mm, bottomMargin=25 * mm,
-                  title="Informe de diagnóstico vial - OE 5 Act 5 - Semillero GEOPAV (rev. 2)",
+                  title="Informe de diagnóstico vial - OE 5 Act 5 - Semillero GEOPAV (rev. 3)",
                   author="Semillero de Investigación GEOPAV - Universidad de Ibagué", invariant=1)
         doc.semilla = previo
         fr = Frame(doc.leftMargin, doc.bottomMargin, doc.width, doc.height, id="f")
@@ -473,6 +488,10 @@ def cuerpo(doc):
         "Calarcá concentra efectivamente la mortalidad del cruce, o el tramo tolimense no superó el "
         "umbral con el que la ANSV define un sector crítico. Se dirime contrastando con las cifras "
         "municipales de Forensis para Cajamarca e Ibagué del mismo periodo. <b>[DA]</b>", P))
+    A(Paragraph(
+        "El microdato 2021 – mar 2026 registra en el tramo Cajamarca – Ibagué siniestros que el "
+        "conjunto de sectores críticos no marca, lo que favorece la segunda lectura para el periodo "
+        "reciente. No la prueba para 2015 – 2019: eso sigue pidiendo Forensis. <b>[F]</b>", P))
 
     # ================================================================== 5
     A(Paragraph("5. La tasa y sus condiciones de validez", H2))
@@ -501,7 +520,26 @@ def cuerpo(doc):
                    "septiembre de 2020 y cambió geometría, velocidad y composición del tránsito.", CELDA),
          Paragraph("La tasa <b>sobrestima</b> el riesgo del corredor actual. No es la tasa de hoy.", CELDA)],
     ], [44 * mm, 68 * mm, 50 * mm]))
-    A(fuente("Act4_Analisis/analisis_siniestralidad_OE5.xlsx y memoria metodológica del OE 5 (revisión 2)."))
+    A(fuente("Act4_Analisis/analisis_siniestralidad_OE5.xlsx y memoria metodológica del OE 5 (revisión 4)."))
+
+    A(Paragraph("Tasa posterior al túnel, como cota inferior", H3))
+    A(Paragraph(
+        f"El microdato georreferenciado que la ANSV entregó por solicitud (oficio 20265000140371) "
+        f"registra <b>{post_tunel['fallecidos_paso_2021_2025']} fallecidos</b> en el tramo del paso "
+        f"entre 2021 y 2025. Dos tránsitos posibles: el de la estación 244 de INVÍAS, media 2015–2018 "
+        f"({es_co(post_tunel['tpd_H1_est244_media_2015_2018'], 1)} veh/día, el mismo supuesto "
+        "extendido que usa la tasa de la sección 1), y el del peaje Cajamarca de 2019 "
+        f"({es_co(post_tunel['tpd_H2_peaje_cajamarca_2019'], 1)} veh/día). Con "
+        f"{post_tunel['L_km']} km de tramo y {post_tunel['anios']} años (2021–2025), la tasa da "
+        f"<b>{es_co(post_tunel['tasa_H1'], 2)}</b> con el primer tránsito y "
+        f"<b>{es_co(post_tunel['tasa_H2'], 2)}</b> con el segundo, fallecidos por cada 100 millones de "
+        "vehículos-kilómetro. No hay aforo propio del paso posterior a 2019: ambos TPD son "
+        "extrapolaciones. <b>[CP sobre F]</b>", P))
+    A(Paragraph(
+        f"De esos fallecidos, 2 caen exactamente en el km 5,0, el límite que separa el tramo de Calarcá "
+        "del de Cajamarca – Ibagué en esta clasificación; excluyéndolos por quedar justo en el borde, la "
+        f"tasa baja a <b>{es_co(post_tunel['tasa_H1_sin_borde'], 2)}</b>. Es una cota inferior por "
+        "subregistro. No se compara con la tasa 2015–2019: otra fuente y otro criterio. <b>[CP]</b>", DEST))
 
     # ================================================================== 6
     A(Paragraph("6. Qué puede y qué no puede afirmar el semillero", H2))
@@ -517,6 +555,8 @@ def cuerpo(doc):
         "condiciones de validez declaradas.",
         "Que la línea base disponible es anterior al Túnel de La Línea y por tanto sobrestima la "
         "siniestralidad del corredor actual.",
+        "Dónde registra la ANSV siniestros georreferenciados posteriores al túnel, y cuánto "
+        "subregistra: de ocho siniestros fatales de prensa, dos.",
     ]:
         A(Paragraph(f"• {t_}", P))
     A(Paragraph("No sostenible", H3))
@@ -537,7 +577,9 @@ def cuerpo(doc):
         "El conjunto de la ANSV reporta <b>únicamente fallecidos</b>: no incluye heridos ni siniestros "
         "con solo daños materiales. La línea base es de mortalidad, no de siniestralidad total.",
         "Es un producto derivado de análisis espacial, no el microdato por siniestro: no permite "
-        "reconstruir cada evento ni conocer el tipo de vehículo implicado.",
+        "reconstruir cada evento ni conocer el tipo de vehículo implicado. El microdato 2021 – mar 2026 "
+        "que entregó la ANSV registra el tipo de usuario de la víctima, no el vehículo que causó el "
+        "siniestro, y tiene subregistro.",
         "Un «sector crítico» es una categoría con su propio umbral, no un censo: que un tramo no "
         "aparezca no significa que no haya tenido fallecidos.",
         "La clase «camiones» de la serie por estación incluye los de dos ejes, que en el peaje son "
@@ -574,7 +616,8 @@ def cuerpo(doc):
     A(fuente("carpetas OE5_SeguridadVial/Act1_Aforos a Act4_Analisis del repositorio del proyecto."))
     A(Paragraph(
         "Fuentes primarias: ANSV, <font face='Courier' size=8>datos.gov.co/d/rs3u-8r4q</font> y "
-        "<font face='Courier' size=8>/d/24ny-2dhf</font> · INVÍAS, series históricas de TPD en "
+        "<font face='Courier' size=8>/d/24ny-2dhf</font> · ANSV, microdato georreferenciado entregado "
+        "por solicitud, oficio 20265000140371 (22 sep 2026) · INVÍAS, series históricas de TPD en "
         "<font face='Courier' size=8>invias.gov.co/publicaciones/4154/documentos-tecnicos/</font> · "
         "INVÍAS, Túnel de La Línea en "
         "<font face='Courier' size=8>crucecordilleracentral.invias.gov.co</font> · ANI, Tráfico "
@@ -593,10 +636,33 @@ def cuerpo(doc):
         A(Image(lam, width=doc.width, height=doc.width * 1639 / 3100))
         A(Paragraph("Fuente: OE5_SeguridadVial/Visuales/graficos_siniestralidad_OE5.png, generada por "
                     "Act4_Analisis/graficos_siniestralidad_OE5.py [CP].", ParagraphStyle("FF", parent=FUENTE, alignment=1)))
+
+    # densidad lineal sobre el microdato ANSV, si existe
+    lam2 = os.path.join(VIS, "densidad_lineal_OE5.png")
+    if os.path.exists(lam2):
+        A(PageBreak())
+        A(Marca("A", "Anexo B. Densidad lineal de siniestros georreferenciados por la ANSV"))
+        A(Paragraph("Anexo B. Densidad lineal de siniestros georreferenciados por la ANSV", H2))
+        A(Paragraph(
+            "El microdato que la ANSV entregó por solicitud (oficio 20265000140371) se georreferenció "
+            "solo parcialmente, así que la densidad se calcula a lo largo de la vía y no en dos "
+            "dimensiones, contando hechos y no víctimas. Se lee con la misma advertencia que en el "
+            "resto del informe: el ascenso al Alto de La Línea está subrepresentado.", P))
+        CONT["F"] += 1
+        tf2 = f"Figura {CONT['F']}. Densidad lineal de siniestros georreferenciados, Ruta 4003, 2021 – marzo 2026"
+        A(Marca("F", tf2))
+        A(Paragraph(tf2, ParagraphStyle("TF2", parent=TIT_TABLA, alignment=1)))
+        A(Image(lam2, width=doc.width, height=doc.width * 1880 / 3100))
+        A(Paragraph("Fuente: ANSV, oficio 20265000140371 (solicitud de D. Torrente); figura generada por "
+                    "Act4_Analisis/densidad_lineal_OE5.py [CP]. Muestra dónde se pudo georreferenciar, no "
+                    "dónde está el riesgo.", ParagraphStyle("FF2", parent=FUENTE, alignment=1)))
     A(Spacer(1, 14))
-    A(Paragraph("<i>Nota de elaboración: la revisión 2 de este informe corrige su presentación con apoyo de un "
-                "asistente de inteligencia artificial (Claude, de Anthropic). El contenido y los controles de las "
-                "cifras son los de la revisión 1, y el semillero verificó el resultado.</i>", FUENTE))
+    A(Paragraph("<i>Nota de elaboración: la revisión 2 de este informe corrigió su presentación a pedido del "
+                "tutor. La revisión 3 incorpora el microdato georreferenciado que la ANSV entregó por solicitud "
+                "(oficio 20265000140371), la densidad lineal calculada sobre ese microdato y la tasa de "
+                "mortalidad posterior al túnel como cota inferior. Las tres revisiones contaron con apoyo de un "
+                "asistente de inteligencia artificial (Claude, de Anthropic); el semillero verificó cada "
+                "resultado y los controles automáticos del script se detienen si alguna cifra no cuadra.</i>", FUENTE))
 
 
     return S

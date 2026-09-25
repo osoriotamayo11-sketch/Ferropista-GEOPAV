@@ -12,6 +12,7 @@ import {
 } from '@/data/proyecto';
 import Acordeon from './Acordeon';
 import { ExposicionCocora, TransitoInvias } from './graficos/GraficosOE5';
+import { MapaSectoresOE5, DensidadLinealOE5 } from './graficos/LaminasOE5';
 
 /* Mismo chip de marca de origen que el resto del sitio. */
 const ChipMarca: React.FC<{ marca: Marca }> = ({ marca }) => (
@@ -94,15 +95,26 @@ const GRAFICOS = [
       'corredor. La 243 y la 244 son los tramos que quedan entre los portales del trazado del ' +
       'objetivo específico 1; la 245 queda fuera del paso. De aquí sale el denominador de la tasa: ' +
       'esta serie es la que cerró la brecha entre los fallecidos de 2015–2019 y el aforo del peaje, ' +
-      'que solo empieza en 2021. La lámina que contiene este panel se muestra completa más abajo.',
+      'que solo empieza en 2021. La lámina que contiene este panel se descarga más abajo, junto al mapa de sectores.',
     lamina: null,
   },
 ] as const;
 
-/* La lámina compuesta se conserva como imagen: lleva el mapa de sectores
-   sobre el trazado y el detalle del descenso, que no son series que el
-   navegador pueda volver a dibujar. Mismo criterio que la lámina de trazado
-   del objetivo específico 1. */
+/* Densidad lineal sobre el microdato ANSV georreferenciado por solicitud:
+   se muestra junto al texto que explica por qué es lineal y no un mapa de
+   calor en dos dimensiones (SV.porQueNoKde). */
+const LAMINA_DENSIDAD = {
+  src: '/oe5/densidad_lineal.png',
+  w: 1800,
+  h: 1092,
+  titulo: 'Mapa de calor: por qué es lineal y no en 2D',
+  alt: 'Densidad lineal de siniestros georreferenciados por la ANSV en la Ruta 4003, 2021 – marzo 2026',
+  pie: 'Fuente: ANSV, oficio 20265000140371 (solicitud de D. Torrente). Muestra dónde se pudo georreferenciar, no dónde está el riesgo.',
+};
+
+/* El mapa de sectores y el detalle del descenso se dibujan en el navegador
+   (LaminasOE5, sobre un sombreado del DEM). La lámina PNG sigue siendo el
+   entregable y queda enlazada para descarga. */
 const LAMINA_MAPA = {
   src: '/oe5/graficos_siniestralidad.png',
   w: 1800,
@@ -112,8 +124,8 @@ const LAMINA_MAPA = {
     'Los seis sectores críticos de la ANSV situados sobre el trazado del túnel del objetivo 1, con ' +
     'el detalle del descenso hacia Calarcá. El tamaño del círculo es el número de fallecidos y el ' +
     'color es el nivel de confianza del estadístico Getis-Ord Gi* que publica la propia ANSV. ' +
-    'Relieve: Copernicus DEM GLO-30. La lámina incluye además los dos paneles que arriba ya se ' +
-    'ofrecen como gráficos interrogables.',
+    'Relieve: Copernicus DEM GLO-30. La lámina descargable incluye además la serie de INVÍAS y ' +
+    'las dos tasas, que en esta página están en sus propios gráficos.',
 };
 
 /* Carpetas de evidencia del OE 5, una por actividad. Las URL se transcribieron
@@ -302,19 +314,37 @@ export const SintesisOE5: React.FC = () => {
               <h3 className="text-sm font-bold text-uni-900 sm:text-base">{LAMINA_MAPA.titulo}</h3>
               <ChipMarca marca="CP" />
             </figcaption>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={LAMINA_MAPA.src}
-              alt={LAMINA_MAPA.titulo}
-              width={LAMINA_MAPA.w}
-              height={LAMINA_MAPA.h}
-              loading="lazy"
-              className="h-auto w-full rounded-lg border border-slate-200 bg-white"
-            />
+            <MapaSectoresOE5 />
             <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
               <p className="max-w-3xl text-[11px] leading-relaxed text-slate-500">{LAMINA_MAPA.pie}</p>
               <a
                 href={LAMINA_MAPA.src}
+                download
+                className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-[11px] font-semibold text-uni-600 transition-colors hover:border-uni-300 hover:text-uni-700"
+              >
+                <Download className="h-3.5 w-3.5 shrink-0" />
+                Descargar la lámina (PNG)
+              </a>
+            </div>
+          </motion.figure>
+
+          <motion.figure
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.4, delay: 0.15 }}
+            className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5"
+          >
+            <figcaption className="mb-3 flex items-start justify-between gap-3">
+              <h3 className="text-sm font-bold text-uni-900 sm:text-base">{LAMINA_DENSIDAD.titulo}</h3>
+              <ChipMarca marca="CP" />
+            </figcaption>
+            <p className="mb-4 max-w-3xl text-xs leading-relaxed text-slate-600">{SV.porQueNoKde}</p>
+            <DensidadLinealOE5 />
+            <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+              <p className="max-w-3xl text-[11px] leading-relaxed text-slate-500">{LAMINA_DENSIDAD.pie}</p>
+              <a
+                href={LAMINA_DENSIDAD.src}
                 download
                 className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-[11px] font-semibold text-uni-600 transition-colors hover:border-uni-300 hover:text-uni-700"
               >

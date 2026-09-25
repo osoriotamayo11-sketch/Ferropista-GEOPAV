@@ -1,0 +1,93 @@
+{
+  "fallecidos": 36,
+  "fuente": "ANSV-ONSV oficio 20265000140371 (22 sep 2026), anexo Ruta 4003, 2021 - mar 2026",
+  "hechos": 70,
+  "lesionados": 82,
+  "limites_tramo_km": {
+    "cajamarca": 50.365,
+    "calarca": 5.0,
+    "fin": 80.194
+  },
+  "paso_km_11_a_41": {
+    "fallecidos": 1,
+    "hechos": 5,
+    "hechos_fatales": 1,
+    "lesionados": 4
+  },
+  "paso_por_anio": {
+    "2021": {
+      "fallecidos": 6,
+      "hechos": 7,
+      "hechos_fatales": 6,
+      "lesionados": 1
+    },
+    "2022": {
+      "fallecidos": 1,
+      "hechos": 1,
+      "hechos_fatales": 1,
+      "lesionados": 0
+    },
+    "2023": {
+      "fallecidos": 2,
+      "hechos": 2,
+      "hechos_fatales": 1,
+      "lesionados": 1
+    },
+    "2024": {
+      "fallecidos": 0,
+      "hechos": 2,
+      "hechos_fatales": 0,
+      "lesionados": 2
+    },
+    "2025": {
+      "fallecidos": 11,
+      "hechos": 2,
+      "hechos_fatales": 2,
+      "lesionados": 2
+    },
+    "2026": {
+      "fallecidos": 0,
+      "hechos": 0,
+      "hechos_fatales": 0,
+      "lesionados": 0
+    }
+  },
+  "periodo": [
+    "2021-01-20",
+    "2026-03-28"
+  ],
+  "por_tramo": {
+    "Armenia – Calarcá (fuera)": {
+      "fallecidos": 9,
+      "hechos": 21,
+      "hechos_fatales": 8,
+      "lesionados": 18
+    },
+    "Cajamarca – Ibagué": {
+      "fallecidos": 7,
+      "hechos": 35,
+      "hechos_fatales": 5,
+      "lesionados": 58
+    },
+    "Paso Calarcá – Cajamarca": {
+      "fallecidos": 20,
+      "hechos": 14,
+      "hechos_fatales": 10,
+      "lesionados": 6
+    }
+  },
+  "prensa": {
+    "en_anexo": 2,
+    "total": 8
+  },
+  "punto_mas_cargado_hechos": {
+    "hechos": 16,
+    "lon_lat": [
+      -75.656447,
+      4.536317
+    ]
+  },
+  "puntos_distintos_hechos": 28,
+  "puntos_distintos_victimas": 28,
+  "victimas": 118
+}
