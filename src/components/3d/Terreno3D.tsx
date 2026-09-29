@@ -14,6 +14,9 @@
  *   · /data/trazado_tunel.geojson     Eje recto entre portales, 106 vértices,
  *                                     52.211,8 m, pendiente 0,9587 % [CP].
  *   · /data/limites_area_estudio.geojson  Límites municipales [F, IGAC].
+ *   · /data/via_actual_ruta40.geojson Vía actual (Ruta 40), OpenStreetMap ODbL
+ *                                     [F, OSM]; cada tramo trae `tunel: boolean`
+ *                                     (el túnel de La Línea, 2020).
  *
  * Correcciones frente al boceto `paz-y-region-gemini`:
  *  1. PROPORCIÓN. El boceto usaba una malla cuadrada de 20 × 20 para un área de
@@ -47,16 +50,29 @@ import { useEffect, useMemo, useState } from 'react';
 import * as THREE from 'three';
 import { fromArrayBuffer } from 'geotiff';
 import { Canvas } from '@react-three/fiber';
-import { Line, OrbitControls } from '@react-three/drei';
+import { Html, Line, OrbitControls } from '@react-three/drei';
 
 /** Ancho del terreno en unidades de mundo. El alto se deriva del bbox. */
 const WORLD_WIDTH = 20;
 /** Exageración vertical del relieve. Se declara en la leyenda. */
 const EXAGERACION_V = 3;
+/** Color y profundidad del faldón tipo maqueta que cierra los bordes del corte. */
+const FALDON_COLOR = '#5b4a3c';
+const FALDON_BASE_Y = -0.3;
 
 const RUTA_DEM = '/oe1/dem_estudio_90m.tif';
 const RUTA_TRAZADO = '/data/trazado_tunel.geojson';
 const RUTA_LIMITES = '/data/limites_area_estudio.geojson';
+const RUTA_VIA_ACTUAL = '/data/via_actual_ruta40.geojson';
+const RUTA_MUNICIPIOS_CONTEXTO = '/data/municipios_contexto_via.geojson';
+const RUTA_ETIQUETAS_MUNICIPIOS = '/data/etiquetas_municipios.json';
+
+interface EtiquetaMunicipio {
+  nombre: string;
+  rol: 'estudio' | 'contexto';
+  lon: number;
+  lat: number;
+}
 
 interface DemData {
   width: number;
@@ -70,7 +86,10 @@ interface DemData {
 }
 
 type GeoJson = {
-  features: { geometry: { type: string; coordinates: unknown } }[];
+  features: {
+    geometry: { type: string; coordinates: unknown };
+    properties?: Record<string, unknown>;
+  }[];
 };
 
 /* ═══════ Paleta hipsométrica ═══════ */
@@ -126,22 +145,69 @@ function Terreno({ dem }: { dem: DemData }) {
 }
 
 /* ═══════ Proyección de coordenadas geográficas al mundo 3D ═══════ */
+function posicionUV(dem: DemData, u: number, v: number, alzada = 0): THREE.Vector3 {
+  const x = u * WORLD_WIDTH - WORLD_WIDTH / 2;
+  const z = -(v * dem.worldDepth - dem.worldDepth / 2);
+
+  const px = Math.min(Math.max(Math.floor(u * dem.width), 0), dem.width - 1);
+  const py = Math.min(Math.max(Math.floor((1 - v) * dem.height), 0), dem.height - 1);
+  const elev = dem.elevations[py * dem.width + px];
+
+  const y = ((elev - dem.minElev) / dem.metrosPorUnidad) * EXAGERACION_V + alzada;
+  return new THREE.Vector3(x, y, z);
+}
+
 function usarProyector(dem: DemData) {
   return (lon: number, lat: number, alzada = 0.04) => {
     const [minLon, minLat, maxLon, maxLat] = dem.bbox;
     const u = (lon - minLon) / (maxLon - minLon);
     const v = (lat - minLat) / (maxLat - minLat);
-
-    const x = u * WORLD_WIDTH - WORLD_WIDTH / 2;
-    const z = -(v * dem.worldDepth - dem.worldDepth / 2);
-
-    const px = Math.min(Math.max(Math.floor(u * dem.width), 0), dem.width - 1);
-    const py = Math.min(Math.max(Math.floor((1 - v) * dem.height), 0), dem.height - 1);
-    const elev = dem.elevations[py * dem.width + px];
-
-    const y = ((elev - dem.minElev) / dem.metrosPorUnidad) * EXAGERACION_V + alzada;
-    return new THREE.Vector3(x, y, z);
+    return posicionUV(dem, u, v, alzada);
   };
+}
+
+/* ═══════ Faldón tipo maqueta: cierra los 4 bordes del recorte para que no se
+   vea el hueco lateral cuando la cámara baja cerca del horizonte. Paredes
+   verticales desde el borde real del terreno hasta una base plana un poco
+   por debajo de la cota mínima, más una tapa inferior. No toca la escala ni
+   la exageración: solo reutiliza las alturas ya calculadas del DEM. ═══════ */
+function Faldon({ dem }: { dem: DemData }) {
+  const { paredes, tapa } = useMemo(() => {
+    const N = 160;
+    const anillo: THREE.Vector3[] = [];
+    for (let i = 0; i <= N; i++) anillo.push(posicionUV(dem, i / N, 0));
+    for (let i = 0; i <= N; i++) anillo.push(posicionUV(dem, 1, i / N));
+    for (let i = 0; i <= N; i++) anillo.push(posicionUV(dem, 1 - i / N, 1));
+    for (let i = 0; i <= N; i++) anillo.push(posicionUV(dem, 0, 1 - i / N));
+
+    const pos: number[] = [];
+    for (let i = 0; i < anillo.length - 1; i++) {
+      const a = anillo[i];
+      const b = anillo[i + 1];
+      pos.push(a.x, a.y, a.z, a.x, FALDON_BASE_Y, a.z, b.x, b.y, b.z);
+      pos.push(b.x, b.y, b.z, a.x, FALDON_BASE_Y, a.z, b.x, FALDON_BASE_Y, b.z);
+    }
+    const paredesGeo = new THREE.BufferGeometry();
+    paredesGeo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+    paredesGeo.computeVertexNormals();
+
+    const tapaGeo = new THREE.PlaneGeometry(WORLD_WIDTH, dem.worldDepth);
+    tapaGeo.rotateX(-Math.PI / 2);
+    tapaGeo.translate(0, FALDON_BASE_Y, 0);
+
+    return { paredes: paredesGeo, tapa: tapaGeo };
+  }, [dem]);
+
+  return (
+    <group>
+      <mesh geometry={paredes}>
+        <meshStandardMaterial color={FALDON_COLOR} side={THREE.DoubleSide} roughness={1} />
+      </mesh>
+      <mesh geometry={tapa}>
+        <meshStandardMaterial color={FALDON_COLOR} roughness={1} />
+      </mesh>
+    </group>
+  );
 }
 
 /** Recorre cualquier geometría GeoJSON y devuelve sus anillos como listas de coordenadas. */
@@ -185,6 +251,97 @@ function Limites({ dem, data }: { dem: DemData; data: GeoJson | null }) {
   );
 }
 
+/* ═══════ Municipios de contexto: solo son cruzados por la vía actual, no
+   forman parte del área de estudio. Trazo más ligero y a rayas para no
+   confundirlos con los límites del área de estudio. Los nombres se dibujan
+   aparte, en NombresMunicipios, desde etiquetas_municipios.json. ═══════ */
+function MunicipiosContexto({ dem, data }: { dem: DemData; data: GeoJson | null }) {
+  const geometry = useMemo(() => {
+    const proyectar = usarProyector(dem);
+    const verts: number[] = [];
+
+    for (const f of data?.features ?? []) {
+      const { type, coordinates } = f.geometry as { type: string; coordinates: never };
+      const anillosF: number[][][] =
+        type === 'Polygon'
+          ? (coordinates as unknown as number[][][])
+          : type === 'MultiPolygon'
+            ? (coordinates as unknown as number[][][][]).flat()
+            : [];
+
+      for (const anillo of anillosF) {
+        for (let i = 0; i < anillo.length - 1; i++) {
+          const a = proyectar(anillo[i][0], anillo[i][1], 0.05);
+          const b = proyectar(anillo[i + 1][0], anillo[i + 1][1], 0.05);
+          verts.push(a.x, a.y, a.z, b.x, b.y, b.z);
+        }
+      }
+    }
+
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(verts, 3));
+
+    // computeLineDistances vive en el objeto Line/LineSegments, no en la
+    // geometría; se replica aquí a mano (distancia por segmento, reiniciada
+    // en cada par) para poder poblar el atributo dentro del useMemo.
+    const lineDistances: number[] = [];
+    for (let i = 0; i < verts.length; i += 6) {
+      const d = Math.hypot(verts[i + 3] - verts[i], verts[i + 4] - verts[i + 1], verts[i + 5] - verts[i + 2]);
+      lineDistances.push(0, d);
+    }
+    geo.setAttribute('lineDistance', new THREE.Float32BufferAttribute(lineDistances, 1));
+
+    return geo;
+  }, [dem, data]);
+
+  if (!data) return null;
+  return (
+    <lineSegments geometry={geometry}>
+      <lineDashedMaterial color="#4b5563" dashSize={0.09} gapSize={0.06} transparent opacity={0.7} />
+    </lineSegments>
+  );
+}
+
+/* ═══════ Nombres de los 5 municipios (etiquetas_municipios.json), superpuestos
+   al relieve sin cajita de fondo: halo de texto en vez de un rótulo opaco, para
+   que se lea sobre cualquier color del terreno. ═══════ */
+function NombresMunicipios({ dem, data }: { dem: DemData; data: EtiquetaMunicipio[] | null }) {
+  const proyectar = usarProyector(dem);
+  if (!data) return null;
+  return (
+    <group>
+      {data.map((e, i) => {
+        const esEstudio = e.rol === 'estudio';
+        return (
+          <Html
+            key={i}
+            position={proyectar(e.lon, e.lat, 0.14)}
+            center
+            distanceFactor={13}
+            style={{ pointerEvents: 'none' }}
+          >
+            <span
+              className={
+                esEstudio
+                  ? 'whitespace-nowrap text-[10px] font-semibold text-slate-800'
+                  : 'whitespace-nowrap text-[10px] italic text-slate-500'
+              }
+              style={{
+                textShadow:
+                  '0 0 2px #fff, 0 0 2px #fff, 0 0 3px #fff, 0 0 3px #fff',
+                WebkitTextStroke: '2px rgba(255,255,255,0.7)',
+                paintOrder: 'stroke fill',
+              }}
+            >
+              {e.nombre}
+            </span>
+          </Html>
+        );
+      })}
+    </group>
+  );
+}
+
 /* ═══════ Trazado del túnel y portales ═══════ */
 function Trazado({ dem, data }: { dem: DemData; data: GeoJson | null }) {
   const { puntos, portales } = useMemo(() => {
@@ -214,13 +371,59 @@ function Trazado({ dem, data }: { dem: DemData; data: GeoJson | null }) {
   );
 }
 
+/* ═══════ Vía actual (Ruta 40) [F, OSM] ═══════
+   Cada tramo trae su propia propiedad `tunel`; el túnel de La Línea (2020)
+   se dibuja semitransparente para distinguirlo del resto de la vía. */
+function ViaActual({ dem, data }: { dem: DemData; data: GeoJson | null }) {
+  const { superficie, tunel } = useMemo(() => {
+    const proyectar = usarProyector(dem);
+    const vertsSuperficie: number[] = [];
+    const vertsTunel: number[] = [];
+
+    for (const f of data?.features ?? []) {
+      if (f.geometry.type !== 'LineString') continue;
+      const coords = f.geometry.coordinates as unknown as number[][];
+      const esTunel = f.properties?.tunel === true;
+      const destino = esTunel ? vertsTunel : vertsSuperficie;
+      for (let i = 0; i < coords.length - 1; i++) {
+        const a = proyectar(coords[i][0], coords[i][1], 0.08);
+        const b = proyectar(coords[i + 1][0], coords[i + 1][1], 0.08);
+        destino.push(a.x, a.y, a.z, b.x, b.y, b.z);
+      }
+    }
+
+    const build = (verts: number[]) => {
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.Float32BufferAttribute(verts, 3));
+      return geo;
+    };
+    return { superficie: build(vertsSuperficie), tunel: build(vertsTunel) };
+  }, [dem, data]);
+
+  if (!data) return null;
+  return (
+    <group>
+      <lineSegments geometry={superficie}>
+        <lineBasicMaterial color="#7A2E12" />
+      </lineSegments>
+      <lineSegments geometry={tunel}>
+        <lineBasicMaterial color="#7A2E12" transparent opacity={0.35} />
+      </lineSegments>
+    </group>
+  );
+}
+
 /* ═══════ Componente público ═══════ */
 export default function Terreno3D({ height = 560 }: { height?: number }) {
   const [dem, setDem] = useState<DemData | null>(null);
   const [trazado, setTrazado] = useState<GeoJson | null>(null);
   const [limites, setLimites] = useState<GeoJson | null>(null);
+  const [viaActual, setViaActual] = useState<GeoJson | null>(null);
+  const [municipiosContexto, setMunicipiosContexto] = useState<GeoJson | null>(null);
+  const [etiquetasMunicipios, setEtiquetasMunicipios] = useState<EtiquetaMunicipio[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [leyendaAbierta, setLeyendaAbierta] = useState(true);
+  const [mostrarNombresMunicipios, setMostrarNombresMunicipios] = useState(true);
 
   useEffect(() => {
     let vivo = true;
@@ -273,10 +476,16 @@ export default function Terreno3D({ height = 560 }: { height?: number }) {
 
     (async () => {
       try {
-        const [tr, li] = await Promise.all([fetch(RUTA_TRAZADO), fetch(RUTA_LIMITES)]);
+        const [tr, li, via, ctx, etq] = await Promise.all([
+          fetch(RUTA_TRAZADO), fetch(RUTA_LIMITES), fetch(RUTA_VIA_ACTUAL), fetch(RUTA_MUNICIPIOS_CONTEXTO),
+          fetch(RUTA_ETIQUETAS_MUNICIPIOS),
+        ]);
         if (!vivo) return;
         if (tr.ok) setTrazado(await tr.json());
         if (li.ok) setLimites(await li.json());
+        if (via.ok) setViaActual(await via.json());
+        if (ctx.ok) setMunicipiosContexto(await ctx.json());
+        if (etq.ok) setEtiquetasMunicipios((await etq.json()).etiquetas ?? null);
       } catch {
         /* las capas vectoriales son accesorias: el relieve se muestra igual */
       }
@@ -320,10 +529,32 @@ export default function Terreno3D({ height = 560 }: { height?: number }) {
               <span className="h-[3px] w-5 shrink-0" style={{ backgroundColor: '#0033cc' }} />
               <span>Trazado (preliminar) [CP]</span>
             </div>
+            <div className="mb-1.5 flex items-center gap-2">
+              <span className="h-[3px] w-5 shrink-0" style={{ backgroundColor: '#7A2E12' }} />
+              <span>Vía actual, Ruta 40 [F, OSM]</span>
+            </div>
             <div className="mb-2.5 flex items-center gap-2">
+              <span className="h-[3px] w-5 shrink-0 opacity-35" style={{ backgroundColor: '#7A2E12' }} />
+              <span>Túnel de La Línea (2020)</span>
+            </div>
+            <div className="mb-1.5 flex items-center gap-2">
               <span className="h-2.5 w-4 shrink-0 border border-slate-800" />
               <span>Municipios [F, IGAC]</span>
             </div>
+            <div className="mb-2.5 flex items-center gap-2">
+              <span className="h-0 w-5 shrink-0 border-t border-dashed border-slate-500" />
+              <span>Municipio que cruza solo la vía actual [F, IGAC]</span>
+            </div>
+
+            <label className="mb-2.5 flex cursor-pointer items-center gap-2">
+              <input
+                type="checkbox"
+                checked={mostrarNombresMunicipios}
+                onChange={(e) => setMostrarNombresMunicipios(e.target.checked)}
+                className="h-3 w-3"
+              />
+              <span>Nombres de municipios</span>
+            </label>
 
             <h4 className="mb-1 text-[10px] font-bold uppercase tracking-wide text-slate-500">
               Elevación (msnm)
@@ -346,6 +577,7 @@ export default function Terreno3D({ height = 560 }: { height?: number }) {
       <p className="pointer-events-none absolute inset-x-3 bottom-2 z-10 text-center font-mono text-[9px] leading-snug text-slate-500">
         Copernicus DEM GLO-30 remuestreado a ~93 m, exageración vertical ×{EXAGERACION_V}. Relieve
         ilustrativo: las cotas publicadas se calculan sobre el DEM a 30 m en el objetivo específico 1.
+        Vía: © colaboradores de OpenStreetMap.
       </p>
 
       {!dem && !error && (
@@ -366,13 +598,17 @@ export default function Terreno3D({ height = 560 }: { height?: number }) {
 
         {dem && (
           <group>
+            <Faldon dem={dem} />
             <Terreno dem={dem} />
             <Limites dem={dem} data={limites} />
+            <MunicipiosContexto dem={dem} data={municipiosContexto} />
+            {mostrarNombresMunicipios && <NombresMunicipios dem={dem} data={etiquetasMunicipios} />}
+            <ViaActual dem={dem} data={viaActual} />
             <Trazado dem={dem} data={trazado} />
           </group>
         )}
 
-        <OrbitControls target={[0, 0.9, 0]} maxPolarAngle={Math.PI / 2 - 0.08} minDistance={6} maxDistance={40} />
+        <OrbitControls target={[0, 0.9, 0]} maxPolarAngle={Math.PI / 2 - 0.35} minDistance={6} maxDistance={40} />
       </Canvas>
     </div>
   );

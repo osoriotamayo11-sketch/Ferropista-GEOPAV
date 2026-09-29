@@ -465,6 +465,8 @@ export interface Actividad {
   entregable: string;
   formato: string;
   estado: EstadoItem;
+  /** Carpeta de evidencia en Drive de esta actividad, si ya se abrió una. */
+  drive?: string;
 }
 
 export interface ObjetivoEspecifico {
@@ -498,8 +500,8 @@ export const NOTA_PARALELISMO =
 
 const A = (n: number, titulo: string, inicio: string, fin: string,
            tipo: 'Producto' | 'Verificador', entregable: string, formato: string,
-           estado: EstadoItem = 'pendiente'): Actividad =>
-  ({ n, titulo, inicio, fin, tipo, entregable, formato, estado });
+           estado: EstadoItem = 'pendiente', drive?: string): Actividad =>
+  ({ n, titulo, inicio, fin, tipo, entregable, formato, estado, drive });
 
 export const PLAN_ACCION: ObjetivoEspecifico[] = [
   {
@@ -509,11 +511,11 @@ export const PLAN_ACCION: ObjetivoEspecifico[] = [
     estado: 'completado',
     titulo: 'Analizar el perfil topográfico del corredor Ibagué – Armenia mediante un Modelo de Elevación Digital, para definir el trazado espacial preliminar del túnel de base y verificar la pendiente longitudinal admisible para tracción ferroviaria de carga.',
     actividades: [
-      A(1, 'Descarga y validación del Modelo de Elevación Digital del corredor (Copernicus DEM GLO-30, ~30 m).', '1 sep 2026', '7 sep 2026', 'Verificador', 'Repositorio ráster documentado', 'Archivo GeoTIFF', 'completado'),
-      A(2, 'Georreferenciación de las cotas de los portales de Ibagué (950 msnm) y Armenia (1.450 msnm) sobre el DEM.', '8 sep 2026', '14 sep 2026', 'Verificador', 'Puntos de control de portales', 'Archivo Shapefile', 'completado'),
-      A(3, 'Ejecución de los geoprocesos de trazado en QGIS: recorte del DEM, relieve sombreado, localización de portales y perfil sobre el modelo.', '15 sep 2026', '21 sep 2026', 'Verificador', 'Registro de geoprocesos', 'Captura de pantalla', 'completado'),
-      A(4, 'Trazado de la ruta preliminar del túnel de base y cálculo de la pendiente longitudinal media.', '22 sep 2026', '28 sep 2026', 'Producto', 'Trazado georreferenciado del túnel', 'Archivo GeoJSON', 'completado'),
-      A(5, 'Elaboración del perfil longitudinal y de la cartera de rasantes del trazado.', '29 sep 2026', '3 oct 2026', 'Producto', 'Perfil topográfico longitudinal', 'Archivo Excel / PDF', 'completado'),
+      A(1, 'Descarga y validación del Modelo de Elevación Digital del corredor (Copernicus DEM GLO-30, ~30 m).', '1 sep 2026', '7 sep 2026', 'Verificador', 'Repositorio ráster documentado', 'Archivo GeoTIFF', 'completado', 'https://drive.google.com/drive/folders/1CxNK5UbqVdSd2U4ztWD9Jd9RdPOhsmmp'),
+      A(2, 'Georreferenciación de las cotas de los portales de Ibagué (950 msnm) y Armenia (1.450 msnm) sobre el DEM.', '8 sep 2026', '14 sep 2026', 'Verificador', 'Puntos de control de portales', 'Archivo Shapefile', 'completado', 'https://drive.google.com/drive/folders/15gj-oMTUpBU6aGaq8fbCgJhXUqqE35is'),
+      A(3, 'Ejecución de los geoprocesos de trazado en QGIS: recorte del DEM, relieve sombreado, localización de portales y perfil sobre el modelo.', '15 sep 2026', '21 sep 2026', 'Verificador', 'Registro de geoprocesos', 'Captura de pantalla', 'completado', 'https://drive.google.com/drive/folders/1JIdzRzPqSSSQ796kyU_DwZKBn7r9mVU5'),
+      A(4, 'Trazado de la ruta preliminar del túnel de base y cálculo de la pendiente longitudinal media.', '22 sep 2026', '28 sep 2026', 'Producto', 'Trazado georreferenciado del túnel', 'Archivo GeoJSON', 'completado', 'https://drive.google.com/drive/folders/1yAHR7WxP4S3KajXwSPL0Spq1r9-2QooI'),
+      A(5, 'Elaboración del perfil longitudinal y de la cartera de rasantes del trazado.', '29 sep 2026', '3 oct 2026', 'Producto', 'Perfil topográfico longitudinal', 'Archivo Excel / PDF', 'completado', 'https://drive.google.com/drive/folders/1eG9D18st1T2Jxmj1b9gzXKLby_HClmTO'),
     ],
   },
   {
@@ -523,11 +525,11 @@ export const PLAN_ACCION: ObjetivoEspecifico[] = [
     estado: 'en_curso',
     titulo: 'Desarrollar una plataforma web geoespacial que visualice el trazado y los indicadores del proyecto, y que aloje un instrumento de consulta ciudadana sobre percepción de riesgo vial en el corredor.',
     actividades: [
-      A(1, 'Configuración del repositorio y del entorno de desarrollo de la plataforma web.', '1 sep 2026', '7 sep 2026', 'Verificador', 'Repositorio de control de versiones', 'Enlace (URL)', 'completado'),
-      A(2, 'Integración del visor cartográfico con el trazado georreferenciado del objetivo 1.', '8 sep 2026', '14 sep 2026', 'Producto', 'Módulo de mapa interactivo', 'Enlace (URL)', 'completado'),
-      A(3, 'Diseño y validación del instrumento de consulta ciudadana sobre percepción de riesgo vial.', '15 sep 2026', '21 sep 2026', 'Verificador', 'Cuestionario validado', 'Documento PDF', 'completado'),
-      A(4, 'Integración del formulario de consulta y despliegue público de la plataforma.', '22 sep 2026', '28 sep 2026', 'Producto', 'Plataforma web publicada', 'Enlace Web (URL)', 'completado'),
-      A(5, 'Difusión del instrumento y apertura de la ventana de recolección de respuestas.', '29 sep 2026', '3 oct 2026', 'Verificador', 'Registro de difusión y respuestas', 'Archivo Excel', 'en_curso'),
+      A(1, 'Configuración del repositorio y del entorno de desarrollo de la plataforma web.', '1 sep 2026', '7 sep 2026', 'Verificador', 'Repositorio de control de versiones', 'Enlace (URL)', 'completado', 'https://drive.google.com/drive/folders/1Uc76S1A3TmD2-JeTnOtIvp6m_0Q-Lc2v'),
+      A(2, 'Integración del visor cartográfico con el trazado georreferenciado del objetivo 1.', '8 sep 2026', '14 sep 2026', 'Producto', 'Módulo de mapa interactivo', 'Enlace (URL)', 'completado', 'https://drive.google.com/drive/folders/1tjaDUkU04ZWvX1MJH0XkPW2ZC0N7DDOB'),
+      A(3, 'Diseño y validación del instrumento de consulta ciudadana sobre percepción de riesgo vial.', '15 sep 2026', '21 sep 2026', 'Verificador', 'Cuestionario validado', 'Documento PDF', 'completado', 'https://drive.google.com/drive/folders/1AJJXG6WE2qvNJ0cYZ_7_HOOXxNpmGTkH'),
+      A(4, 'Integración del formulario de consulta y despliegue público de la plataforma.', '22 sep 2026', '28 sep 2026', 'Producto', 'Plataforma web publicada', 'Enlace Web (URL)', 'completado', 'https://drive.google.com/drive/folders/1oU26wwyBRw1DdW8M_H1sQpqBcyyB8XRd'),
+      A(5, 'Difusión del instrumento y apertura de la ventana de recolección de respuestas.', '29 sep 2026', '3 oct 2026', 'Verificador', 'Registro de difusión y respuestas', 'Archivo Excel', 'en_curso', 'https://drive.google.com/drive/folders/1avkuU9JmbhRok1t_EEgyH4hBSkaEi0AW'),
     ],
   },
   {
@@ -537,22 +539,22 @@ export const PLAN_ACCION: ObjetivoEspecifico[] = [
     estado: 'completado',
     titulo: 'Cuantificar los volúmenes de tránsito de vehículos pesados y los índices de siniestralidad del paso de La Línea, a partir de fuentes oficiales de INVÍAS y de la Agencia Nacional de Seguridad Vial.',
     actividades: [
-      A(1, 'Extracción de las series de volúmenes de tránsito de INVÍAS para la estación del sector La Línea.', '1 sep 2026', '7 sep 2026', 'Verificador', 'Base de datos cruda de aforos', 'Archivo CSV / Excel', 'completado'),
-      A(2, 'Clasificación vehicular del TPDA y depuración del flujo de carga pesada.', '8 sep 2026', '14 sep 2026', 'Producto', 'Matriz de aforos clasificada', 'Documento Excel', 'completado'),
-      A(3, 'Recopilación de reportes de siniestralidad de la ANSV para los municipios del corredor.', '15 sep 2026', '21 sep 2026', 'Verificador', 'Histórico de siniestros', 'Documento PDF', 'completado'),
-      A(4, 'Análisis estadístico de la siniestralidad de vehículos pesados en el descenso del paso.', '22 sep 2026', '28 sep 2026', 'Producto', 'Gráficos de siniestralidad', 'Archivo Excel / JPG', 'completado'),
-      A(5, 'Consolidación del diagnóstico operacional de la infraestructura vial actual.', '29 sep 2026', '3 oct 2026', 'Producto', 'Informe de diagnóstico vial', 'Documento PDF', 'completado'),
+      A(1, 'Extracción de las series de volúmenes de tránsito de INVÍAS para la estación del sector La Línea.', '1 sep 2026', '7 sep 2026', 'Verificador', 'Base de datos cruda de aforos', 'Archivo CSV / Excel', 'completado', 'https://drive.google.com/drive/folders/1U6_3pOBWwg5jYce3BPSIgoqu7l1Qr-Ee'),
+      A(2, 'Clasificación vehicular del TPDA y depuración del flujo de carga pesada.', '8 sep 2026', '14 sep 2026', 'Producto', 'Matriz de aforos clasificada', 'Documento Excel', 'completado', 'https://drive.google.com/drive/folders/1mRSthAfPSelGi76fgveG0S2wvfknZKg-'),
+      A(3, 'Recopilación de reportes de siniestralidad de la ANSV para los municipios del corredor.', '15 sep 2026', '21 sep 2026', 'Verificador', 'Histórico de siniestros', 'Documento PDF', 'completado', 'https://drive.google.com/drive/folders/1NSoocY8sdQSCLIt-1QvF9o45HsSXNAAc'),
+      A(4, 'Análisis estadístico de la siniestralidad de vehículos pesados en el descenso del paso.', '22 sep 2026', '28 sep 2026', 'Producto', 'Gráficos de siniestralidad', 'Archivo Excel / JPG', 'completado', 'https://drive.google.com/drive/folders/1GF6qQQfEPoMKyT3MbPl8PGb8I5ex3VR7'),
+      A(5, 'Consolidación del diagnóstico operacional de la infraestructura vial actual.', '29 sep 2026', '3 oct 2026', 'Producto', 'Informe de diagnóstico vial', 'Documento PDF', 'completado', 'https://drive.google.com/drive/folders/1xbAuxTOUZcZkolGr7h2_U-efjul17K2k'),
     ],
   },
   {
     id: 'oe3', numero: 3, bloque: 2, inicio: '5 oct 2026', fin: '7 nov 2026',
     responsable: 'Tamayo Osorio Miguel Ángel',
     linea: 'Geotecnia de portales',
-    estado: 'pendiente',
+    estado: 'en_curso',
     titulo: 'Estimar la capacidad portante preliminar del terreno de fundación de las infraestructuras de superficie en los portales de Ibagué y Armenia, aplicando la formulación de Meyerhof bajo los lineamientos del Título H de la NSR-10.',
     actividades: [
-      A(1, 'Recopilación de la cartografía geológica del Servicio Geológico Colombiano para las planchas del corredor.', '5 oct 2026', '11 oct 2026', 'Verificador', 'Planos geológicos', 'Documento PDF'),
-      A(2, 'Identificación de zonas de susceptibilidad a movimientos en masa en el entorno de los portales.', '12 oct 2026', '18 oct 2026', 'Verificador', 'Mapa base de susceptibilidad', 'Documento PDF / JPG'),
+      A(1, 'Recopilación de la cartografía geológica del Servicio Geológico Colombiano para las planchas del corredor.', '5 oct 2026', '11 oct 2026', 'Verificador', 'Planos geológicos', 'Documento PDF', 'en_curso'),
+      A(2, 'Identificación de zonas de susceptibilidad a movimientos en masa en el entorno de los portales.', '12 oct 2026', '18 oct 2026', 'Verificador', 'Mapa base de susceptibilidad', 'Documento PDF / JPG', 'en_curso'),
       A(3, 'Definición de los parámetros geotécnicos de diseño adoptados y de su rango de sensibilidad.', '19 oct 2026', '25 oct 2026', 'Verificador', 'Cuadro de parámetros adoptados', 'Documento Excel'),
       A(4, 'Cálculo de la capacidad portante admisible por la formulación de Meyerhof (NSR-10, Título H).', '26 oct 2026', '1 nov 2026', 'Producto', 'Memoria de cálculo', 'Documento Excel'),
       A(5, 'Diseño conceptual de la cimentación superficial de las terminales de carga Ro-Ro.', '2 nov 2026', '7 nov 2026', 'Producto', 'Esquema de cimentación e informe', 'Plano AutoCAD / PDF'),

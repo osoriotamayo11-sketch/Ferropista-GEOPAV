@@ -48,22 +48,22 @@ export default function EsquemaHero3D({
   height = 300,
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+  const [montado, setMontado] = useState(false);
+  const [enPantalla, setEnPantalla] = useState(false);
 
-  // Solo se monta el lienzo cuando la tarjeta entra en pantalla.
+  // Se monta al acercarse a la pantalla y el render se detiene (frameloop
+  // 'never') cada vez que sale de ella, como PasoAutopista3D con su prop `animar`.
   useEffect(() => {
     const nodo = ref.current;
-    if (!nodo) return;
-    if (typeof IntersectionObserver === 'undefined') {
-      setVisible(true);
+    if (!nodo || typeof IntersectionObserver === 'undefined') {
+      setMontado(true);
+      setEnPantalla(true);
       return;
     }
     const obs = new IntersectionObserver(
       ([e]) => {
-        if (e.isIntersecting) {
-          setVisible(true);
-          obs.disconnect();
-        }
+        setEnPantalla(e.isIntersecting);
+        if (e.isIntersecting) setMontado(true);
       },
       { rootMargin: '120px' },
     );
@@ -77,8 +77,8 @@ export default function EsquemaHero3D({
       className="relative w-full overflow-hidden rounded-lg border border-slate-200 bg-slate-50"
       style={{ height }}
     >
-      {visible ? (
-        <EscenaComparativa scenario={scenario} height={height} calidad="media" />
+      {montado ? (
+        <EscenaComparativa scenario={scenario} height={height} calidad="media" activo={enPantalla} />
       ) : (
         <Marcador />
       )}

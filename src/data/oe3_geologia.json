@@ -1,0 +1,138 @@
+{
+ "generado_por": "OE3_Geotecnia/Act1_Cartografia/exportar_visor_geologia_OE3.py",
+ "metodo": "Máscara por color exacto de la leyenda + cierre de 5 px y apertura de 9 px; áreas y distancias [CP] con la escala del recorte.",
+ "portales": [
+  {
+   "id": "oriental_Ibague",
+   "plancha": "244",
+   "nombre": "Portal oriental — Ibagué, Tolima",
+   "fuente": "Plancha 244 Ibagué, 1:100.000 (Mosquera, Núñez y Vesga, 1982; INGEOMINAS/SGC). Leyenda impresa de la plancha.",
+   "imagen": "/oe3/geologia/oriental_Ibague.jpg",
+   "lado_px": 880,
+   "px_por_km": 113.3,
+   "lado_km": 7.77,
+   "portal_px": [
+    440.2,
+    440.6
+   ],
+   "unidades": [
+    {
+     "simbolo": "PCAn",
+     "color": "#bc9e8f",
+     "nombre": "Neises y Anfibolitas de Tierradentro",
+     "edad": "Precámbrico",
+     "descripcion": "Predominantemente neises cuarzo-feldespático-biotíticos.",
+     "area_pct": 4.2,
+     "dist_portal_m": 0,
+     "mascara": "/oe3/geologia/oriental_Ibague_PCAn.png"
+    },
+    {
+     "simbolo": "Jcdi",
+     "color": "#f2c0d9",
+     "nombre": "Batolito de Ibagué",
+     "edad": "Mesozoico (Jurásico)",
+     "descripcion": "Granodiorita biotítico-hornbléndica, medio a grosogranular, con variaciones texturales y composicionales a cuarzodiorita y cuarzomonzonita.",
+     "area_pct": 52.3,
+     "dist_portal_m": 110,
+     "mascara": "/oe3/geologia/oriental_Ibague_Jcdi.png"
+    },
+    {
+     "simbolo": "Tad",
+     "color": "#ffd1dd",
+     "nombre": "Rocas hipoabisales",
+     "edad": "Terciario",
+     "descripcion": "Rocas porfiríticas y afaníticas de composición dacítica–andesítica.",
+     "area_pct": 2.6,
+     "dist_portal_m": 370,
+     "mascara": "/oe3/geologia/oriental_Ibague_Tad.png"
+    },
+    {
+     "simbolo": "PCAa",
+     "color": "#d9c4bf",
+     "nombre": "Neises y Anfibolitas de Tierradentro",
+     "edad": "Precámbrico",
+     "descripcion": "Anfibolitas y neises anfibólicos con efectos diaftoríticos, con intercalaciones menores de neises micáceos y mármoles.",
+     "area_pct": 0.2,
+     "dist_portal_m": 840,
+     "mascara": "/oe3/geologia/oriental_Ibague_PCAa.png"
+    },
+    {
+     "simbolo": "Qca",
+     "color": "#999999",
+     "nombre": "Cono Aluvial de Ibagué",
+     "edad": "Cuaternario",
+     "descripcion": "Cantos de rocas extrusivas e intrusivas y algunas metamórficas, en matriz arenácea y areno-tobácea.",
+     "area_pct": 32.1,
+     "dist_portal_m": 1170,
+     "mascara": "/oe3/geologia/oriental_Ibague_Qca.png"
+    }
+   ]
+  },
+  {
+   "id": "occidental_Calarca",
+   "plancha": "243",
+   "nombre": "Portal occidental — Calarcá, Quindío",
+   "fuente": "Plancha 243 Armenia, 1:100.000 (McCourt, Mosquera, Nivia y Núñez, 1985; INGEOMINAS/SGC). Leyenda impresa de la plancha.",
+   "imagen": "/oe3/geologia/occidental_Calarca.jpg",
+   "lado_px": 880,
+   "px_por_km": 113.1,
+   "lado_km": 7.78,
+   "portal_px": [
+    440.6,
+    440.8
+   ],
+   "unidades": [
+    {
+     "simbolo": "Kqs",
+     "color": "#65ff00",
+     "nombre": "Formación Quebradagrande — miembros sedimentarios-volcánicos",
+     "edad": "Cretácico (Aptiano)",
+     "descripcion": "Principalmente rocas sedimentarias marinas: grauvacas, areniscas, calizas, lutitas y chert. Intercalaciones de vulcanitas básicas. Localmente cataclasadas.",
+     "area_pct": 26.1,
+     "dist_portal_m": 0,
+     "mascara": "/oe3/geologia/occidental_Calarca_Kqs.png"
+    },
+    {
+     "simbolo": "Kqv",
+     "color": "#ffccdb",
+     "nombre": "Formación Quebradagrande — rocas volcánicas",
+     "edad": "Cretácico (Aptiano)",
+     "descripcion": "Intercalaciones de rocas volcánicas submarinas de composición intermedia a básica, principalmente diabasas y andesitas. Localmente estructuras almohadilladas. Sectores de intensa cataclasis.",
+     "area_pct": 21.9,
+     "dist_portal_m": 70,
+     "mascara": "/oe3/geologia/occidental_Calarca_Kqv.png"
+    },
+    {
+     "simbolo": "TQa",
+     "color": "#ffffb3",
+     "nombre": "Formación Armenia",
+     "edad": "Plio-pleistoceno",
+     "descripcion": "Depósitos no consolidados, cenizas volcánicas, flujos de lodo y depósitos de piedemonte.",
+     "area_pct": 41.7,
+     "dist_portal_m": 260,
+     "mascara": "/oe3/geologia/occidental_Calarca_TQa.png"
+    },
+    {
+     "simbolo": "Ku",
+     "color": "#f7bac0",
+     "nombre": "Rocas ultramáficas",
+     "edad": "Cretácico",
+     "descripcion": "Rocas ultramáficas serpentinizadas y tectonizadas. Localmente con fragmentos de eclogitas y anfibolitas eclogíticas.",
+     "area_pct": 1.5,
+     "dist_portal_m": 1880,
+     "mascara": "/oe3/geologia/occidental_Calarca_Ku.png"
+    },
+    {
+     "simbolo": "Kdi",
+     "color": "#ffccff",
+     "nombre": "Complejo de Córdoba",
+     "edad": "Cretácico",
+     "descripcion": "Principalmente diorita con variaciones composicionales a granodiorita. Edad 77 ± 3 m.a. (K/Ar).",
+     "area_pct": 2.2,
+     "dist_portal_m": 1940,
+     "mascara": "/oe3/geologia/occidental_Calarca_Kdi.png"
+    }
+   ]
+  }
+ ]
+}

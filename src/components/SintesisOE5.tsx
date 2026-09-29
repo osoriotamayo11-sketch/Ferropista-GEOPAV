@@ -1,18 +1,33 @@
 'use client';
 
+/**
+ * SintesisOE5 — la sección del objetivo específico 5, en un solo hilo:
+ * la respuesta corta, cuánto tránsito hay, dónde ocurren los siniestros, qué
+ * tan grave es el corredor antes y después del túnel de La Línea, y —plegados,
+ * porque son el respaldo y no la portada— cómo se hizo y qué no afirma este
+ * objetivo. Ninguna cifra se escribe a mano: salen de `SEGURIDAD_VIAL` en
+ * `proyecto.ts`, de `siniestralidad_oe5.json` (vía GraficosOE5) y de
+ * `mapas_oe5.json` (vía LaminasOE5 y el rango post-túnel de aquí abajo).
+ */
+
 import React from 'react';
-import { motion } from 'framer-motion';
 import {
-  ShieldAlert, CheckCircle2, Circle, Loader2, AlertTriangle, MapPin, Gauge,
-  Download, FolderOpen, Route, ExternalLink,
+  ShieldAlert, Gauge, AlertTriangle,
 } from 'lucide-react';
 import {
   SEGURIDAD_VIAL as SV, PLAN_ACCION, EQUIPO,
-  ETIQUETA_MARCA, COLOR_MARCA, type Dato, type Marca, type EstadoItem,
+  ETIQUETA_MARCA, COLOR_MARCA, type Dato, type Marca,
 } from '@/data/proyecto';
+import { METODO_OE } from '@/data/metodo_oe';
+import mapas from '@/data/mapas_oe5.json';
 import Acordeon from './Acordeon';
+import ComoSeHizo from './ComoSeHizo';
+import DescargaArchivo from './DescargaArchivo';
 import { ExposicionCocora, TransitoInvias } from './graficos/GraficosOE5';
-import { MapaSectoresOE5, DensidadLinealOE5 } from './graficos/LaminasOE5';
+import { MapaSiniestralidadOE5, PrensaMicrodatoOE5 } from './graficos/LaminasOE5';
+
+const es = (v: number, d = 0) =>
+  v.toLocaleString('es-CO', { minimumFractionDigits: d, maximumFractionDigits: d });
 
 /* Mismo chip de marca de origen que el resto del sitio. */
 const ChipMarca: React.FC<{ marca: Marca }> = ({ marca }) => (
@@ -23,22 +38,6 @@ const ChipMarca: React.FC<{ marca: Marca }> = ({ marca }) => (
     {marca}
   </span>
 );
-
-const ESTADO_UI: Record<EstadoItem, { texto: string; clase: string; Icono: React.ComponentType<{ className?: string }> }> = {
-  completado: { texto: 'Completado', clase: 'bg-gmae-50 text-gmae-700 border-gmae-300', Icono: CheckCircle2 },
-  en_curso:   { texto: 'En curso',   clase: 'bg-uni-50 text-uni-700 border-uni-200',    Icono: Loader2 },
-  pendiente:  { texto: 'Pendiente',  clase: 'bg-slate-100 text-slate-600 border-slate-300', Icono: Circle },
-};
-
-const BadgeEstado: React.FC<{ estado: EstadoItem }> = ({ estado }) => {
-  const { texto, clase, Icono } = ESTADO_UI[estado];
-  return (
-    <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full border ${clase}`}>
-      <Icono className={`w-3 h-3 ${estado === 'en_curso' ? 'animate-spin' : ''}`} />
-      {texto}
-    </span>
-  );
-};
 
 const Cifra: React.FC<{ etiqueta: string; dato: Dato }> = ({ etiqueta, dato }) => (
   <div className="rounded-xl bg-slate-50 border border-slate-200 p-4 flex flex-col gap-1.5">
@@ -72,107 +71,21 @@ const Tasa: React.FC<{ titulo: string; pie: string; dato: Dato; tenue?: boolean 
   </div>
 );
 
-/* Gráficos del objetivo. Cada uno sustituye al panel de serie temporal de la
-   lámina PNG que ocupaba su lugar; la lámina sigue siendo el entregable y
-   queda enlazada para descarga. Las cifras rotuladas salen del resumen del
-   archivo de datos —media ponderada por días—, no de la curva. */
-const GRAFICOS = [
-  {
-    id: 'cocora',
-    titulo: 'Exposición medida en el peaje Cocora',
-    pie:
-      'Tránsito promedio diario en el peaje Cocora (vía Ibagué – Cajamarca, RN40-03, km 13+800), ' +
-      'total y carga pesada, mes a mes entre octubre de 2021 y mayo de 2026. Las dos líneas ' +
-      'punteadas son la media de los últimos doce meses, que es la cifra que el sitio publica. ' +
-      'Fuente: ANI, conjunto 8yi9-t44c de datos.gov.co; el tránsito promedio diario es cálculo propio.',
-    lamina: '/oe5/siniestralidad.png',
-  },
-  {
-    id: 'invias',
-    titulo: 'Veinte años de tránsito medido por INVÍAS',
-    pie:
-      'Serie histórica de volúmenes de tránsito de INVÍAS, 1997 a 2018, en las tres estaciones del ' +
-      'corredor. La 243 y la 244 son los tramos que quedan entre los portales del trazado del ' +
-      'objetivo específico 1; la 245 queda fuera del paso. De aquí sale el denominador de la tasa: ' +
-      'esta serie es la que cerró la brecha entre los fallecidos de 2015–2019 y el aforo del peaje, ' +
-      'que solo empieza en 2021. La lámina que contiene este panel se descarga más abajo, junto al mapa de sectores.',
-    lamina: null,
-  },
-] as const;
-
-/* Densidad lineal sobre el microdato ANSV georreferenciado por solicitud:
-   se muestra junto al texto que explica por qué es lineal y no un mapa de
-   calor en dos dimensiones (SV.porQueNoKde). */
-const LAMINA_DENSIDAD = {
-  src: '/oe5/densidad_lineal.png',
-  w: 1800,
-  h: 1092,
-  titulo: 'Mapa de calor: por qué es lineal y no en 2D',
-  alt: 'Densidad lineal de siniestros georreferenciados por la ANSV en la Ruta 4003, 2021 – marzo 2026',
-  pie: 'Fuente: ANSV, oficio 20265000140371 (solicitud de D. Torrente). Muestra dónde se pudo georreferenciar, no dónde está el riesgo.',
+/* Rango post-túnel, construido aquí porque su fuente es mapas_oe5.json (el
+   microdato ANSV 2021 – mar 2026), no proyecto.ts: es la salida directa de
+   procesar_microdato_ANSV_OE5.py, igual que el resto de cifras que ese
+   archivo alimenta en LaminasOE5. Marca H: es cota inferior, no comparable. */
+const TASA_POST_TUNEL = mapas.microdato.tasa_post_tunel;
+const DATO_TASA_POST_TUNEL: Dato = {
+  valor: `${es(TASA_POST_TUNEL.tasa_H1, 2)} – ${es(TASA_POST_TUNEL.tasa_H2, 2)}`,
+  marca: 'H',
+  fuente: 'ANSV, oficio 20265000140371 (microdato georreferenciado 2021 – mar 2026); INVÍAS y peaje Cajamarca para el tránsito supuesto',
+  nota: 'Cota inferior, no comparable: subregistro de georreferenciación (2 de 8 fatales de prensa) y sin aforo del paso después de 2019.',
 };
-
-/* El mapa de sectores y el detalle del descenso se dibujan en el navegador
-   (LaminasOE5, sobre un sombreado del DEM). La lámina PNG sigue siendo el
-   entregable y queda enlazada para descarga. */
-const LAMINA_MAPA = {
-  src: '/oe5/graficos_siniestralidad.png',
-  w: 1800,
-  h: 952,
-  titulo: 'Sectores críticos sobre el trazado y detalle del descenso a Calarcá',
-  pie:
-    'Los seis sectores críticos de la ANSV situados sobre el trazado del túnel del objetivo 1, con ' +
-    'el detalle del descenso hacia Calarcá. El tamaño del círculo es el número de fallecidos y el ' +
-    'color es el nivel de confianza del estadístico Getis-Ord Gi* que publica la propia ANSV. ' +
-    'Relieve: Copernicus DEM GLO-30. La lámina descargable incluye además la serie de INVÍAS y ' +
-    'las dos tasas, que en esta página están en sus propios gráficos.',
-};
-
-/* Carpetas de evidencia del OE 5, una por actividad. Las URL se transcribieron
-   del Google Sheet oficial y cada una se comprobó abriéndola: la página de
-   Drive devolvió el nombre de carpeta que aparece en `entregable`. Los cuatro
-   identificadores de Drive llevan caracteres ambiguos (I mayúscula frente a l
-   minúscula), así que NO se editan a ojo: si alguno cambia, se vuelve a
-   comprobar contra el título que devuelve Drive. */
-const EVIDENCIAS_OE5: { n: number; carpeta: string; entregable: string; formato: string; contenido: string; url: string }[] = [
-  {
-    n: 1, carpeta: 'Act1_Aforos',
-    entregable: 'Base de datos cruda de aforos', formato: 'CSV / Excel',
-    contenido: 'Descarga de los conjuntos de la ANI y de INVÍAS, extracción del TPD y las series mensual y anual.',
-    url: 'https://drive.google.com/drive/folders/1U6_3pOBWwg5jYce3BPSIgoqu7l1Qr-Ee',
-  },
-  {
-    n: 2, carpeta: 'Act2_Clasificacion',
-    entregable: 'Matriz de aforos clasificada', formato: 'Excel',
-    contenido: 'Matriz de aforos clasificada por categoría de vehículo, con el script que la construye.',
-    url: 'https://drive.google.com/drive/folders/1mRSthAfPSelGi76fgveG0S2wvfknZKg-',
-  },
-  {
-    n: 3, carpeta: 'Act3_Siniestros',
-    entregable: 'Histórico de siniestros', formato: 'PDF',
-    contenido: 'Sectores críticos y velocidades de la ANSV, el recorte del corredor y el histórico de siniestros.',
-    url: 'https://drive.google.com/drive/folders/1NSoocY8sdQSCLIt-1QvF9o45HsSXNAAc',
-  },
-  {
-    n: 4, carpeta: 'Act4_Analisis',
-    entregable: 'Gráficos de siniestralidad', formato: 'Excel / JPG',
-    contenido: 'Cálculo de la tasa por 100 millones de vehículos-kilómetro y los scripts de las figuras.',
-    url: 'https://drive.google.com/drive/folders/1GF6qQQfEPoMKyT3MbPl8PGb8I5ex3VR7',
-  },
-  {
-    n: 5, carpeta: 'Act5_Informe',
-    entregable: 'Informe de diagnóstico vial', formato: 'PDF',
-    contenido: 'Informe de diagnóstico vial y memoria metodológica.',
-    url: 'https://drive.google.com/drive/folders/1xbAuxTOUZcZkolGr7h2_U-efjul17K2k',
-  },
-];
 
 export const SintesisOE5: React.FC = () => {
   const oe5 = PLAN_ACCION.find((o) => o.id === 'oe5');
   if (!oe5) return null;
-
-  const maxFallecidos = Math.max(...SV.sectores.map((s) => s.fallecidos));
-  const maxTpd = Math.max(...SV.mediciones.map((m) => m.tpd));
 
   return (
     <section id="oe5" className="py-24 bg-slate-50 relative overflow-hidden border-t border-slate-200">
@@ -198,268 +111,143 @@ export const SintesisOE5: React.FC = () => {
           </p>
         </div>
 
-        {/* 1. Estado del objetivo */}
-        <div className="rounded-2xl bg-white border border-gmae-300/60 p-6 sm:p-8 mb-6">
-          <div className="flex flex-wrap items-center gap-3 mb-4">
-            <BadgeEstado estado={oe5.estado} />
-            <span className="text-[11px] font-mono text-slate-500">{oe5.inicio} → {oe5.fin}</span>
-            <span className="text-[11px] text-slate-500">· Responsable: {oe5.responsable}</span>
-          </div>
-          <p className="text-sm text-slate-700 leading-relaxed mb-5">{oe5.titulo}</p>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-3">
-            {oe5.actividades.map((a) => {
-              const { Icono } = ESTADO_UI[a.estado];
-              const tinte = a.estado === 'completado' ? 'text-gmae-600'
-                : a.estado === 'en_curso' ? 'text-uni-600' : 'text-slate-400';
-              return (
-                <div key={a.n} className="rounded-xl bg-slate-50 border border-slate-200 p-3 space-y-1.5">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono text-slate-500">Act {a.n}</span>
-                    <Icono className={`w-3.5 h-3.5 ${tinte} ${a.estado === 'en_curso' ? 'animate-spin' : ''}`} />
-                  </div>
-                  <p className="text-[11px] text-slate-600 leading-snug">{a.entregable}</p>
-                  <p className="text-[10px] font-mono text-slate-400">{a.inicio} → {a.fin}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* 2. El resultado: la tasa. Dos cifras, no tres: la anterior se movió
-               al acordeón del método, donde queda auditable sin competir con
-               el resultado vigente. */}
+        {/* 1. La respuesta corta */}
         <div className="rounded-2xl bg-white border border-slate-200 p-5 sm:p-7 mb-6">
           <div className="flex items-center gap-2 mb-1.5">
             <Gauge className="w-4 h-4 text-uni-600" />
-            <h3 className="text-lg font-bold text-uni-900">La tasa normalizada por exposición</h3>
+            <h3 className="text-lg font-bold text-uni-900">La respuesta corta</h3>
           </div>
           <p className="text-xs text-slate-500 mb-5 max-w-3xl leading-relaxed">
-            Contar muertos sin dividir por exposición es contar goles sin saber cuántos partidos se
-            jugaron. La unidad estándar es <strong className="text-slate-700">fallecidos por cada
-            100 millones de vehículos-kilómetro</strong>: fallecidos ÷ (TPD × 365 × longitud × años).
-            Las dos cifras usan los mismos 42 fallecidos y difieren solo en el denominador.
-            Ninguna de las dos definiciones de tramo es obviamente la correcta, así que se publican
-            ambas en lugar de escoger una en silencio.
+            La unidad estándar es <strong className="text-slate-700">fallecidos por cada 100
+            millones de vehículos-kilómetro</strong>. La tasa de hoy es la línea base 2015–2019,
+            anterior al Túnel de La Línea; el rango 2021–2025 es apenas una cota inferior y no se
+            compara con ella.
           </p>
-          <div className="grid md:grid-cols-2 gap-4">
-            <Tasa titulo="Corredor completo · 74 km" pie="42 fallecidos · TPD 6.820 · 5 años" dato={SV.tasaCorredor} />
-            <Tasa titulo="Solo el paso · 45 km" pie="42 fallecidos · TPD 6.676 · 5 años" dato={SV.tasaPaso} />
+          <div className="grid md:grid-cols-3 gap-4">
+            <Tasa titulo="Tasa del paso · 2015–2019" pie="Fallecidos por 100 M veh-km" dato={SV.tasaPaso} />
+            <Tasa titulo="Fallecidos del paso · 2015–2019" pie="Cuatro sectores críticos de la ANSV" dato={SV.fallecidosPaso} />
+            <Tasa titulo="Tasa del paso · 2021–2025" pie="Rango, cota inferior, no comparable" dato={DATO_TASA_POST_TUNEL} tenue />
           </div>
         </div>
 
-        {/* 3. Entradas medidas */}
+        {/* 2. Cuánto tránsito hay */}
         <div className="rounded-2xl bg-white border border-slate-200 p-5 sm:p-7 mb-6">
-          <h3 className="text-lg font-bold text-uni-900 mb-1.5">Las entradas del cálculo</h3>
+          <h3 className="text-lg font-bold text-uni-900 mb-1.5">Cuánto tránsito hay</h3>
           <p className="text-xs text-slate-500 mb-5 max-w-3xl leading-relaxed">
-            Ninguna es una suposición. Cada una cita su fuente: la ANSV para los fallecidos, INVÍAS
-            para el tránsito y las longitudes de tramo.
+            El denominador de la tasa. La serie histórica de INVÍAS pone el aforo en el mismo
+            periodo que los fallecidos; el peaje Cocora mide la exposición de hoy, cuatro años
+            después del último fallecido registrado.
           </p>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-            <Cifra etiqueta="Fallecidos en el tramo del paso" dato={SV.fallecidosPaso} />
-            <Cifra etiqueta="Fallecidos en todo el corredor" dato={SV.fallecidosCorredor} />
-            <Cifra etiqueta="Sectores críticos del corredor" dato={SV.sectoresCriticos} />
-            <Cifra etiqueta="Tránsito medido en el paso" dato={SV.tpdPaso} />
-            <Cifra etiqueta="Tránsito del corredor, ponderado" dato={SV.tpdCorredor} />
-            <Cifra etiqueta="Longitud del corredor" dato={SV.longitudCorredor} />
-            <Cifra etiqueta="Longitud del paso" dato={SV.longitudPaso} />
-            <Cifra etiqueta="Participación de la carga pesada" dato={SV.participacionPesada} />
-            <Cifra etiqueta="Exposición anual de la carga pesada" dato={SV.exposicionPesada} />
-            <Cifra etiqueta="Cuánto mueve la única hipótesis" dato={SV.sensibilidadHipotesis} />
-            <Cifra etiqueta="Control: los 52 fallecidos sobre 74 km" dato={SV.tasaControl52} />
+
+          <div className="space-y-8">
+            <div>
+              <div className="mb-3 flex items-start justify-between gap-3">
+                <h4 className="text-sm font-bold text-uni-900">Exposición medida en el peaje Cocora</h4>
+                <ChipMarca marca="CP" />
+              </div>
+              <ExposicionCocora />
+            </div>
+            <div>
+              <div className="mb-3 flex items-start justify-between gap-3">
+                <h4 className="text-sm font-bold text-uni-900">Veinte años de tránsito medido por INVÍAS</h4>
+                <ChipMarca marca="CP" />
+              </div>
+              <TransitoInvias />
+            </div>
+          </div>
+
+          <div className="mt-7 border-t border-slate-200 pt-6">
+            <h4 className="text-sm font-bold text-uni-900 mb-1.5">Las entradas del cálculo</h4>
+            <p className="text-xs text-slate-500 mb-4 max-w-3xl leading-relaxed">
+              Ninguna es una suposición. Cada una cita su fuente: la ANSV para los fallecidos, INVÍAS
+              para el tránsito y las longitudes de tramo.
+            </p>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+              <Cifra etiqueta="Fallecidos en el tramo del paso" dato={SV.fallecidosPaso} />
+              <Cifra etiqueta="Fallecidos en todo el corredor" dato={SV.fallecidosCorredor} />
+              <Cifra etiqueta="Sectores críticos del corredor" dato={SV.sectoresCriticos} />
+              <Cifra etiqueta="Tránsito medido en el paso" dato={SV.tpdPaso} />
+              <Cifra etiqueta="Tránsito del corredor, ponderado" dato={SV.tpdCorredor} />
+              <Cifra etiqueta="Longitud del corredor" dato={SV.longitudCorredor} />
+              <Cifra etiqueta="Longitud del paso" dato={SV.longitudPaso} />
+              <Cifra etiqueta="Participación de la carga pesada" dato={SV.participacionPesada} />
+              <Cifra etiqueta="Exposición anual de la carga pesada" dato={SV.exposicionPesada} />
+              <Cifra etiqueta="Cuánto mueve la única hipótesis" dato={SV.sensibilidadHipotesis} />
+              <Cifra etiqueta="Control: los 52 fallecidos sobre 74 km" dato={SV.tasaControl52} />
+            </div>
           </div>
         </div>
 
-        {/* 4. Los gráficos, sustituyendo los paneles de serie de las láminas */}
-        <div className="mb-6 space-y-4">
-          {GRAFICOS.map((g, i) => (
-            <motion.figure
-              key={g.id}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.4, delay: i * 0.05 }}
-              className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-6"
-            >
-              <figcaption className="mb-4 flex items-start justify-between gap-3">
-                <h3 className="text-sm font-bold text-uni-900 sm:text-base">{g.titulo}</h3>
-                <ChipMarca marca="CP" />
-              </figcaption>
-
-              {g.id === 'cocora' ? <ExposicionCocora /> : <TransitoInvias />}
-
-              <div className="mt-4 flex flex-col gap-3 border-t border-slate-200 pt-3 sm:flex-row sm:items-start sm:justify-between">
-                <p className="max-w-3xl text-[11px] leading-relaxed text-slate-500">{g.pie}</p>
-                {g.lamina && (
-                  <a
-                    href={g.lamina}
-                    download
-                    className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-[11px] font-semibold text-uni-600 transition-colors hover:border-uni-300 hover:text-uni-700"
-                  >
-                    <Download className="h-3.5 w-3.5 shrink-0" />
-                    Descargar la lámina (PNG)
-                  </a>
-                )}
-              </div>
-            </motion.figure>
-          ))}
-
-          <motion.figure
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.4, delay: 0.1 }}
-            className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5"
-          >
-            <figcaption className="mb-3 flex items-start justify-between gap-3">
-              <h3 className="text-sm font-bold text-uni-900 sm:text-base">{LAMINA_MAPA.titulo}</h3>
-              <ChipMarca marca="CP" />
-            </figcaption>
-            <MapaSectoresOE5 />
-            <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-              <p className="max-w-3xl text-[11px] leading-relaxed text-slate-500">{LAMINA_MAPA.pie}</p>
-              <a
-                href={LAMINA_MAPA.src}
-                download
-                className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-[11px] font-semibold text-uni-600 transition-colors hover:border-uni-300 hover:text-uni-700"
-              >
-                <Download className="h-3.5 w-3.5 shrink-0" />
-                Descargar la lámina (PNG)
-              </a>
-            </div>
-          </motion.figure>
-
-          <motion.figure
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.4, delay: 0.15 }}
-            className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5"
-          >
-            <figcaption className="mb-3 flex items-start justify-between gap-3">
-              <h3 className="text-sm font-bold text-uni-900 sm:text-base">{LAMINA_DENSIDAD.titulo}</h3>
-              <ChipMarca marca="CP" />
-            </figcaption>
-            <p className="mb-4 max-w-3xl text-xs leading-relaxed text-slate-600">{SV.porQueNoKde}</p>
-            <DensidadLinealOE5 />
-            <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-              <p className="max-w-3xl text-[11px] leading-relaxed text-slate-500">{LAMINA_DENSIDAD.pie}</p>
-              <a
-                href={LAMINA_DENSIDAD.src}
-                download
-                className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-[11px] font-semibold text-uni-600 transition-colors hover:border-uni-300 hover:text-uni-700"
-              >
-                <Download className="h-3.5 w-3.5 shrink-0" />
-                Descargar la lámina (PNG)
-              </a>
-            </div>
-          </motion.figure>
-        </div>
-
-        {/* 5. Los seis sectores críticos */}
+        {/* 3. Dónde ocurren */}
         <div className="rounded-2xl bg-white border border-slate-200 p-5 sm:p-7 mb-6">
           <div className="flex items-center gap-2 mb-1.5">
-            <MapPin className="w-4 h-4 text-uni-600" />
-            <h3 className="text-lg font-bold text-uni-900">Los seis sectores críticos del corredor</h3>
-            <ChipMarca marca="F" />
+            <ShieldAlert className="w-4 h-4 text-uni-600" />
+            <h3 className="text-lg font-bold text-uni-900">Dónde ocurren</h3>
           </div>
           <p className="text-xs text-slate-500 mb-5 max-w-3xl leading-relaxed">
-            Todos caen en jurisdicción de Calarcá, Quindío, en 3,6 km del descenso. Los cuatro a cargo
-            de INVÍAS, en el tramo que la ANSV nombra «Calarcá – Ibagué», suman los 42 fallecidos que
-            entran en la tasa; los dos a cargo de la ANI no pertenecen al cruce y quedan fuera.
+            Dos fuentes, dos periodos, un mismo corredor: los seis sectores críticos que la ANSV
+            identificó con el estadístico Getis-Ord Gi* para 2015–2019, y el microdato
+            georreferenciado que entregó por solicitud para 2021 – marzo de 2026.
           </p>
-          <div className="overflow-x-auto">
-            <table className="w-full text-xs min-w-[520px]">
-              <thead>
-                <tr className="text-left text-[10px] uppercase tracking-wider text-slate-500 border-b border-slate-200">
-                  <th className="py-2 pr-3 font-bold">Punto de referencia</th>
-                  <th className="py-2 pr-3 font-bold">Fallecidos 2015–2019</th>
-                  <th className="py-2 pr-3 font-bold">Confianza Gi*</th>
-                  <th className="py-2 pr-3 font-bold">Entidad</th>
-                  <th className="py-2 font-bold">¿Entra en la tasa?</th>
-                </tr>
-              </thead>
-              <tbody>
-                {SV.sectores.map((s, i) => (
-                  <tr key={`${s.pr}-${i}`} className="border-b border-slate-100 last:border-0">
-                    <td className="py-2 pr-3 font-mono font-semibold text-slate-700">{s.pr}</td>
-                    <td className="py-2 pr-3">
-                      <div className="flex items-center gap-2">
-                        <span className="font-bold text-uni-900 w-6">{s.fallecidos}</span>
-                        <span
-                          className={`h-2 rounded-sm ${s.enPaso ? 'bg-uni-700' : 'bg-slate-300'}`}
-                          style={{ width: `${(s.fallecidos / maxFallecidos) * 100}px` }}
-                        />
-                      </div>
-                    </td>
-                    <td className="py-2 pr-3 text-slate-600">{s.confianza}</td>
-                    <td className="py-2 pr-3 text-slate-600">{s.entidad}</td>
-                    <td className="py-2">
-                      {s.enPaso
-                        ? <span className="text-gmae-700 font-semibold">Sí</span>
-                        : <span className="text-slate-400">No · tramo de la ANI</span>}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <MapaSiniestralidadOE5 />
+
+          <div className="mt-4 flex flex-wrap gap-2.5">
+            <DescargaArchivo
+              href="/oe5/graficos_siniestralidad.jpg"
+              etiqueta="Descargar sectores críticos y detalle del descenso a Calarcá"
+              formato="JPG"
+            />
+            <DescargaArchivo
+              href="/oe5/densidad_lineal.jpg"
+              etiqueta="Descargar la densidad lineal del microdato ANSV"
+              formato="JPG"
+            />
+          </div>
+
+          <div className="mt-4">
+            <Acordeon
+              titulo="¿Están en el anexo los fatales conocidos por prensa?"
+              resumen="Cruce entre el microdato de la ANSV y los siniestros fatales que documentó la prensa entre 2022 y 2025."
+              icono={<AlertTriangle className="h-5 w-5 text-acred-600" />}
+              contador={`${mapas.microdato.resumen.prensa.en_anexo} de ${mapas.microdato.resumen.prensa.total}`}
+              tono="gris"
+            >
+              <PrensaMicrodatoOE5 />
+            </Acordeon>
           </div>
         </div>
 
-        {/* 6. Las cuatro mediciones del corredor */}
+        {/* 4. Qué tan grave, antes y después del túnel (2020) */}
         <div className="rounded-2xl bg-white border border-slate-200 p-5 sm:p-7 mb-6">
-          <h3 className="text-lg font-bold text-uni-900 mb-1.5">Cuatro mediciones del mismo corredor</h3>
+          <h3 className="text-lg font-bold text-uni-900 mb-1.5">Qué tan grave, antes y después del túnel (2020)</h3>
           <p className="text-xs text-slate-500 mb-5 max-w-3xl leading-relaxed">
-            <strong className="text-slate-700">No son una serie temporal.</strong> Son cuatro puntos de
-            medición con criterios de clasificación distintos. La clase «camiones» de la serie por
-            estación de INVÍAS incluye los de dos ejes, que en peaje caen en categoría II: por eso su
-            participación de carga pesada es sistemáticamente mayor. Las dos lecturas no se promedian.
+            Contar muertos sin dividir por exposición es contar goles sin saber cuántos partidos se
+            jugaron. Las dos tasas 2015–2019 usan los mismos 42 fallecidos y difieren solo en el
+            denominador; el rango 2021–2025 es harina de otro costal.
           </p>
-          <div className="overflow-x-auto">
-            <table className="w-full text-xs min-w-[560px]">
-              <thead>
-                <tr className="text-left text-[10px] uppercase tracking-wider text-slate-500 border-b border-slate-200">
-                  <th className="py-2 pr-3 font-bold">Punto de medición</th>
-                  <th className="py-2 pr-3 font-bold">Periodo</th>
-                  <th className="py-2 pr-3 font-bold">TPD</th>
-                  <th className="py-2 font-bold">Carga pesada</th>
-                </tr>
-              </thead>
-              <tbody>
-                {SV.mediciones.map((m) => (
-                  <tr key={m.punto} className="border-b border-slate-100 last:border-0">
-                    <td className="py-2 pr-3 font-semibold text-slate-700">{m.punto}</td>
-                    <td className="py-2 pr-3 text-slate-500 font-mono text-[11px]">{m.periodo}</td>
-                    <td className="py-2 pr-3">
-                      <div className="flex items-center gap-2">
-                        <span className="font-bold text-uni-900 w-12">{m.tpd.toLocaleString('es-CO')}</span>
-                        <span
-                          className="h-2 rounded-sm bg-uni-500"
-                          style={{ width: `${(m.tpd / maxTpd) * 90}px` }}
-                        />
-                      </div>
-                    </td>
-                    <td className="py-2 font-semibold text-slate-600">
-                      {m.pesada.toLocaleString('es-CO')} %
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="grid md:grid-cols-3 gap-4 mb-6">
+            <Tasa titulo="Corredor completo · 74 km · 2015–2019" pie="42 fallecidos · TPD 6.820 · 5 años" dato={SV.tasaCorredor} />
+            <Tasa titulo="Solo el paso · 45 km · 2015–2019" pie="42 fallecidos · TPD 6.676 · 5 años" dato={SV.tasaPaso} />
+            <Tasa titulo="Solo el paso · 2021–2025" pie="Rango, cota inferior" dato={DATO_TASA_POST_TUNEL} tenue />
+          </div>
+          <div className="space-y-3 max-w-4xl text-xs leading-relaxed text-slate-600">
+            <p>{SV.limites[1]}</p>
+            <p>{SV.limites[4]}</p>
           </div>
         </div>
 
-        {/* 7. Método, plegado: es el respaldo, no la portada del objetivo.
-               Aquí vive también la corrección del 12,79: se mueve de la vista
-               principal, pero no se borra — el cambio tiene que seguir siendo
-               auditable desde el sitio público. */}
+        {/* 5. Cómo se hizo, y qué no afirma: plegado, es el respaldo, no la
+               portada del objetivo. Incluye las cuatro mediciones del
+               corredor, que no son una serie temporal. */}
         <div className="mb-4">
-          <Acordeon
-            titulo="Cómo se hizo, y la corrección que hubo por el camino"
-            resumen="Las tres fuentes, la fórmula de la tasa, el criterio de la media de doce meses y la cifra que el semillero publicaba antes."
-            icono={<Route className="h-5 w-5 text-uni-600" />}
-            contador="método"
+          <ComoSeHizo
+            porQue={METODO_OE.oe5.porQue}
+            paraQue={METODO_OE.oe5.paraQue}
+            como={METODO_OE.oe5.como}
+            noAfirma={SV.limites}
+            resumen="Las tres fuentes, la fórmula de la tasa y las cuatro mediciones del mismo corredor."
           >
-            <div className="max-w-3xl space-y-3 text-xs leading-relaxed text-slate-600">
+            <div className="space-y-3">
               <p>
                 El numerador son los fallecidos de los sectores críticos que publica la{' '}
                 <strong className="text-uni-900">ANSV</strong> en el conjunto rs3u-8r4q de
@@ -481,84 +269,50 @@ export const SintesisOE5: React.FC = () => {
               </p>
             </div>
 
-            <div className="mt-4 rounded-xl bg-amber-500/5 border border-amber-500/25 p-4">
-              <div className="flex items-center gap-2 text-[11px] font-bold text-acred-600 uppercase tracking-wider mb-2">
-                <AlertTriangle className="w-3.5 h-3.5" />
-                La corrección, dicha en voz alta
-              </div>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                El semillero publicaba <strong className="text-slate-700">12,79</strong>, casi tres
-                veces la cifra real, porque sus dos entradas eran supuestos: un tránsito de 3.000
-                vehículos al día y un tramo de 60 km. El tránsito medido del paso es más del doble
-                del supuesto y el tramo son 74 km declarados por INVÍAS. La cifra anterior queda
-                retirada de la vista principal y se conserva aquí, con su marca de hipótesis, para
-                que el cambio siga siendo auditable desde el propio sitio.
+            <div className="mt-5">
+              <h4 className="text-sm font-bold text-uni-900 mb-1.5">Cuatro mediciones del mismo corredor</h4>
+              <p className="text-xs text-slate-500 mb-4 leading-relaxed">
+                <strong className="text-slate-700">No son una serie temporal.</strong> Son cuatro
+                puntos de medición con criterios de clasificación distintos. La clase «camiones» de
+                la serie por estación de INVÍAS incluye los de dos ejes, que en peaje caen en
+                categoría II: por eso su participación de carga pesada es sistemáticamente mayor.
+                Las dos lecturas no se promedian.
               </p>
-              <div className="mt-4 max-w-sm">
-                <Tasa
-                  titulo="Lo que publicábamos antes"
-                  pie="TPD 3.000 y 60 km, ambos supuestos"
-                  dato={SV.tasaAnterior}
-                  tenue
-                />
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs min-w-[560px]">
+                  <thead>
+                    <tr className="text-left text-[10px] uppercase tracking-wider text-slate-500 border-b border-slate-200">
+                      <th className="py-2 pr-3 font-bold">Punto de medición</th>
+                      <th className="py-2 pr-3 font-bold">Periodo</th>
+                      <th className="py-2 pr-3 font-bold">TPD</th>
+                      <th className="py-2 font-bold">Carga pesada</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {SV.mediciones.map((m) => (
+                      <tr key={m.punto} className="border-b border-slate-100 last:border-0">
+                        <td className="py-2 pr-3 font-semibold text-slate-700">{m.punto}</td>
+                        <td className="py-2 pr-3 text-slate-500 font-mono text-[11px]">{m.periodo}</td>
+                        <td className="py-2 pr-3">
+                          <span className="font-bold text-uni-900">{m.tpd.toLocaleString('es-CO')}</span> veh/día
+                        </td>
+                        <td className="py-2 font-semibold text-slate-600">
+                          {m.pesada.toLocaleString('es-CO')} %
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
-          </Acordeon>
+          </ComoSeHizo>
         </div>
 
-        {/* 8. Límites del objetivo, también plegados */}
-        <div className="mb-4">
-          <Acordeon
-            titulo="Qué no afirma este objetivo"
-            resumen="Lo que la línea base no puede sostener, declarado junto al resultado y no en letra pequeña."
-            icono={<AlertTriangle className="h-5 w-5 text-acred-600" />}
-            contador={`${SV.limites.length} límites`}
-          >
-            <ul className="space-y-2.5 text-xs text-slate-600 leading-relaxed max-w-4xl">
-              {SV.limites.map((l) => (
-                <li key={l} className="flex gap-2">
-                  <span className="text-slate-400 shrink-0">·</span>
-                  <span>{l}</span>
-                </li>
-              ))}
-            </ul>
-          </Acordeon>
-        </div>
-
-        {/* 9. Evidencias */}
-        <Acordeon
-          titulo="Carpetas de evidencia"
-          resumen="Una carpeta de Drive por actividad, con los datos y los scripts tal como se entregaron."
-          icono={<FolderOpen className="h-5 w-5 text-gmae-600" />}
-          contador={`${EVIDENCIAS_OE5.length} carpetas`}
-          tono="gris"
-        >
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {EVIDENCIAS_OE5.map((e) => (
-              <a
-                key={e.carpeta}
-                href={e.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-start gap-3 rounded-xl bg-white border border-slate-200 p-4 hover:border-uni-300 transition-colors"
-              >
-                <FolderOpen className="w-4 h-4 text-gmae-600 shrink-0 mt-0.5" />
-                <div className="min-w-0 flex-1">
-                  <p className="text-[10px] font-mono text-slate-500">Actividad {e.n} · {e.formato}</p>
-                  <p className="text-xs font-semibold text-slate-700 leading-snug mt-0.5">{e.entregable}</p>
-                  <p className="text-[11px] leading-relaxed text-slate-500 mt-1">{e.contenido}</p>
-                </div>
-                <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-uni-600 shrink-0" />
-              </a>
-            ))}
-          </div>
-
-          <p className="mt-4 border-t border-slate-200 pt-3 text-[11px] leading-relaxed text-slate-500">
-            {SV.nota} · Trabajo del {EQUIPO.semillero}, {EQUIPO.universidad}. Fallecidos: ANSV,
-            conjunto rs3u-8r4q de datos.gov.co. Tránsito: serie histórica de volúmenes de tránsito
-            de INVÍAS, estaciones 243 y 244, y conjunto 8yi9-t44c de la ANI para el peaje Cocora.
-          </p>
-        </Acordeon>
+        <p className="text-[11px] leading-relaxed text-slate-500">
+          {SV.nota} · Trabajo del {EQUIPO.semillero}, {EQUIPO.universidad}. Fallecidos: ANSV,
+          conjunto rs3u-8r4q de datos.gov.co. Tránsito: serie histórica de volúmenes de tránsito
+          de INVÍAS, estaciones 243 y 244, y conjunto 8yi9-t44c de la ANI para el peaje Cocora.
+        </p>
 
       </div>
     </section>

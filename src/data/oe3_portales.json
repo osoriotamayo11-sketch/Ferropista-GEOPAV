@@ -1,0 +1,93 @@
+{
+ "generado_por": "OE3_Geotecnia/exportar_web_OE3.py",
+ "portales": [
+  {
+   "id": "oriental_Ibague",
+   "nombre": "Portal oriental",
+   "municipio": "Ibagué, Tolima",
+   "lat": 4.364,
+   "lon": -75.196,
+   "cota_msnm": 951.0,
+   "unidad_plancha": {
+    "plancha": "244 Ibagué (1982)",
+    "texto": "Contacto entre PCAn (Neises y Anfibolitas de Tierradentro) y Jcdi (Batolito de Ibagué, granodiorita)"
+   },
+   "unidad_1M": {
+    "simbolo": "P-Pi",
+    "edad": "Pérmico"
+   },
+   "falla_mas_cercana": {
+    "nombre": "(sin nombre)",
+    "tipo": "Falla",
+    "dist_km": 6.3
+   },
+   "nsr10": {
+    "Aa": 0.2,
+    "Av": 0.2,
+    "zona": "Intermedia"
+   },
+   "susceptibilidad_punto": [
+    3
+   ],
+   "amenaza_punto": "Media",
+   "amenaza_3km_pct": {
+    "Alta": 3.8,
+    "Media": 96.2
+   },
+   "amenaza_alta_dist_m": 345,
+   "amenaza_muy_alta_dist_m": null,
+   "inventario_simma_3km": 0,
+   "pendiente_250m": {
+    "media": 16.7,
+    "p90": 31.1,
+    "pct_mayor_25": 27.7
+   },
+   "dist_via_actual_km": 4.5
+  },
+  {
+   "id": "occidental_Calarca",
+   "nombre": "Portal occidental",
+   "municipio": "Calarcá, Quindío",
+   "lat": 4.48,
+   "lon": -75.652,
+   "cota_msnm": 1451.5,
+   "unidad_plancha": {
+    "plancha": "243 Armenia (1985)",
+    "texto": "Borde de un lente de Kqv (Quebradagrande volcánico: diabasas y andesitas) dentro de Kqs (sedimentario: grauvacas, lutitas, chert, calizas)"
+   },
+   "unidad_1M": {
+    "simbolo": "b5k4-VCm",
+    "edad": "Aptiano-Santoniano"
+   },
+   "falla_mas_cercana": {
+    "nombre": "Falla de Silvia-Pijao",
+    "tipo": "Falla cubierta",
+    "dist_km": 1.9
+   },
+   "nsr10": {
+    "Aa": 0.25,
+    "Av": 0.25,
+    "zona": "Alta"
+   },
+   "susceptibilidad_punto": [
+    3,
+    2
+   ],
+   "amenaza_punto": "Media",
+   "amenaza_3km_pct": {
+    "Alta": 19.7,
+    "Media": 74.7,
+    "Muy Alta": 5.6
+   },
+   "amenaza_alta_dist_m": 310,
+   "amenaza_muy_alta_dist_m": 1915,
+   "inventario_simma_3km": 3,
+   "pendiente_250m": {
+    "media": 8.3,
+    "p90": 12.3,
+    "pct_mayor_25": 0.0
+   },
+   "dist_via_actual_km": 5.4
+  }
+ ]
+}

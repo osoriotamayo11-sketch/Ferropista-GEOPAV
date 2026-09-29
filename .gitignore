@@ -57,3 +57,17 @@ originales_imagenes/
 # Crudos ANSV con datos por víctima: no se publican (solo los agregados)
 OE5_SeguridadVial/Act3_Siniestros/Sint_Via_LaLinea_CodTramo_4003_Vigencia_2021_Mar2026.xlsx
 OE5_SeguridadVial/Act3_Siniestros/Resp_20265000140371.pdf
+
+# OE 3: fuentes del SGC descargadas (84 MB; se bajan de nuevo desde el SGC, md5 en el producto de la Act 1)
+OE3_Geotecnia/Act1_Cartografia/Plancha_244_Ibague_mapa.pdf
+OE3_Geotecnia/Act1_Cartografia/Memoria_244_Ibague.pdf
+OE3_Geotecnia/Act1_Cartografia/Plancha_243_Armenia_mapa.pdf
+OE3_Geotecnia/Act1_Cartografia/Resena_243_Armenia.pdf
+# Caché de Python
+__pycache__/
+
+# Fuentes de terceros de la Act 3 del OE 3 (Hoek, Carrillo, NSR-10, Revista EIA)
+OE3_Geotecnia/Act3_Parametros/Fuentes/*.pdf
+
+# Fuentes de terceros de la Act 4 del OE 3 (USACE EM 1110-1-1905, FHWA NHI-06-088 y 089; md5 en el script)
+OE3_Geotecnia/Act4_Capacidad/Fuentes/*.pdf

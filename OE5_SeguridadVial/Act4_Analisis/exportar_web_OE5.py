@@ -87,6 +87,39 @@ x = np.round(np.arange(0, fin + 1e-9, 0.25), 2)
 kmh = np.array([float(h["km"]) for h in hechos])
 dens = np.exp(-0.5 * ((x[:, None] - kmh[None, :]) / BW) ** 2).sum(1) / (BW * np.sqrt(2 * np.pi))
 
+# Vía actual (sesión 16): tramos simplificados a 0,0003° (≈ 33 m) con Douglas-Peucker, suficiente a la escala del mapa web.
+from shapely.geometry import LineString
+_via = json.load(open(os.path.join(os.path.dirname(OE1), "OE2_Plataforma", "Act2_Visor", "via_actual_ruta40.geojson"), encoding="utf-8"))
+via = [{"tunel": f["properties"]["tunel"],
+        "coords": [[round(x, 5), round(y, 5)] for x, y in LineString(f["geometry"]["coordinates"]).simplify(0.0003).coords]}
+       for f in _via["features"]]
+
+# Densidad de hechos A LO LARGO DE LA VÍA (sesión 16): el «mapa de calor» sobre la línea donde ocurren los
+# hechos, no en manchas 2-D sobre la montaña. Mismo núcleo gaussiano y banda (BW) que la franja lineal [H].
+# Cada hecho del microdato se proyecta sobre la vía actual (OSM); los que caen a más de 700 m de ella
+# no se proyectan y se reportan como excluidos.
+_KX, _KY = 111320 * np.cos(np.radians(4.45)), 110574.0
+_coords = []
+for f in _via["features"]:
+    c = f["geometry"]["coordinates"]; _coords += c if not _coords else c[1:]
+_linea_m = LineString([(x * _KX, y * _KY) for x, y in _coords])
+from shapely.geometry import Point as _Pt
+_s, _excl = [], 0
+for h in hechos:
+    p = _Pt(float(h["lon"]) * _KX, float(h["lat"]) * _KY)
+    if _linea_m.distance(p) <= 700: _s.append(_linea_m.project(p))
+    else: _excl += 1
+_s = np.array(_s); _L = _linea_m.length; _paso = 250.0
+_cortes = np.arange(0, _L + _paso, _paso); _cortes[-1] = min(_cortes[-1], _L)
+_tramos = []
+for a0, a1 in zip(_cortes[:-1], _cortes[1:]):
+    m = (a0 + a1) / 2
+    d = float(np.exp(-0.5 * ((m - _s) / (BW * 1000)) ** 2).sum() / (BW * np.sqrt(2 * np.pi)))   # hechos/km
+    p0, p1 = _linea_m.interpolate(a0), _linea_m.interpolate(a1)
+    _tramos.append({"c": [[round(p0.x / _KX, 5), round(p0.y / _KY, 5)], [round(p1.x / _KX, 5), round(p1.y / _KY, 5)]], "d": round(d, 3)})
+via_densidad = {"bw_km": BW, "paso_m": _paso, "hechos_usados": int(len(_s)), "hechos_excluidos_mas_de_700m": _excl,
+                "max": round(max(t["d"] for t in _tramos), 3), "tramos": _tramos}
+
 salida = {
     "_fuente": "Generado por OE5_SeguridadVial/Act4_Analisis/exportar_web_OE5.py. NO editar a mano.",
     "corredor": {"bounds": relieve(CORREDOR, 1400, os.path.join(PUB, "relieve_corredor.jpg")),
@@ -94,6 +127,8 @@ salida = {
     "descenso": {"bounds": relieve(DESCENSO, 900, os.path.join(PUB, "relieve_descenso.jpg")),
                  "img": "/oe5/relieve_descenso.jpg"},
     "trazado": trazado,
+    "via": via,
+    "via_densidad": via_densidad,   # [CP] densidad de hechos del microdato ANSV 2021–mar 2026 sobre la vía actual   # vía actual, Ruta 40 [F, OpenStreetMap ODbL] — OE2_Plataforma/Act2_Visor/via_actual_ruta40.py
     "portales": {"oriental": trazado[0], "occidental": trazado[-1]},
     "sectores": sectores,
     "microdato": {

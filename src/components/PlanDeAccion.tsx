@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   ClipboardList, Target, CalendarDays, User, CheckCircle2, Circle, Loader2,
-  ChevronDown, FileText, AlertTriangle, Globe,
+  ChevronDown, FileText, AlertTriangle, Globe, FolderOpen,
 } from 'lucide-react';
 import {
   PLAN_ACCION, OBJETIVO_GENERAL, BLOQUES, NOTA_PARALELISMO, ODS, LIMITACIONES,
@@ -95,6 +95,19 @@ const TarjetaObjetivo: React.FC<{ oe: ObjetivoEspecifico }> = ({ oe }) => {
                     <FileText className="w-3 h-3" />
                     {a.entregable} · {a.formato}
                   </span>
+                  {a.drive ? (
+                    <a
+                      href={a.drive}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 font-sans font-semibold text-uni-600 hover:text-uni-700"
+                    >
+                      <FolderOpen className="w-3 h-3 shrink-0" />
+                      Carpeta de evidencia
+                    </a>
+                  ) : a.estado !== 'pendiente' ? (
+                    <span className="text-slate-400">Evidencia por publicar</span>
+                  ) : null}
                 </div>
               </div>
               <div className="shrink-0"><Badge estado={a.estado} /></div>

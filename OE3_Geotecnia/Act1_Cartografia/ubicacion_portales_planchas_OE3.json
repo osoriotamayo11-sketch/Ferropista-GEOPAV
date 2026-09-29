@@ -1,0 +1,116 @@
+{
+  "244": {
+    "portal": "oriental_Ibague",
+    "lon": -75.196,
+    "lat": 4.364,
+    "epsg": 3116,
+    "E": 875841,
+    "N": 974415,
+    "lineas_E_pt": [
+      398.0,
+      539.5,
+      681.0,
+      822.75,
+      964.75,
+      1106.5,
+      1248.0,
+      1389.5
+    ],
+    "lineas_N_pt": [
+      312.0,
+      453.5,
+      595.0,
+      736.75,
+      878.0,
+      1020.5,
+      1161.5
+    ],
+    "escala_pt_km": [
+      28.329,
+      28.317
+    ],
+    "E_primera_linea": 840000,
+    "N_primera_linea": 995000,
+    "residuo_max_meridianos_pt": 3.0,
+    "residuo_max_paralelos_pt": 2.5,
+    "portal_pt": [
+      1413.3,
+      894.9
+    ],
+    "control_meridianos": [
+      {
+        "meridiano": "75°30'0\"W",
+        "x_calculado_pt": 458.0,
+        "x_rotulo_pt": 456.1
+      },
+      {
+        "meridiano": "75°20'0\"W",
+        "x_calculado_pt": 982.1,
+        "x_rotulo_pt": 980.5
+      },
+      {
+        "meridiano": "75°10'0\"W",
+        "x_calculado_pt": 1506.2,
+        "x_rotulo_pt": 1503.2
+      }
+    ],
+    "px_por_km_recorte": 113.3,
+    "nota_control": "x_rotulo_pt es el inicio (xMin) del texto del rótulo; un desfase igual en todos los meridianos indica anclaje del texto, no error de escala."
+  },
+  "243": {
+    "portal": "occidental_Calarca",
+    "lon": -75.652,
+    "lat": 4.48,
+    "epsg": 3115,
+    "E": 1158221,
+    "N": 987304,
+    "lineas_E_pt": [
+      254.75,
+      396.5,
+      537.5,
+      679.0,
+      820.5,
+      961.5,
+      1103.0,
+      1244.5,
+      1385.5,
+      1527.0
+    ],
+    "lineas_N_pt": [
+      285.75,
+      427.25,
+      568.75,
+      709.75,
+      851.25,
+      992.25,
+      1133.75,
+      1274.75
+    ],
+    "escala_pt_km": [
+      28.272,
+      28.257
+    ],
+    "E_primera_linea": 1120000,
+    "N_primera_linea": 995000,
+    "residuo_max_meridianos_pt": 11.6,
+    "residuo_max_paralelos_pt": 0.6,
+    "portal_pt": [
+      1335.4,
+      503.2
+    ],
+    "control_meridianos": [
+      {
+        "meridiano": "75°50'0\"W",
+        "x_calculado_pt": 766.1,
+        "x_rotulo_pt": 754.6
+      },
+      {
+        "meridiano": "75°40'0\"W",
+        "x_calculado_pt": 1289.2,
+        "x_rotulo_pt": 1277.6
+      }
+    ],
+    "px_por_km_recorte": 113.1,
+    "nota_control": "x_rotulo_pt es el inicio (xMin) del texto del rótulo; un desfase igual en todos los meridianos indica anclaje del texto, no error de escala."
+  }
+}

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 OE 5 - Memoria metodologica de la cuantificacion de la siniestralidad vial.
-Producto: Memoria_metodologica_OE5_siniestralidad_rev4.pdf
+Producto: Memoria_metodologica_OE5_siniestralidad_rev5.pdf
 
 REVISION 4 (23 sep 2026): incorpora el microdato georreferenciado que la ANSV entrego por
 solicitud (oficio 20265000140371). Las revisiones 1 a 3 no tenian script generador en el
@@ -45,7 +45,14 @@ ACT1 = os.path.join(OE5, "Act1_Aforos")
 ACT3 = os.path.join(OE5, "Act3_Siniestros")
 ACT4 = os.path.join(OE5, "Act4_Analisis")
 VIS = os.path.join(OE5, "Visuales")
-SALIDA = os.path.join(BASE, "Memoria_metodologica_OE5_siniestralidad_rev4.pdf")
+SALIDA = os.path.join(BASE, "Memoria_metodologica_OE5_siniestralidad_rev5.pdf")
+
+def _alto(ruta, ancho):
+    """Alto proporcional de una lámina: se lee del PNG, no se escribe a mano (las láminas cambian de tamaño)."""
+    from PIL import Image as _PI
+    with _PI.open(ruta) as _im:
+        return ancho * _im.height / _im.width
+
 RAIZ = os.path.dirname(OE5)
 LOGO_U = os.path.join(RAIZ, "public", "logo-unibague.png")
 LOGO_G = os.path.join(RAIZ, "public", "logo-geopav.png")
@@ -287,13 +294,13 @@ def portada(canv, doc):
     tit = Paragraph("Memoria metodológica: cuantificación de la siniestralidad vial",
                     ParagraphStyle("pt", fontName=F_BOLD, fontSize=26, leading=32, textColor=AZUL))
     w, h = tit.wrap(W - 2 * MARGEN, 100 * mm); tit.drawOn(canv, MARGEN, H - 88 * mm - h)
-    sub = Paragraph("Corredor de análisis Ibagué – Calarcá, Ruta Nacional 40 · Revisión 4",
+    sub = Paragraph("Corredor de análisis Ibagué – Calarcá, Ruta Nacional 40 · Revisión 5",
                     ParagraphStyle("ps", fontName=F_REG, fontSize=14, leading=19, textColor=GRIS))
     w2, h2 = sub.wrap(W - 2 * MARGEN, 30 * mm); sub.drawOn(canv, MARGEN, H - 96 * mm - h - h2)
     ficha = [("Objetivo específico", "OE 5 — Volúmenes de tránsito de vehículos pesados e índices de siniestralidad del paso de La Línea"),
              ("Actividades que respalda", "Act 1 a Act 5"),
              ("Responsable asignado", "Castaño Cifuentes Maicol Stiven"),
-             ("Revisión", "4 · incorpora el microdato ANSV 2021 – mar 2026 (oficio 20265000140371)")]
+             ("Revisión", "5 · lámina del anexo con formato institucional y vía actual; contenido de la revisión 4 sin cambios")]
     t = Table([[Paragraph(f"<b>{k}</b>", CELDA), Paragraph(v, CELDA)] for k, v in ficha],
               colWidths=[52 * mm, W - 2 * MARGEN - 52 * mm])
     t.setStyle(TableStyle([("BACKGROUND", (0, 0), (0, -1), FONDO), ("LINEBELOW", (0, 0), (-1, -1), 0.4, LINEA),
@@ -329,7 +336,7 @@ def construir_documento(cuerpo_fn):
         CONT.update({"T": 0, "F": 0, "A": 0})
         doc = Doc(SALIDA, pagesize=LETRA, leftMargin=MARGEN, rightMargin=MARGEN,
                   topMargin=32 * mm, bottomMargin=25 * mm,
-                  title="Memoria metodológica - OE 5 - Semillero GEOPAV (rev. 4)",
+                  title="Memoria metodológica - OE 5 - Semillero GEOPAV (rev. 5)",
                   author="Semillero de Investigación GEOPAV - Universidad de Ibagué", invariant=1)
         doc.semilla = previo
         fr = Frame(doc.leftMargin, doc.bottomMargin, doc.width, doc.height, id="f")
@@ -393,7 +400,8 @@ def cuerpo(doc):
              [C("1"), C("2 sep 2026"), C("Versión inicial: concluía que la tasa no era publicable.")],
              [C("2"), C("9 sep 2026"), C("Tasa publicable con la serie histórica de INVÍAS. Ver sección 0.1.")],
              [C("3"), C("16 sep 2026"), C("Presentación corregida según el tutor. Sin cambios de contenido.")],
-             [C("<b>4</b>"), C("<b>23 sep 2026</b>"), C("<b>Incorpora el microdato ANSV 2021 – marzo 2026. Ver sección 0.2.</b>")]],
+             [C("4"), C("23 sep 2026"), C("Incorpora el microdato ANSV 2021 – marzo 2026. Ver sección 0.2.")],
+             [C("<b>5</b>"), C("<b>26 sep 2026</b>"), C("<b>Lámina del anexo con encabezado institucional y la vía actual (Ruta 40, OpenStreetMap) en el mapa. Sin cambios de contenido.</b>")]],
             [22 * mm, 28 * mm, doc.width - 50 * mm]))
     A(fuente("elaboración propia del semillero."))
     A(Paragraph("Marcas de origen usadas en todo el documento — <b>F</b>: cifra tomada de una fuente externa, "
@@ -790,12 +798,12 @@ def cuerpo(doc):
     tf = f"Figura {CONT['F']}. Densidad lineal de siniestros georreferenciados, Ruta 4003, 2021 – marzo 2026"
     A(Marca("F", tf))
     A(Paragraph(tf, ParagraphStyle("TF", parent=TIT_TABLA, alignment=1)))
-    A(Image(lam, width=doc.width, height=doc.width * 1880 / 3100))
+    A(Image(lam, width=doc.width, height=_alto(lam, doc.width)))
     A(Paragraph("Fuente: ANSV, oficio 20265000140371 (solicitud de D. Torrente); figura generada por "
                 "Act4_Analisis/densidad_lineal_OE5.py [CP]. Muestra dónde se pudo georreferenciar, no dónde está el "
                 "riesgo.", ParagraphStyle("FF", parent=FUENTE, alignment=1)))
     A(Spacer(1, 14))
-    A(Paragraph("<i>Nota de elaboración: la revisión 3 corrigió la presentación según el tutor. La revisión 4 incorpora "
+    A(Paragraph("<i>Nota de elaboración: la revisión 3 corrigió la presentación según el tutor; la revisión 5 solo actualiza la lámina del anexo. La revisión 4 incorpora "
                 "el microdato georreferenciado que la ANSV entregó por solicitud, la densidad lineal y la tasa "
                 "posterior al túnel como cota inferior, y corrige la mención a los «seis sectores» del paso. Ambas "
                 "contaron con apoyo de un asistente de inteligencia artificial (Claude, de Anthropic); el semillero "

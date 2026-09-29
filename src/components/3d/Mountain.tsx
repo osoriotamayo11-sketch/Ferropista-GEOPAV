@@ -129,15 +129,15 @@ function Trees({ data }: { data: TreeData[] }) {
 
   return (
     <group>
-      <instancedMesh ref={trunk} args={[undefined, undefined, data.length]} castShadow>
+      <instancedMesh ref={trunk} args={[undefined, undefined, data.length]}>
         <cylinderGeometry args={[0.05, 0.08, 0.4, 5]} />
         <meshStandardMaterial color="#5D4037" roughness={0.9} />
       </instancedMesh>
-      <instancedMesh ref={coneLow} args={[undefined, undefined, data.length]} castShadow>
+      <instancedMesh ref={coneLow} args={[undefined, undefined, data.length]}>
         <coneGeometry args={[0.4, 0.6, 5]} />
         <meshStandardMaterial color="#2E7D32" roughness={0.8} flatShading />
       </instancedMesh>
-      <instancedMesh ref={coneTop} args={[undefined, undefined, data.length]} castShadow>
+      <instancedMesh ref={coneTop} args={[undefined, undefined, data.length]}>
         <coneGeometry args={[0.3, 0.5, 5]} />
         <meshStandardMaterial color="#388E3C" roughness={0.8} flatShading />
       </instancedMesh>
@@ -230,7 +230,7 @@ export default function Mountain({
 
   return (
     <group>
-      <mesh geometry={geometry} receiveShadow castShadow>
+      <mesh geometry={geometry}>
         {[...Array(6)].map((_, i) => (
           <meshStandardMaterial
             key={i}

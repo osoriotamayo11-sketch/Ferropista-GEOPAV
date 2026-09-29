@@ -1,0 +1,162 @@
+{
+  "portales": {
+    "oriental_Ibague": {
+      "lon": -75.196,
+      "lat": 4.364,
+      "amenaza_100k_en_punto": [
+        {
+          "CATAME": "Media",
+          "PLANCHA": "244",
+          "MAPA": "Zonificacion de la susceptibilidad y amenaza relativa de la plancha 244"
+        }
+      ],
+      "amenaza_100k_3km": {
+        "Alta": {
+          "dist_m": 345,
+          "area_pct": 3.8
+        },
+        "Media": {
+          "dist_m": 0,
+          "area_pct": 96.2
+        }
+      },
+      "susceptibilidad_100k_en_punto": [
+        {
+          "SUSMM": 3,
+          "LEYENDA": "Area en susceptibilidad Media de la plancha 244 = 67,97",
+          "PLANCHA": "244",
+          "MAPA": "Zonificacion de la susceptibilidad y la amenaza relativa de la plancha 244"
+        }
+      ],
+      "geomorfologia_100k_en_punto": [
+        {
+          "CODGMF": "Dldeml",
+          "UNIGMF": "Lomo denudado moderado de longitud larga"
+        },
+        {
+          "CODGMF": "Dsd",
+          "UNIGMF": "Sierra denudada"
+        }
+      ],
+      "inventario_simma_3km": [],
+      "resumen_municipal_amenaza_100k_pct_area": [
+        {
+          "CATEGORIA": "M",
+          "AREA_KM": 1377.78764339,
+          "CODIGO_DAN": "73001",
+          "DEPARTAMEN": "Tolima",
+          "MUNICIPIO": "Ibagué",
+          "SUM_BAJA": 0.0,
+          "SUM_MEDIA": 60.19810391,
+          "SUM_ALTA": 37.92331776,
+          "SUM_MUY_AL": 1.87858026
+        }
+      ],
+      "consultado": "2026-09-25T22:47:04"
+    },
+    "occidental_Calarca": {
+      "lon": -75.652,
+      "lat": 4.48,
+      "amenaza_100k_en_punto": [
+        {
+          "CATAME": "Media",
+          "PLANCHA": "243",
+          "MAPA": "Zonificacion de la susceptibilidad y la amenaza relativa de la plancha 243"
+        }
+      ],
+      "amenaza_100k_3km": {
+        "Alta": {
+          "dist_m": 310,
+          "area_pct": 19.7
+        },
+        "Media": {
+          "dist_m": 0,
+          "area_pct": 74.7
+        },
+        "Muy Alta": {
+          "dist_m": 1915,
+          "area_pct": 5.6
+        }
+      },
+      "susceptibilidad_100k_en_punto": [
+        {
+          "SUSMM": 3,
+          "LEYENDA": "Area en susceptibilidad Media en la plancha 243 = 66,25%",
+          "PLANCHA": "243",
+          "MAPA": "Zonificacion de la susceptibilidad y la amenaza relativa de la plancha 243"
+        },
+        {
+          "SUSMM": 2,
+          "LEYENDA": "Area en susceptibilidad Baja en la plancha 243 = 1,86%",
+          "PLANCHA": "243",
+          "MAPA": "Zonificacion de la susceptibilidad y la amenaza relativa de la plancha 243"
+        }
+      ],
+      "geomorfologia_100k_en_punto": [
+        {
+          "CODGMF": "Dle",
+          "UNIGMF": "Ladera erosiva"
+        }
+      ],
+      "inventario_simma_3km": [
+        {
+          "INV_MOVIMIENTO_MASA_ID": 26393,
+          "TIPO": "Deslizamiento",
+          "SUBTIPO": "Deslizamiento rotacional",
+          "dist_km": 2.07
+        },
+        {
+          "INV_MOVIMIENTO_MASA_ID": 26397,
+          "TIPO": "Deslizamiento",
+          "SUBTIPO": "Deslizamiento rotacional",
+          "dist_km": 2.84
+        },
+        {
+          "INV_MOVIMIENTO_MASA_ID": 26392,
+          "TIPO": "Deslizamiento",
+          "SUBTIPO": "Deslizamiento rotacional",
+          "dist_km": 2.84
+        }
+      ],
+      "resumen_municipal_amenaza_100k_pct_area": [
+        {
+          "CATEGORIA": "M",
+          "AREA_KM": 218.91784198,
+          "CODIGO_DAN": "63130",
+          "DEPARTAMEN": "Quindío",
+          "MUNICIPIO": "Calarcá",
+          "SUM_BAJA": 0.05716862,
+          "SUM_MEDIA": 64.15518617,
+          "SUM_ALTA": 28.05396717,
+          "SUM_MUY_AL": 7.73263646
+        }
+      ],
+      "quindio_suelo_geotecnico": [
+        {
+          "NOMBRE": "CONSOCIACION ARMENIA CI",
+          "TAXONOMIA": "Typic Hapludands",
+          "ORDEN_SUEL": "Andisol",
+          "SIST_UNIFI": "Arcillo Arenoso",
+          "SIMB_UNIFI": "CL-SC",
+          "PRJE_PARTI": "Con menos del 60% pero mas del 35% de arcilla",
+          "PROFUNDIDA": "Muy profundo",
+          "RANG_PROF": "77-150X",
+          "LIMITANTES": "Sin Limitaciones",
+          "COBERTURA": "Cultivos"
+        }
+      ],
+      "quindio_geologia_cod": [
+        {
+          "DXF_TEXT": "Strc1",
+          "COD": "Strc1"
+        }
+      ],
+      "quindio_geomorfologia_cod": [
+        {
+          "COD": "Dco"
+        }
+      ],
+      "consultado": "2026-09-25T22:48:43"
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+ "generado_por": "OE2_Plataforma/Act2_Visor/etiquetas_municipios.py",
+ "metodo": "polylabel del polígono recortado al relieve, sin franja de 1,5 km alrededor del trazado y la vía",
+ "etiquetas": [
+  {
+   "nombre": "Cajamarca",
+   "rol": "estudio",
+   "lon": -75.52891,
+   "lat": 4.37137,
+   "fuera_de_franja": true
+  },
+  {
+   "nombre": "Ibagué",
+   "rol": "estudio",
+   "lon": -75.32514,
+   "lat": 4.50656,
+   "fuera_de_franja": true
+  },
+  {
+   "nombre": "Calarcá",
+   "rol": "estudio",
+   "lon": -75.68358,
+   "lat": 4.45335,
+   "fuera_de_franja": true
+  },
+  {
+   "nombre": "Armenia",
+   "rol": "contexto",
+   "lon": -75.72039,
+   "lat": 4.51084,
+   "fuera_de_franja": true
+  },
+  {
+   "nombre": "Salento",
+   "rol": "contexto",
+   "lon": -75.5414,
+   "lat": 4.61903,
+   "fuera_de_franja": true
+  }
+ ]
+}

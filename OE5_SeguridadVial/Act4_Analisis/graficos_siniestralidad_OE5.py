@@ -41,6 +41,10 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
+import sys
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "Comun"))
+from lamina_institucional import encabezado, pie, dibujar_via, FUENTE_VIA  # marco común (sesión 16)
+
 import rasterio
 from matplotlib.colors import LightSource, LinearSegmentedColormap
 from matplotlib.lines import Line2D
@@ -107,7 +111,7 @@ if os.path.exists(LIBRO):
         print(f"control OK: figura y libro coinciden ({TASA_CORR:.2f} y {TASA_PASO:.2f})")
 
 # ------------------------------------------------------------------ lienzo
-fig = plt.figure(figsize=(15.5, 8.2), dpi=200)
+fig = plt.figure(figsize=(15.5, 9.9), dpi=200)
 fig.patch.set_facecolor("white")
 gs = fig.add_gridspec(2, 2, width_ratios=[1.30, 1], height_ratios=[1.32, 1],
                       wspace=0.15, hspace=0.30, left=0.04, right=0.975, top=0.855, bottom=0.075)
@@ -149,6 +153,7 @@ for f in lim["features"]:
 xy = np.array(tra["features"][0]["geometry"]["coordinates"])
 axm.plot(xy[:, 0], xy[:, 1], color="white", lw=5.5, solid_capstyle="round", zorder=3)
 axm.plot(xy[:, 0], xy[:, 1], color=AZUL, lw=2.6, solid_capstyle="round", zorder=3.1)
+h_via = dibujar_via(axm, lw=1.3, z=2.8)
 for p, et, dy in [(xy[0], "Portal oriental\nIbagué · 951 msnm", -0.028),
                   (xy[-1], "Portal occidental\nCalarcá · 1.451 msnm", -0.028)]:
     axm.plot(*p, "o", ms=9, color=AZUL, mec="white", mew=2.2, zorder=4)
@@ -175,6 +180,7 @@ axz.imshow(dem, extent=(ext[0], ext[2], ext[1], ext[3]), origin="upper",
            cmap=rampa, interpolation="bilinear")
 axz.imshow(sombra, extent=(ext[0], ext[2], ext[1], ext[3]), origin="upper",
            cmap="gray", alpha=0.5, interpolation="bilinear")
+dibujar_via(axz, lw=2.2, z=2.8)
 # Seis puntos en 3,5 km, y dos pares casi superpuestos (los dos PR 85 distan ~200 m).
 # Rotularlos sobre el mapa colisiona siempre, asi que van numerados y la identidad
 # completa se lee en la lista de al lado: el color nunca es el unico portador.
@@ -249,7 +255,7 @@ axm.annotate("Seis sectores críticos de la vía actual,\ntodos en el descenso h
              arrowprops=dict(arrowstyle="-", color=SUAVE, lw=0.9,
                              connectionstyle="arc3,rad=0.18"))
 axm.annotate("Trazado propuesto del túnel de base",
-             xy=(xy[len(xy) // 2][0], xy[len(xy) // 2][1]), xytext=(-75.45, 4.352),
+             xy=(xy[len(xy) // 2][0], xy[len(xy) // 2][1]), xytext=(-75.36, 4.352),
              fontsize=8.8, color=AZUL, weight="bold", ha="center", zorder=7,
              arrowprops=dict(arrowstyle="-", color=AZUL, lw=0.9, alpha=0.7,
                              connectionstyle="arc3,rad=-0.2"))
@@ -268,7 +274,7 @@ leyenda = [
            label="Sector crítico · 95 % de confianza"),
     Line2D([], [], color=AZUL, lw=2.6, label="Trazado del túnel (OE 1)"),
 ]
-lg = axm.legend(handles=leyenda, loc="upper right", frameon=True, fontsize=8.3,
+lg = axm.legend(handles=leyenda + h_via, loc="lower left", frameon=True, fontsize=8.3,
                 framealpha=0.94, edgecolor="#CBD5E1", borderpad=0.7, handletextpad=0.9)
 lg.get_frame().set_linewidth(0.6)
 axm.set_title("Dónde muere la gente hoy, y por dónde pasaría el túnel", fontsize=12.5,
@@ -335,12 +341,11 @@ axt.text(0, 0.285,
 axt.set_xlim(0, 1)
 axt.set_ylim(0, 1)
 
-fig.suptitle("Objetivo específico 5 · Siniestralidad de la carga pesada en el paso del Alto de La Línea",
-             fontsize=15, weight="bold", color=TINTA, x=0.04, ha="left", y=0.962)
-fig.text(0.04, 0.925,
-         "Semillero de Investigación GEOPAV · Universidad de Ibagué · Paz y Región 2026B   |   "
-         "Fallecidos: ANSV rs3u-8r4q 2015–2019 [F] · Tránsito: INVÍAS serie histórica [F] · Tasas [CP]",
-         fontsize=8.6, color=SUAVE)
+arriba = encabezado(fig, "Siniestralidad de la carga pesada en el paso del Alto de La Línea — OE 5",
+                    "Semillero GEOPAV, Universidad de Ibagué · Paz y Región 2026B")
+abajo = pie(fig, "Fallecidos: ANSV, conjunto rs3u-8r4q, 2015–2019 [F] · Tránsito: INVÍAS, serie histórica de TPD [F] · Tasas: cálculo propio [CP]. "
+            "Relieve: Copernicus DEM GLO-30. " + FUENTE_VIA + ".\nScripts: graficos_siniestralidad_OE5.py. Elaborado con apoyo de IA (Claude) y verificado contra las fuentes citadas.")
+gs.update(top=arriba - 0.06, bottom=abajo + 0.045)
 
 os.makedirs(VIS, exist_ok=True)
 # El PNG ya sale determinista; el PDF de matplotlib embebe CreationDate y cambiaria de

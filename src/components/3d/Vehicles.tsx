@@ -31,11 +31,11 @@ export const CAR_COLORS = [
 export function Car({ color = '#6B9DC2' }: { color?: string }) {
   return (
     <group>
-      <mesh castShadow>
+      <mesh>
         <boxGeometry args={[0.5, 0.18, 0.24]} />
         <meshStandardMaterial color={color} roughness={0.6} metalness={0.2} />
       </mesh>
-      <mesh position={[0.02, 0.14, 0]} castShadow>
+      <mesh position={[0.02, 0.14, 0]}>
         <boxGeometry args={[0.24, 0.13, 0.22]} />
         <meshStandardMaterial color={color} roughness={0.6} metalness={0.2} />
       </mesh>
@@ -44,7 +44,7 @@ export function Car({ color = '#6B9DC2' }: { color?: string }) {
         <meshStandardMaterial color="#D1E0ED" transparent opacity={0.7} roughness={0.1} metalness={0.3} side={THREE.DoubleSide} />
       </mesh>
       {[-0.15, 0.15].map((wx) => (
-        <mesh key={wx} position={[wx, -0.1, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow>
+        <mesh key={wx} position={[wx, -0.1, 0]} rotation={[Math.PI / 2, 0, 0]}>
           <cylinderGeometry args={[0.06, 0.06, 0.28, 8]} />
           <meshStandardMaterial color="#2D3748" roughness={0.9} />
         </mesh>
@@ -57,11 +57,11 @@ export function Car({ color = '#6B9DC2' }: { color?: string }) {
 export function Truck({ bodyColor = '#C07B52', cabColor = '#D4956A' }: { bodyColor?: string; cabColor?: string }) {
   return (
     <group>
-      <mesh position={[-0.15, 0.05, 0]} castShadow>
+      <mesh position={[-0.15, 0.05, 0]}>
         <boxGeometry args={[0.65, 0.32, 0.28]} />
         <meshStandardMaterial color={bodyColor} roughness={0.7} metalness={0.1} />
       </mesh>
-      <mesh position={[0.32, 0, 0]} castShadow>
+      <mesh position={[0.32, 0, 0]}>
         <boxGeometry args={[0.28, 0.28, 0.26]} />
         <meshStandardMaterial color={cabColor} roughness={0.6} metalness={0.15} />
       </mesh>
@@ -70,7 +70,7 @@ export function Truck({ bodyColor = '#C07B52', cabColor = '#D4956A' }: { bodyCol
         <meshStandardMaterial color="#D1E0ED" transparent opacity={0.7} roughness={0.1} metalness={0.3} side={THREE.DoubleSide} />
       </mesh>
       {[-0.32, -0.08, 0.22, 0.38].map((wx) => (
-        <mesh key={wx} position={[wx, -0.14, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow>
+        <mesh key={wx} position={[wx, -0.14, 0]} rotation={[Math.PI / 2, 0, 0]}>
           <cylinderGeometry args={[0.07, 0.07, 0.32, 8]} />
           <meshStandardMaterial color="#1A202C" roughness={0.9} />
         </mesh>
@@ -87,11 +87,11 @@ export function Truck({ bodyColor = '#C07B52', cabColor = '#D4956A' }: { bodyCol
 export function Locomotive() {
   return (
     <group>
-      <mesh castShadow>
+      <mesh>
         <boxGeometry args={[1.4, 0.45, 0.38]} />
         <meshStandardMaterial color="#4A6E8B" roughness={0.5} metalness={0.3} />
       </mesh>
-      <mesh position={[-0.45, 0.28, 0]} castShadow>
+      <mesh position={[-0.45, 0.28, 0]}>
         <boxGeometry args={[0.45, 0.22, 0.36]} />
         <meshStandardMaterial color="#3A5872" roughness={0.5} metalness={0.3} />
       </mesh>
@@ -104,7 +104,7 @@ export function Locomotive() {
         <meshStandardMaterial color="#F5E6C8" emissive="#F5E6C8" emissiveIntensity={0.5} />
       </mesh>
       {[-0.45, -0.15, 0.1, 0.35].map((wx) => (
-        <mesh key={wx} position={[wx, -0.26, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow>
+        <mesh key={wx} position={[wx, -0.26, 0]} rotation={[Math.PI / 2, 0, 0]}>
           <cylinderGeometry args={[0.09, 0.09, 0.42, 8]} />
           <meshStandardMaterial color="#1F2937" roughness={0.9} />
         </mesh>
@@ -120,7 +120,7 @@ export function Locomotive() {
 export function Wagon({ children }: { children?: ReactNode }) {
   return (
     <group>
-      <mesh castShadow>
+      <mesh>
         <boxGeometry args={[1.5, 0.1, 0.38]} />
         <meshStandardMaterial color="#7B8C9A" roughness={0.7} metalness={0.15} />
       </mesh>
@@ -129,7 +129,7 @@ export function Wagon({ children }: { children?: ReactNode }) {
         <meshStandardMaterial color="#B0B8C2" roughness={0.8} />
       </mesh>
       {[-0.45, -0.12, 0.12, 0.45].map((wx) => (
-        <mesh key={wx} position={[wx, -0.09, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow>
+        <mesh key={wx} position={[wx, -0.09, 0]} rotation={[Math.PI / 2, 0, 0]}>
           <cylinderGeometry args={[0.07, 0.07, 0.42, 8]} />
           <meshStandardMaterial color="#1F2937" roughness={0.9} />
         </mesh>

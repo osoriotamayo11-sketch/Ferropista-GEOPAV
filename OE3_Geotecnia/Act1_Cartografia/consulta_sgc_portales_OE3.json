@@ -1,0 +1,329 @@
+{
+  "generado": "2026-09-25T22:11:53",
+  "portales": {
+    "oriental_Ibague": {
+      "lon": -75.196,
+      "lat": 4.364,
+      "unidad_bajo_portal": [
+        {
+          "SimboloUC": "P-Pi",
+          "Edad": "Pérmico",
+          "Descripcion": "Granodioritas que varían de sienogranitos a tonalitas y de cuarzomonzonitas a cuarzomonzodioritas"
+        }
+      ],
+      "unidades_5km": [
+        {
+          "SimboloUC": "P-Pi",
+          "Edad": "Pérmico",
+          "Descripcion": "Granodioritas que varían de sienogranitos a tonalitas y de cuarzomonzonitas a cuarzomonzodioritas"
+        },
+        {
+          "SimboloUC": "Q-vc",
+          "Edad": "Cuaternario",
+          "Descripcion": "Flujos volcanoclásticos constituidos por piroclastos y epiclastos de composición andesítica"
+        }
+      ],
+      "fallas_10km": [
+        {
+          "nombre": "(sin nombre)",
+          "tipo": "Falla",
+          "dist_km": 6.3
+        },
+        {
+          "nombre": "Falla de Ibagué",
+          "tipo": "Falla de rumbo dextral",
+          "dist_km": 7.5
+        }
+      ],
+      "nsr10": [
+        {
+          "NOMBRE_MUNICIPIO": "IBAGUÉ",
+          "CÓDIGO_MUNICIPIO": "73001",
+          "AA": 0.2,
+          "AV": 0.2,
+          "AE": 0.15,
+          "AD": 0.08,
+          "ZONA_AMENAZA_SÍSMICA": "Intermedia"
+        }
+      ],
+      "dataciones_UPb_20km": [
+        {
+          "dist_km": 4.5,
+          "unidad": "Complejo Cajamarca",
+          "litologia": "Metagranito",
+          "edad_Ma": "277,6",
+          "error_Ma": "± 1,6",
+          "metodo": "U–Pb LA–ICP–MS",
+          "referencia": "Cochrane (2013)"
+        },
+        {
+          "dist_km": 7.6,
+          "unidad": "Formación Saldaña",
+          "litologia": "Riodacita",
+          "edad_Ma": "158,5",
+          "error_Ma": "± 1,0",
+          "metodo": "U–Pb LA–ICP–MS",
+          "referencia": "Cochrane (2013)"
+        },
+        {
+          "dist_km": 7.6,
+          "unidad": "Batolito de Ibagué",
+          "litologia": "Granito",
+          "edad_Ma": "164,4",
+          "error_Ma": "± 1,1",
+          "metodo": "U–Pb LA–ICP–MS",
+          "referencia": "Cochrane (2013)"
+        },
+        {
+          "dist_km": 9.4,
+          "unidad": "Batolito de Ibagué",
+          "litologia": "Granodiorita",
+          "edad_Ma": "166",
+          "error_Ma": "± 10,0",
+          "metodo": "U–Pb LA–ICP–MS",
+          "referencia": "Villagómez et al. (2011a)"
+        },
+        {
+          "dist_km": 9.4,
+          "unidad": "Complejo Cajamarca",
+          "litologia": "Metagranito",
+          "edad_Ma": "275,8",
+          "error_Ma": "± 1,5",
+          "metodo": "U–Pb LA–ICP–MS",
+          "referencia": "Cochrane (2013)"
+        },
+        {
+          "dist_km": 9.4,
+          "unidad": "Intrusivo granítico (?)",
+          "litologia": "Granito",
+          "edad_Ma": "271,9",
+          "error_Ma": "± 3,7",
+          "metodo": "U–Pb LA–ICP–MS",
+          "referencia": "Villagómez et al. (2011a)"
+        },
+        {
+          "dist_km": 9.9,
+          "unidad": "Batolito de Ibagué",
+          "litologia": "Granodiorita",
+          "edad_Ma": "156,5",
+          "error_Ma": "± 1,1",
+          "metodo": "U–Pb LA–ICP–MS",
+          "referencia": "Cochrane (2013)"
+        },
+        {
+          "dist_km": 10.5,
+          "unidad": "Batolito de Ibagué",
+          "litologia": "Granito biotítico",
+          "edad_Ma": "155,7",
+          "error_Ma": "± 2,2",
+          "metodo": "U–Pb LA–ICP–MS",
+          "referencia": "Cochrane (2013)"
+        },
+        {
+          "dist_km": 12.9,
+          "unidad": "Batolito de Ibagué",
+          "litologia": "Granito",
+          "edad_Ma": "159,6",
+          "error_Ma": "± 2,4",
+          "metodo": "U–Pb LA–ICP–MS",
+          "referencia": "Villagómez et al. (2011a)"
+        }
+      ]
+    },
+    "occidental_Calarca": {
+      "lon": -75.652,
+      "lat": 4.48,
+      "unidad_bajo_portal": [
+        {
+          "SimboloUC": "b5k4-VCm",
+          "Edad": "Aptiano-Santoniano",
+          "Descripcion": "Basaltos y andesitas intercalados con arenitas lodosas líticas, lodolitas carbonosas, arenitas feldespáticas, calizas y limolitas silíceas."
+        }
+      ],
+      "unidades_5km": [
+        {
+          "SimboloUC": "Q-vc",
+          "Edad": "Cuaternario",
+          "Descripcion": "Flujos volcanoclásticos constituidos por piroclastos y epiclastos de composición andesítica"
+        },
+        {
+          "SimboloUC": "K1-Pu",
+          "Edad": "Cretácico Inferior",
+          "Descripcion": "Peridotitas serpentinizadas intruidas por diques de rodingitas; serpentinitas."
+        },
+        {
+          "SimboloUC": "K2-Pi",
+          "Edad": "Cretácico Superior",
+          "Descripcion": "Granodioritas, tonalitas y cuarzodioritas."
+        },
+        {
+          "SimboloUC": "K1-Mmg",
+          "Edad": "Cretácico Inferior",
+          "Descripcion": "Anfibolitas, gneises cuarzofeldespáticos, anfibolitas, migmatitas, esquistos y serpentinitas."
+        },
+        {
+          "SimboloUC": "b5k4-VCm",
+          "Edad": "Aptiano-Santoniano",
+          "Descripcion": "Basaltos y andesitas intercalados con arenitas lodosas líticas, lodolitas carbonosas, arenitas feldespáticas, calizas y limolitas silíceas."
+        }
+      ],
+      "fallas_10km": [
+        {
+          "nombre": "Falla de Silvia-Pijao",
+          "tipo": "Falla cubierta",
+          "dist_km": 1.9
+        },
+        {
+          "nombre": "Falla de Silvia-Pijao",
+          "tipo": "Falla",
+          "dist_km": 4.2
+        },
+        {
+          "nombre": "Falla de Armenia",
+          "tipo": "Falla",
+          "dist_km": 4.4
+        },
+        {
+          "nombre": "(sin nombre)",
+          "tipo": "Falla",
+          "dist_km": 9.0
+        },
+        {
+          "nombre": "Falla de San Jerónimo",
+          "tipo": "Falla",
+          "dist_km": 9.7
+        }
+      ],
+      "nsr10": [
+        {
+          "NOMBRE_MUNICIPIO": "CALARCÁ",
+          "CÓDIGO_MUNICIPIO": "63130",
+          "AA": 0.25,
+          "AV": 0.25,
+          "AE": 0.2,
+          "AD": 0.1,
+          "ZONA_AMENAZA_SÍSMICA": "Alta"
+        }
+      ],
+      "dataciones_UPb_20km": [
+        {
+          "dist_km": 9.0,
+          "unidad": "Stock de Córdoba",
+          "litologia": "Granodiorita",
+          "edad_Ma": "79,7",
+          "error_Ma": "± 2,5",
+          "metodo": "U–Pb LA–ICP–MS",
+          "referencia": "Villagómez et al. (2011a)"
+        },
+        {
+          "dist_km": 9.5,
+          "unidad": "Complejo Quebradagrande",
+          "litologia": "Toba",
+          "edad_Ma": "114,3",
+          "error_Ma": "± 3,8",
+          "metodo": "U–Pb LA–ICP–MS",
+          "referencia": "Villagómez et al. (2011a)"
+        },
+        {
+          "dist_km": 10.8,
+          "unidad": "Complejo Cajamarca",
+          "litologia": "Cuarcita",
+          "edad_Ma": "240–200",
+          "error_Ma": null,
+          "metodo": "U–Pb LA–ICP–MS",
+          "referencia": "Villagómez et al. (2011a)"
+        },
+        {
+          "dist_km": 10.8,
+          "unidad": "Intrusivo Gnéisico de La Línea",
+          "litologia": "Gneis granodiorítico",
+          "edad_Ma": "236,2",
+          "error_Ma": "± 6,3",
+          "metodo": "U–Pb LA–ICP–MS",
+          "referencia": "Villagómez et al. (2011a)"
+        },
+        {
+          "dist_km": 15.5,
+          "unidad": "Intrusivos hipoabisales",
+          "litologia": "Pórfido diorítico ",
+          "edad_Ma": "8,4",
+          "error_Ma": "± 0,2",
+          "metodo": "U–Pb LA–MC–ICP–MS",
+          "referencia": "Leal Mejía (2011)"
+        },
+        {
+          "dist_km": 16.0,
+          "unidad": "Intrusivos hipoabisales",
+          "litologia": "Cuarzodiorita",
+          "edad_Ma": "7,6",
+          "error_Ma": "± 0,2",
+          "metodo": "U–Pb LA–MC–ICP–MS",
+          "referencia": "Leal Mejía (2011)"
+        },
+        {
+          "dist_km": 17.4,
+          "unidad": "Intrusivos hipoabisales",
+          "litologia": "Pórfido diorítico",
+          "edad_Ma": "7,5",
+          "error_Ma": "± 0,2",
+          "metodo": "U–Pb LA–MC–ICP–MS",
+          "referencia": "Leal Mejía (2011)"
+        },
+        {
+          "dist_km": 17.6,
+          "unidad": "Intrusivos hipoabisales",
+          "litologia": "Pórfido granodiorítico",
+          "edad_Ma": "7,9",
+          "error_Ma": "± 0,3",
+          "metodo": "U–Pb LA–MC–ICP–MS",
+          "referencia": "Leal Mejía (2011)"
+        },
+        {
+          "dist_km": 17.6,
+          "unidad": "Intrusivos hipoabisales",
+          "litologia": "Pórfido diorítico",
+          "edad_Ma": "8,1",
+          "error_Ma": "± 0,3",
+          "metodo": "U–Pb LA–MC–ICP–MS",
+          "referencia": "Leal Mejía (2011)"
+        },
+        {
+          "dist_km": 17.6,
+          "unidad": "Intrusivos hipoabisales",
+          "litologia": "Pórfido diorítico",
+          "edad_Ma": "8,3",
+          "error_Ma": "± 0,2",
+          "metodo": "U–Pb LA–MC–ICP–MS",
+          "referencia": "Leal Mejía (2011)"
+        },
+        {
+          "dist_km": 17.7,
+          "unidad": "Intrusivos hipoabisales",
+          "litologia": "Pórfido granodiorítico",
+          "edad_Ma": "7,6",
+          "error_Ma": "± 0,2",
+          "metodo": "U–Pb LA–MC–ICP–MS",
+          "referencia": "Leal Mejía (2011)"
+        },
+        {
+          "dist_km": 18.8,
+          "unidad": "Intrusivos hipoabisales",
+          "litologia": "Dique de pórfido granodiorítico tardío",
+          "edad_Ma": "7,3",
+          "error_Ma": "± 0,2",
+          "metodo": "U–Pb LA–MC–ICP–MS",
+          "referencia": "Leal Mejía (2011)"
+        },
+        {
+          "dist_km": 19.2,
+          "unidad": "Intrusivos hipoabisales",
+          "litologia": "Pórfido granodiorítico",
+          "edad_Ma": "6,3",
+          "error_Ma": "± 0,3",
+          "metodo": "U–Pb LA–MC–ICP–MS",
+          "referencia": "Leal Mejía (2011)"
+        }
+      ]
+    }
+  }
+}

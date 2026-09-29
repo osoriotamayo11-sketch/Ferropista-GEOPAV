@@ -30,6 +30,10 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
+import sys
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "Comun"))
+from lamina_institucional import encabezado, pie, dibujar_via, FUENTE_VIA  # marco común (sesión 16)
+
 import rasterio
 from matplotlib.colors import LightSource, LinearSegmentedColormap
 
@@ -88,7 +92,7 @@ kmh = np.array([h["km"] for h in H])
 dens = np.exp(-0.5 * ((x[:, None] - kmh[None, :]) / BW) ** 2).sum(1) / (BW * np.sqrt(2 * np.pi))  # hechos/km
 
 # ------------------------------------------------------------ lienzo
-fig = plt.figure(figsize=(15.5, 9.4), dpi=200); fig.patch.set_facecolor("white")
+fig = plt.figure(figsize=(15.5, 10.9), dpi=200); fig.patch.set_facecolor("white")
 gs = fig.add_gridspec(3, 2, width_ratios=[1.35, 1], height_ratios=[1.55, 0.16, 0.95],
                       wspace=0.12, hspace=0.42, left=0.045, right=0.975, top=0.86, bottom=0.115)
 
@@ -107,6 +111,7 @@ axm.imshow(sombra, extent=E, origin="upper", cmap="gray", alpha=0.55, interpolat
 tra = json.load(open(os.path.join(OE1, "Act4_Trazado", "trazado_tunel.geojson"), encoding="utf-8"))
 xy = np.array(tra["features"][0]["geometry"]["coordinates"])
 axm.plot(xy[:, 0], xy[:, 1], color=GRIS, lw=2, ls=(0, (4, 3)), zorder=3)
+h_via = dibujar_via(axm, lw=1.3, z=3.5)
 pts = {}
 for h in H:
     k = (float(h["lon"]), float(h["lat"])); p = pts.setdefault(k, {"n": 0, "f": 0, "km": h["km"]})
@@ -128,7 +133,7 @@ axm.set_title("A · Dónde cayeron los 70 hechos: solo 28 puntos distintos", loc
 axm.plot([], [], "o", color=AZUL, ms=8, label="Punto con al menos un fallecido")
 axm.plot([], [], "o", color=AZUL_CLARO, ms=8, label="Punto solo con lesionados")
 axm.plot([], [], color=GRIS, lw=2, ls=(0, (4, 3)), label="Trazado del túnel de base (OE 1)")
-axm.legend(loc="lower right", fontsize=8, frameon=True, framealpha=0.9, edgecolor="#CBD5E1")
+axm.legend(handles=axm.get_legend_handles_labels()[0] + h_via, loc="lower right", fontsize=8, frameon=True, framealpha=0.9, edgecolor="#CBD5E1")
 
 # ---- B: cruce con prensa
 axp = fig.add_subplot(gs[0, 1]); axp.set_xlim(0, 1); axp.set_ylim(len(PR) + 0.6, -1.1); axp.axis("off")
@@ -185,20 +190,20 @@ axb.annotate(f"km 11 – 41 (ascenso y Alto de La Línea):\n{p11['hechos']} hech
              arrowprops=dict(arrowstyle="-", color=SUAVE, lw=0.8))
 
 # ---- encabezado y pie
-fig.text(0.045, 0.955, "OE 5 · Act 4 — Siniestros georreferenciados por la ANSV en la Ruta 4003, 2021 – marzo 2026",
-         fontsize=15, weight="bold", color=TINTA)
-fig.text(0.045, 0.918, f"{RES['victimas']} víctimas ({RES['fallecidos']} fallecidos, {RES['lesionados']} lesionados) en "
+arriba = encabezado(fig, "Siniestros georreferenciados por la ANSV — OE 5, Actividad 4",
+                    "Ruta 4003, 2021 – marzo 2026 · Semillero GEOPAV, Universidad de Ibagué · Paz y Región 2026B")
+fig.text(0.045, arriba - 0.03, f"{RES['victimas']} víctimas ({RES['fallecidos']} fallecidos, {RES['lesionados']} lesionados) en "
          f"{RES['hechos']} hechos. La figura muestra dónde se pudo georreferenciar, no dónde está el riesgo: "
          "el ascenso está subrepresentado.", fontsize=10, color=SUAVE)
-fig.text(0.045, 0.888, f"Tasa del paso 2021–2025, cota inferior [H]: {es(TASAS['tasa_H1'], 2)} a {es(TASAS['tasa_H2'], 2)} "
+fig.text(0.045, arriba - 0.055, f"Tasa del paso 2021–2025, cota inferior [H]: {es(TASAS['tasa_H1'], 2)} a {es(TASAS['tasa_H2'], 2)} "
          f"fallecidos por 10⁸ veh-km ({F} fallecidos del anexo; sin aforo del paso posterior a 2019). "
          "No es comparable con la tasa 2015–2019 (7,66): otra fuente y otro criterio.", fontsize=9, color=TINTA)
-fig.text(0.045, 0.035, "[F] ANSV – Observatorio Nacional de Seguridad Vial, oficio 20265000140371 del 22 sep 2026 y anexo "
-         "Sint_Via_LaLinea_CodTramo_4003 (fuente primaria INMLCF). Prensa: El Tiempo, El Espectador, Infobae (ver memoria del OE 5).",
-         fontsize=7.6, color=SUAVE)
-fig.text(0.045, 0.021, "[CP] procesar_microdato_ANSV_OE5.py · densidad_lineal_OE5.py.  [H] Hecho = misma fecha, municipio y PR; "
-         "límite Calarcá en km 5,0 (longitud INVÍAS est. 245); banda 1,5 km; TPD 2015–2018 y 2019.", fontsize=7.6, color=SUAVE)
-fig.text(0.045, 0.007, "Semillero de Investigación GEOPAV · Universidad de Ibagué · Paz y Región 2026B", fontsize=7.6, color=SUAVE)
+abajo = pie(fig, "[F] ANSV – Observatorio Nacional de Seguridad Vial, oficio 20265000140371 del 22 sep 2026 y anexo "
+         "Sint_Via_LaLinea_CodTramo_4003 (fuente primaria INMLCF). Prensa: El Tiempo, El Espectador, Infobae (ver memoria del OE 5)."
+         "\n[CP] procesar_microdato_ANSV_OE5.py · densidad_lineal_OE5.py.  [H] Hecho = misma fecha, municipio y PR; "
+         "límite Calarcá en km 5,0 (longitud INVÍAS est. 245); banda 1,5 km; TPD 2015–2018 y 2019.\n" + FUENTE_VIA +
+         ". Elaborado con apoyo de IA (Claude) y verificado contra las fuentes citadas.")
+gs.update(top=arriba - 0.10, bottom=abajo + 0.045)
 
 os.makedirs(VIS, exist_ok=True)
 fig.savefig(os.path.join(VIS, "densidad_lineal_OE5.png"), dpi=200, facecolor="white")

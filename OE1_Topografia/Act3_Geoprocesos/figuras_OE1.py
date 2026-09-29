@@ -28,10 +28,12 @@ from matplotlib.patches import Patch, PathPatch
 from matplotlib.path import Path as MplPath
 import rasterio
 from rasterio.windows import from_bounds
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'Comun'))
+from lamina_institucional import encabezado, pie, dibujar_via, FUENTE_VIA  # marco común (sesión 16)
 
 INK, INK2, MUTED, GRID = '#0b0b0b', '#52514e', '#898781', '#e1e0d9'
 ACC, ACC_L, TIERRA = '#2a78d6', '#cde2fb', '#d9d5cb'
-SURF = '#fcfcfb'
+SURF = '#ffffff'
 plt.rcParams.update({'font.family': 'DejaVu Sans', 'font.size': 9})
 PIE_FUENTE = ('Fuente del terreno: Copernicus DEM GLO-30 (ESA/Airbus), ~30 m. '
               'Cotas de portal según Fernández O. (2025), diapositiva 20.')
@@ -61,7 +63,7 @@ def marco(ax, ejes_y=True):
     ax.tick_params(colors=MUTED, labelsize=8.5, length=0)
 
 def fig1_perfil(pkk, ter, ras, pend, cif):
-    fig, ax = plt.subplots(figsize=(13.5, 5.6), dpi=200); fig.patch.set_facecolor(SURF)
+    fig, ax = plt.subplots(figsize=(16.54, 7.6), dpi=200); fig.patch.set_facecolor(SURF)
     BASE = 400
     ax.fill_between(pkk, ras, ter, where=(ter > ras), color=ACC_L, alpha=.55, lw=0, zorder=2)
     ax.fill_between(pkk, BASE, ter, color=TIERRA, lw=0, zorder=1)
@@ -93,16 +95,14 @@ def fig1_perfil(pkk, ter, ras, pend, cif):
     marco(ax)
     ax.legend(loc='upper left', frameon=False, fontsize=8.5, handlelength=1.9,
               bbox_to_anchor=(0.004, 0.995), labelcolor=INK2)
-    fig.suptitle('Perfil longitudinal del túnel de base — tramo Ibagué – Armenia',
-                 x=.008, y=.982, ha='left', fontsize=13.5, fontweight='bold', color=INK)
-    fig.text(.008, .932, 'Semillero GEOPAV · Paz y Región 2026B · Objetivo específico 1 — cálculo propio [CP]',
-             ha='left', fontsize=8.5, color=MUTED)
+    arriba = encabezado(fig, 'Perfil longitudinal del túnel de base — OE 1',
+        'Tramo Ibagué – Armenia · cálculo propio [CP] · Semillero GEOPAV, Universidad de Ibagué · Paz y Región 2026B')
     _lon = f'{pkk[-1]:.2f}'.replace('.', ',')
     _pen = f'{pend:.3f}'.replace('.', ',')
-    fig.text(.008, .015, f'Alineamiento recto entre portales · longitud {_lon} km · '
-             f'pendiente {_pen} % (criterio adoptado < 1,5 %)\n{PIE_FUENTE}',
-             ha='left', fontsize=7.5, color=MUTED, linespacing=1.6)
-    fig.subplots_adjust(left=.052, right=.988, top=.87, bottom=.175)
+    abajo = pie(fig, f'Alineamiento recto entre portales · longitud {_lon} km · '
+             f'pendiente {_pen} % (criterio adoptado < 1,5 %)\n{PIE_FUENTE}\nScripts: procesamiento_OE1.py · figuras_OE1.py. '
+             'Elaborado con apoyo de IA (Claude) y verificado contra las fuentes citadas.')
+    fig.subplots_adjust(left=.05, right=.988, top=arriba - .035, bottom=abajo + .085)
     _guardar(fig, 'perfil_longitudinal')
     plt.close(fig); print('  figura 1: perfil_longitudinal')
 
@@ -110,7 +110,7 @@ def fig2_cobertura(pkk, cob, L):
     STEPS = ['#cde2fb', '#9ec5f4', '#5598e7', '#2a78d6', '#184f95']
     RANGOS = [(0, 100), (100, 300), (300, 700), (700, 1200), (1200, 1e9)]
     ETIQ = ['0 – 100 m', '100 – 300 m', '300 – 700 m', '700 – 1.200 m', '> 1.200 m']
-    fig, (ax, ax2) = plt.subplots(2, 1, figsize=(13.5, 6.9), dpi=200,
+    fig, (ax, ax2) = plt.subplots(2, 1, figsize=(16.54, 9.2), dpi=200,
                                   gridspec_kw={'height_ratios': [2.15, 1], 'hspace': .42})
     fig.patch.set_facecolor(SURF)
     for (lo, hi), col in zip(RANGOS, STEPS):
@@ -163,14 +163,12 @@ def fig2_cobertura(pkk, cob, L):
     ax2.spines['bottom'].set_color('#c3c2b7'); ax2.tick_params(colors=MUTED, labelsize=8.5, length=0)
     ax2.set_title('Distribución de la longitud del túnel por rango de cobertura',
                   loc='left', fontsize=9.5, fontweight='bold', color=INK, pad=9)
-    fig.suptitle('Cobertura del túnel de base — insumo para la selección del método de excavación',
-                 x=.008, y=.982, ha='left', fontsize=13.5, fontweight='bold', color=INK)
-    fig.text(.008, .935, 'Semillero GEOPAV · Paz y Región 2026B · Objetivo específico 1 — cálculo propio [CP] · alimenta el OE 4',
-             ha='left', fontsize=8.5, color=MUTED)
-    fig.text(.008, .014, 'Cobertura = cota del terreno − cota de la rasante, sobre 1.500 puntos del alineamiento.\n'
-             'Los rangos son una clasificación propia del semillero, no una norma.',
-             ha='left', fontsize=7.4, color=MUTED, linespacing=1.6)
-    fig.subplots_adjust(left=.055, right=.985, top=.845, bottom=.115)
+    arriba = encabezado(fig, 'Cobertura del túnel de base — OE 1',
+        'Insumo para la selección del método de excavación (OE 4) · cálculo propio [CP] · Semillero GEOPAV, Universidad de Ibagué · Paz y Región 2026B')
+    abajo = pie(fig, 'Cobertura = cota del terreno − cota de la rasante, sobre 1.500 puntos del alineamiento. '
+             'Los rangos son una clasificación propia del semillero, no una norma.\n' + PIE_FUENTE +
+             '\nScripts: procesamiento_OE1.py · figuras_OE1.py. Elaborado con apoyo de IA (Claude) y verificado contra las fuentes citadas.')
+    fig.subplots_adjust(left=.055, right=.985, top=arriba - .075, bottom=abajo + .075)
     _guardar(fig, 'cobertura_tunel')
     plt.close(fig); print('  figura 2: cobertura_tunel')
 
@@ -187,7 +185,8 @@ def fig3_mapa(PE, PW, cob):
     ls = LightSource(azdeg=315, altdeg=45)
     dx = abs(tr.a)*111320*np.cos(np.deg2rad(4.45)); dy = abs(tr.e)*110540
     rgb = ls.shade(dem, cmap=cmap, blend_mode='soft', vert_exag=2.2, dx=dx, dy=dy, vmin=500, vmax=3900)
-    fig, ax = plt.subplots(figsize=(13.5, 6.6), dpi=200); fig.patch.set_facecolor(SURF)
+    fig = plt.figure(figsize=(16.54, 9.0), dpi=200); fig.patch.set_facecolor(SURF)
+    ax = fig.add_axes([.012, .2, .76, .62])
     ax.imshow(rgb, extent=[W, E, S, N], origin='upper', interpolation='bilinear')
 
     # --- máscara de área de estudio -----------------------------------------
@@ -206,7 +205,10 @@ def fig3_mapa(PE, PW, cob):
     _est = _geo('limites_area_estudio.geojson')
     if _est:
         from rasterio.features import rasterize
-        dentro = rasterize([(f['geometry'], 1) for f in _est['features']],
+        _ctxv = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
+                             'OE2_Plataforma', 'Act2_Visor', 'municipios_contexto_via.geojson')
+        _ctxv = json.load(io.open(_ctxv, encoding='utf-8')) if os.path.exists(_ctxv) else {'features': []}
+        dentro = rasterize([(f['geometry'], 1) for f in _est['features'] + _ctxv['features']],
                            out_shape=dem.shape, transform=tr, fill=0,
                            dtype='uint8', all_touched=True).astype(bool)
         gris = rgb[..., :3] @ np.array([.2126, .7152, .0722])      # luminancia
@@ -228,11 +230,23 @@ def fig3_mapa(PE, PW, cob):
                     a = np.array(anillo)
                     ax.plot(a[:, 0], a[:, 1], color='#ffffff', lw=3.0, zorder=2.8, alpha=.85)
                     ax.plot(a[:, 0], a[:, 1], color='#3d3b34', lw=1.35, zorder=3)
+        # Municipios de contexto: los cruza la vía actual, no el túnel (Salento). Van en color pero con
+        # límite a trazos, y NO entran en los porcentajes del área de estudio [CP].
+        for f in _ctxv['features']:
+            for poly in _anillos(f['geometry']):
+                for anillo in poly:
+                    a = np.array(anillo)
+                    ax.plot(a[:, 0], a[:, 1], color='#3d3b34', lw=1.0, ls=(0, (4, 2.5)), zorder=3)
+            from shapely.geometry import shape as _shape, box as _box   # rótulo en la parte visible del municipio
+            _vis = _shape(f['geometry']).intersection(_box(W, S, E, N)).representative_point()
+            ax.annotate(f['properties']['MpNombre'].upper() + '\n(contexto)', xy=(_vis.x, _vis.y), xytext=(10, 34), textcoords='offset points', ha='center', va='center',
+                        fontsize=8.2, color='#3d3b34', fontweight='bold', zorder=3.4, alpha=.75)
 
     lx, ly = [PE[1], PW[1]], [PE[0], PW[0]]
     ax.plot(lx, ly, color='#ffffff', lw=5.0, solid_capstyle='round', zorder=4, alpha=.85)
     ax.plot(lx, ly, color=ACC, lw=2.6, solid_capstyle='round', zorder=5,
             label='Trazado preliminar del túnel de base')
+    h_via = dibujar_via(ax, lw=1.5, z=4.6)   # vía actual (Ruta 40, OSM), bajo el trazado
     def _msnm(v):                      # separador de miles es-CO, sin tocar otras comas
         return f'{v:,.0f}'.replace(',', '.') + ' msnm'
     for x, y, lab, ha, off in [(PE[1], PE[0], 'Portal oriental\nIbagué, Tolima\n' + _msnm(PE[2]), 'left', .012),
@@ -268,24 +282,41 @@ def fig3_mapa(PE, PW, cob):
     from matplotlib.lines import Line2D
     _h = [Line2D([], [], color=ACC, lw=2.6, label='Trazado preliminar del túnel de base'),
           Line2D([], [], color='#4a4840', lw=1.15, label='Municipios del área de estudio'),
-          Line2D([], [], color='#b9b7ab', lw=.55, label='Límite municipal (contexto)')]
-    ax.legend(handles=_h, loc='upper left', frameon=True, facecolor='#ffffff', edgecolor='none',
-              framealpha=.9, fontsize=8.0, handlelength=2.2, labelcolor=INK2)
-    cax = fig.add_axes([.845, .16, .016, .30])
+          Line2D([], [], color='#3d3b34', lw=1.0, ls=(0, (4, 2.5)), label='Municipio que cruza solo la vía actual'),
+          Line2D([], [], color='#b9b7ab', lw=.55, label='Límite municipal (contexto)')] + h_via
+    cax = fig.add_axes([.80, .40, .014, .22])
     cax.imshow(np.linspace(3900, 500, 256).reshape(-1, 1), aspect='auto', cmap=cmap, extent=[0, 1, 500, 3900])
     cax.set_xticks([]); cax.yaxis.tick_right(); cax.set_yticks([500, 1500, 2500, 3500])
     cax.tick_params(labelsize=7.2, colors=MUTED, length=0)
     cax.set_title('msnm', fontsize=7.2, color=MUTED, pad=5)
     for s in cax.spines.values(): s.set_edgecolor('#c3c2b7'); s.set_linewidth(.6)
-    fig.suptitle('Trazado preliminar del túnel de base — corredor Ibagué – Armenia',
-                 x=.008, y=.978, ha='left', fontsize=13.5, fontweight='bold', color=INK)
-    fig.text(.008, .928, 'Semillero GEOPAV · Paz y Región 2026B · Objetivo específico 1 — cálculo propio [CP]',
-             ha='left', fontsize=8.5, color=MUTED)
-    fig.text(.008, .018, 'Relieve sombreado: Copernicus DEM GLO-30 (ESA/Airbus), ~30 m, EPSG:4326 · '
-             'exageración vertical 2,2× · iluminación 315°/45° · Límites municipales: IGAC, capa de municipios [F]\n'
-             'Área de estudio: los tres municipios que cruza el trazado — Ibagué 39,2 %, Cajamarca 42,7 %, Calarcá 18,1 % [CP]\n' + PIE_FUENTE,
-             ha='left', fontsize=7.4, color=MUTED, linespacing=1.6)
-    fig.subplots_adjust(left=.012, right=.83, top=.90, bottom=.125)
+    arriba = encabezado(fig, 'Trazado preliminar del túnel de base — OE 1',
+        'Corredor Ibagué – Armenia sobre el modelo de elevación Copernicus GLO-30 · Semillero GEOPAV, Universidad de Ibagué · Paz y Región 2026B')
+    abajo = pie(fig, 'Relieve sombreado: Copernicus DEM GLO-30 (ESA/Airbus), ~30 m, EPSG:4326 · '
+             'exageración vertical 2,2× · iluminación 315°/45° · Límites municipales y departamentales: IGAC [F]\n'
+             'Área de estudio: los tres municipios que cruza el trazado — Ibagué 39,2 %, Cajamarca 42,7 %, Calarcá 18,1 % [CP]. '
+             'Salento se muestra como contexto: lo cruza la vía actual, no el túnel.\n'
+             + PIE_FUENTE + ' ' + FUENTE_VIA + '.\n'
+             'Lectura: la ubicación de los portales responde a un criterio geométrico, no geotécnico; documento de nivel conceptual, no constituye diseño. '
+             'Scripts: procesamiento_OE1.py · figuras_OE1.py · via_actual_ruta40.py. Elaborado con apoyo de IA (Claude) y verificado contra las fuentes citadas.')
+    alto = arriba - abajo - .06
+    ax.set_position([.012, abajo + .03, .77, alto])
+    fig.legend(handles=_h, loc='upper left', bbox_to_anchor=(.79, arriba - .02), frameon=False,
+               fontsize=8.8, handlelength=2.4, labelcolor=INK2, title='Convenciones',
+               title_fontproperties={'weight': 'bold', 'size': 9.5}, alignment='left')
+    # Localización en Colombia [F, IGAC]
+    _dep = _geo('departamentos_colombia_igac.geojson')
+    if _dep:
+        lax = fig.add_axes([.845, abajo + .035, .14, .36])
+        for f in _dep['features']:
+            resalta = str(f['properties']).upper().find('TOLIMA') >= 0 or str(f['properties']).upper().find('QUIND') >= 0
+            for poly in _anillos(f['geometry']):
+                a = np.array(poly[0])
+                lax.fill(a[:, 0], a[:, 1], color='#193F77' if resalta else '#e2e8f0', ec='white', lw=.3)
+        lax.add_patch(plt.Rectangle((W, S), E - W, N - S, fill=False, ec='#dc2626', lw=1.4, zorder=5))
+        lax.set_aspect('equal'); lax.set_xticks([]); lax.set_yticks([])
+        for sp in lax.spines.values(): sp.set_edgecolor('#c3c2b7')
+        lax.set_title('Localización · Tolima y Quindío', fontsize=8.6, color='#193F77', fontweight='bold', loc='left')
     _guardar(fig, 'mapa_trazado')
     plt.close(fig); print('  figura 3: mapa_trazado')
 

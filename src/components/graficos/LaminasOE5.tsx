@@ -1,37 +1,36 @@
 'use client';
 
 /**
- * LaminasOE5 — el contenido de las dos láminas de la Act 4 del OE 5, dibujado en el
+ * LaminasOE5 — el contenido de las láminas de la Act 4 del OE 5, dibujado en el
  * navegador en lugar de mostrarse como imagen:
- *   - MapaSectoresOE5: los seis sectores críticos 2015–2019 sobre el trazado del OE 1,
- *     con el detalle del descenso a Calarcá.
- *   - DensidadLinealOE5: el microdato ANSV 2021 – mar 2026 (mapa de puntos, cruce con
- *     prensa, franja de densidad lineal y hechos por kilómetro).
+ *   - MapaSiniestralidadOE5: un solo mapa con selector de tres estados que
+ *     fusiona los seis sectores críticos 2015–2019 (Gi*) y el microdato ANSV
+ *     georreferenciado 2021 – mar 2026, sobre el trazado del OE 1. Con el
+ *     microdato activo, la vía se pinta tramo a tramo según su densidad lineal
+ *     de siniestros (`via_densidad`) en vez de dibujarse de un solo color.
+ *   - PrensaMicrodatoOE5: la tabla de cruce entre el microdato y los siniestros
+ *     fatales que documentó la prensa, para el plegado homónimo.
  *
  * Datos: `src/data/mapas_oe5.json`, generado por
  * OE5_SeguridadVial/Act4_Analisis/exportar_web_OE5.py. Ninguna cifra se escribe aquí.
  * El fondo de los mapas es un sombreado del DEM (Copernicus GLO-30) en EPSG:4686, así que
  * la conversión longitud/latitud → píxel es lineal dentro de la ventana declarada.
- * Las láminas PNG siguen siendo el entregable y quedan enlazadas para descarga.
+ * Las láminas JPG siguen siendo el entregable y quedan enlazadas para descarga.
  */
 
-import React, { useMemo, useState } from 'react';
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  ReferenceArea,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from 'recharts';
+import React, { useState } from 'react';
 import mapas from '@/data/mapas_oe5.json';
 
 const AZUL = '#193F77';
 const AZUL_CLARO = '#7BA0D4';
-const GRIS = '#94A3B8';
 const TINTA = '#0F2449';
+/* Rampa de densidad de siniestros sobre la vía: un solo tono, naranja claro a
+   rojo oscuro, con un paso medio para que el contraste se note sobre el
+   relieve incluso a d bajas. El extremo claro (d=0) es más saturado que un
+   simple beige para que los tramos sin siniestros se distingan del fondo. */
+const DENSIDAD_CLARO: [number, number, number] = [243, 201, 154]; // #F3C99A
+const DENSIDAD_MEDIO: [number, number, number] = [240, 138, 60]; // #F08A3C
+const DENSIDAD_OSCURO: [number, number, number] = [140, 29, 11]; // #8C1D0B
 
 const es = (v: number, d = 0) =>
   v.toLocaleString('es-CO', { minimumFractionDigits: d, maximumFractionDigits: d });
@@ -50,6 +49,7 @@ function proyector(v: Ventana) {
     y: (lat: number) => ((lat1 - lat) / (lat1 - lat0)) * H,
   };
 }
+type Proyector = ReturnType<typeof proyector>;
 
 function Fondo({ v, children, etiqueta }: { v: Ventana; children: React.ReactNode; etiqueta: string }) {
   const p = proyector(v);
@@ -72,6 +72,59 @@ function Rotulo({ x, y, texto, ancla = 'middle', tam = 15, color = '#5B6B80' }:
   );
 }
 
+/** Vía actual (Ruta 40) [F, OSM], de un solo color: se usa cuando el microdato no está activo. */
+function ViaActualCapa({ p }: { p: Proyector }) {
+  return (
+    <g>
+      {mapas.via.map((seg, i) => {
+        const pts = seg.coords.map(([lo, la]) => `${p.x(lo)},${p.y(la)}`).join(' ');
+        return (
+          <polyline key={i} points={pts} fill="none" stroke="#7A2E12" strokeWidth={2.5}
+                     strokeOpacity={seg.tunel ? 0.35 : 1} strokeLinecap="round" />
+        );
+      })}
+    </g>
+  );
+}
+
+/** Interpola en dos pasos: claro → medio (t 0–0,5) y medio → oscuro (t 0,5–1). */
+function colorDensidad(t: number) {
+  const c = Math.max(0, Math.min(1, t));
+  const [a, b] = c < 0.5 ? [DENSIDAD_CLARO, DENSIDAD_MEDIO] : [DENSIDAD_MEDIO, DENSIDAD_OSCURO];
+  const local = c < 0.5 ? c / 0.5 : (c - 0.5) / 0.5;
+  const rgb = a.map((v, i) => Math.round(v + (b[i] - v) * local));
+  return `rgb(${rgb.join(',')})`;
+}
+
+/** Vía coloreada tramo a tramo por su densidad lineal de siniestros (microdato ANSV) [CP].
+    El halo blanco se dibuja UNA sola vez como polilínea continua (los 305 tramos de
+    via_densidad son contiguos, cada uno empieza donde termina el anterior), para que
+    se lea sobre el relieve y sobre el trazado del túnel, encima de los cuales se
+    dibuja siempre esta capa. Los tramos coloreados van encima del halo, con extremos
+    a escuadra: como comparten vértices exactos y el mismo ancho, no dejan costuras. */
+function ViaDensidadCapa({ p }: { p: Proyector }) {
+  const tramos = mapas.via_densidad.tramos;
+  const max = mapas.via_densidad.max;
+  const puntosHalo = [tramos[0].c[0], ...tramos.map((t) => t.c[1])]
+    .map(([lo, la]) => `${p.x(lo)},${p.y(la)}`)
+    .join(' ');
+
+  return (
+    <g>
+      <polyline points={puntosHalo} fill="none" stroke="white" strokeWidth={10}
+                strokeLinecap="round" strokeLinejoin="round" />
+      {tramos.map((t, i) => {
+        const [[lo0, la0], [lo1, la1]] = t.c;
+        return (
+          <line key={i} x1={p.x(lo0)} y1={p.y(la0)} x2={p.x(lo1)} y2={p.y(la1)}
+                stroke={colorDensidad(t.d / max)} strokeWidth={7}
+                strokeLinecap="butt" strokeLinejoin="round" />
+        );
+      })}
+    </g>
+  );
+}
+
 function Ficha({ titulo, filas }: { titulo: string; filas: [string, string][] }) {
   return (
     <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs">
@@ -88,39 +141,103 @@ function Ficha({ titulo, filas }: { titulo: string; filas: [string, string][] })
   );
 }
 
-/* =================================================================== sectores */
+/* =================================================================== mapa único */
 
 type Sector = (typeof mapas.sectores)[number];
+type Punto = (typeof mapas.microdato.puntos)[number];
+type Capa = 'gi' | 'microdato' | 'ambos';
 
-export function MapaSectoresOE5() {
+const OPCIONES_CAPA: { k: Capa; label: string }[] = [
+  { k: 'gi', label: '2015–2019 · sectores críticos (Gi*)' },
+  { k: 'microdato', label: '2021 – mar 2026 · microdato ANSV' },
+  { k: 'ambos', label: 'Ambos' },
+];
+
+export function MapaSiniestralidadOE5() {
+  const [capa, setCapa] = useState<Capa>('gi');
   const [detalle, setDetalle] = useState(false);
-  const [sel, setSel] = useState<number | null>(0);
+  const [soloCalor, setSoloCalor] = useState(false);
+  const [selSector, setSelSector] = useState<number | null>(null);
+  const [selPunto, setSelPunto] = useState<number | null>(null);
+
   const v: Ventana = detalle ? mapas.descenso : mapas.corredor;
   const p = proyector(v);
-  const fmax = Math.max(...mapas.sectores.map((s) => s.fallecidos));
-  /* Mismo orden que la lámina: fallecidos de mayor a menor y, en empate, de oeste a este. */
-  const orden = [...mapas.sectores].sort((a, b) => b.fallecidos - a.fallecidos || a.lon - b.lon);
-  const radio = (s: Sector) => (detalle ? 16 : 7) + (detalle ? 30 : 16) * Math.sqrt(s.fallecidos / fmax);
-  const s = sel !== null ? orden[sel] : null;
   const pts = mapas.trazado.map(([lo, la]) => `${p.x(lo)},${p.y(la)}`).join(' ');
+
+  const mostrarGi = capa === 'gi' || capa === 'ambos';
+  const mostrarMicrodato = capa === 'microdato' || capa === 'ambos';
+  /* «Solo calor» únicamente aplica junto al microdato: en el estado Gi* puro
+     no hay vía coloreada que aislar, así que ahí los círculos siempre se ven. */
+  const ocultarCirculos = soloCalor && mostrarMicrodato;
+
+  const fmax = Math.max(...mapas.sectores.map((s) => s.fallecidos));
+  const ordenSectores = [...mapas.sectores].sort((a, b) => b.fallecidos - a.fallecidos || a.lon - b.lon);
+  const radioSector = (s: Sector) => (detalle ? 16 : 7) + (detalle ? 30 : 16) * Math.sqrt(s.fallecidos / fmax);
+
+  const nmax = Math.max(...mapas.microdato.puntos.map((q) => q.hechos));
+  /* Radio máximo ~60 % del de los sectores Gi*, para que no compitan con la vía coloreada. */
+  const radioPunto = (q: Punto) => 0.6 * ((detalle ? 10 : 6) + (detalle ? 22 : 18) * Math.sqrt(q.hechos / nmax));
+
+  const sectorSel: Sector | null = selSector !== null ? ordenSectores[selSector] : null;
+  const puntoSel: Punto | null = selPunto !== null ? mapas.microdato.puntos[selPunto] : null;
 
   return (
     <div className="space-y-3">
       <div className="flex flex-wrap items-center gap-2 text-[11px]">
-        <button onClick={() => setDetalle(false)}
-                className={`rounded-full border px-3 py-1 font-semibold ${!detalle ? 'border-uni-700 bg-uni-700 text-white' : 'border-slate-300 bg-white text-slate-600'}`}>
-          Corredor completo
+        {OPCIONES_CAPA.map((op) => (
+          <button
+            key={op.k}
+            type="button"
+            onClick={() => setCapa(op.k)}
+            className={`rounded-full border px-3 py-1 font-semibold ${
+              capa === op.k ? 'border-uni-700 bg-uni-700 text-white' : 'border-slate-300 bg-white text-slate-600'
+            }`}
+          >
+            {op.label}
+          </button>
+        ))}
+        {mostrarMicrodato && (
+          <button
+            type="button"
+            onClick={() => setSoloCalor((v) => !v)}
+            className={`rounded-full border px-3 py-1 font-semibold ${
+              soloCalor ? 'border-uni-700 bg-uni-700 text-white' : 'border-slate-300 bg-white text-slate-600'
+            }`}
+          >
+            Solo calor
+          </button>
+        )}
+        <button
+          type="button"
+          onClick={() => setDetalle((d) => !d)}
+          className={`ml-auto rounded-full border px-3 py-1 font-semibold ${
+            detalle ? 'border-uni-700 bg-uni-700 text-white' : 'border-slate-300 bg-white text-slate-600'
+          }`}
+        >
+          {detalle ? 'Ver corredor completo' : 'Acercar al descenso a Calarcá (3,6 km)'}
         </button>
-        <button onClick={() => setDetalle(true)}
-                className={`rounded-full border px-3 py-1 font-semibold ${detalle ? 'border-uni-700 bg-uni-700 text-white' : 'border-slate-300 bg-white text-slate-600'}`}>
-          Detalle del descenso a Calarcá (3,6 km)
-        </button>
-        <span className="text-slate-500">Toca un círculo para ver su ficha.</span>
       </div>
+
       <div className="grid gap-4 lg:grid-cols-[1fr_260px]">
-        <Fondo v={v} etiqueta="Sectores críticos de la ANSV sobre el trazado del túnel">
+        <Fondo v={v} etiqueta="Siniestralidad del corredor Ibagué – Calarcá">
+          {!mostrarMicrodato && <ViaActualCapa p={p} />}
+
+          {/* Los círculos del microdato van debajo de la vía coloreada: son
+              contexto de dónde cae cada hecho, no compiten con el calor. */}
+          {mostrarMicrodato && !ocultarCirculos && mapas.microdato.puntos.map((pt, i) => (
+            <circle key={`m${i}`} cx={p.x(pt.lon)} cy={p.y(pt.lat)} r={radioPunto(pt)}
+                    fill={TINTA} fillOpacity={0.25}
+                    stroke={selPunto === i ? '#F59E0B' : TINTA} strokeWidth={selPunto === i ? 3 : 1.5}
+                    style={{ cursor: 'pointer' }} onClick={() => setSelPunto(i)} onMouseEnter={() => setSelPunto(i)} />
+          ))}
+
           <polyline points={pts} fill="none" stroke="white" strokeWidth={7} strokeLinecap="round" />
           <polyline points={pts} fill="none" stroke={AZUL} strokeWidth={3.5} strokeLinecap="round" />
+
+          {/* La vía coloreada por densidad va encima del trazado del túnel y
+              de la vía actual/Túnel de La Línea que dibuja ViaActualCapa. */}
+          {mostrarMicrodato && <ViaDensidadCapa p={p} />}
+
           {!detalle && (
             <>
               {(['oriental', 'occidental'] as const).map((k) => {
@@ -137,22 +254,25 @@ export function MapaSectoresOE5() {
               <Rotulo x={p.x(-75.427)} y={p.y(4.428)} texto="CAJAMARCA" />
             </>
           )}
-          {orden.map((sec, i) => (
-            <g key={i} onClick={() => setSel(i)} onMouseEnter={() => setSel(i)} style={{ cursor: 'pointer' }}>
-              <circle cx={p.x(sec.lon)} cy={p.y(sec.lat)} r={radio(sec)}
+
+          {mostrarGi && !ocultarCirculos && ordenSectores.map((sec, i) => (
+            <g key={`s${i}`} onClick={() => setSelSector(i)} onMouseEnter={() => setSelSector(i)} style={{ cursor: 'pointer' }}>
+              <circle cx={p.x(sec.lon)} cy={p.y(sec.lat)} r={radioSector(sec)}
                       fill={sec.confianza === '99 %' ? AZUL : AZUL_CLARO} fillOpacity={0.9}
-                      stroke={sel === i ? '#F59E0B' : 'white'} strokeWidth={sel === i ? 4 : 2.5} />
+                      stroke={selSector === i ? '#F59E0B' : 'white'} strokeWidth={selSector === i ? 4 : 2.5} />
               {detalle && (() => {
                 /* Si el círculo se pisa con uno anterior, su número sale afuera con línea guía;
                    la posición del círculo no se mueve. */
-                const cx = p.x(sec.lon), cy = p.y(sec.lat);
-                const previos = orden.slice(0, i).filter((o) => Math.hypot(p.x(o.lon) - cx, p.y(o.lat) - cy) < 60).length;
+                const cx = p.x(sec.lon);
+                const cy = p.y(sec.lat);
+                const previos = ordenSectores.slice(0, i).filter((o) => Math.hypot(p.x(o.lon) - cx, p.y(o.lat) - cy) < 60).length;
                 if (!previos) {
                   return <text x={cx} y={cy + 6} textAnchor="middle" fontSize={17} fontWeight={800}
                                fill="white" style={{ pointerEvents: 'none' }}>{i + 1}</text>;
                 }
                 const ang = 2.4 + 1.1 * previos;
-                const lx = cx + 90 * Math.cos(ang), ly = cy - 90 * Math.sin(ang);
+                const lx = cx + 90 * Math.cos(ang);
+                const ly = cy - 90 * Math.sin(ang);
                 return (
                   <g style={{ pointerEvents: 'none' }}>
                     <line x1={cx} y1={cy} x2={lx} y2={ly} stroke="#5B6B80" strokeWidth={1.5} />
@@ -164,206 +284,117 @@ export function MapaSectoresOE5() {
             </g>
           ))}
         </Fondo>
+
         <div className="space-y-3">
-          {s && (
-            <Ficha titulo={`${s.pr} · ${s.tramo}`} filas={[
-              ['Fallecidos 2015–2019', es(s.fallecidos)],
-              ['Confianza Gi*', `${s.confianza} (z = ${es(s.gi_z, 2)})`],
-              ['A cargo de', s.entidad],
-              ['¿Entra en la tasa?', s.en_tasa ? 'Sí' : 'No — tramo de la ANI'],
+          {mostrarGi && !ocultarCirculos && sectorSel && (
+            <Ficha titulo={`${sectorSel.pr} · ${sectorSel.tramo}`} filas={[
+              ['Fallecidos 2015–2019', es(sectorSel.fallecidos)],
+              ['Confianza Gi*', `${sectorSel.confianza} (z = ${es(sectorSel.gi_z, 2)})`],
+              ['A cargo de', sectorSel.entidad],
+              ['¿Entra en la tasa?', sectorSel.en_tasa ? 'Sí' : 'No — tramo de la ANI'],
+            ]} />
+          )}
+          {mostrarMicrodato && !ocultarCirculos && puntoSel && (
+            <Ficha titulo={`km ${es(puntoSel.km, 1)} · ${puntoSel.municipio}`} filas={[
+              ['Tramo', puntoSel.tramo],
+              ['Hechos', `${es(puntoSel.hechos)} (${es(puntoSel.hechos_fatales)} con fallecido)`],
+              ['Fallecidos', es(puntoSel.fallecidos)],
+              ['Lesionados', es(puntoSel.lesionados)],
             ]} />
           )}
           <ul className="space-y-1.5 text-[11px] text-slate-600">
-            <li className="flex items-center gap-2"><span className="h-3 w-3 rounded-full" style={{ background: AZUL }} />Sector crítico · 99 % de confianza</li>
-            <li className="flex items-center gap-2"><span className="h-3 w-3 rounded-full" style={{ background: AZUL_CLARO }} />Sector crítico · 95 % de confianza</li>
+            {mostrarGi && !ocultarCirculos && (
+              <>
+                <li className="flex items-center gap-2"><span className="h-3 w-3 rounded-full" style={{ background: AZUL }} />Sector crítico · 99 % de confianza</li>
+                <li className="flex items-center gap-2"><span className="h-3 w-3 rounded-full" style={{ background: AZUL_CLARO }} />Sector crítico · 95 % de confianza</li>
+              </>
+            )}
+            {mostrarMicrodato && !ocultarCirculos && (
+              <li className="flex items-center gap-2">
+                <span className="h-3 w-3 rounded-full border-[1.5px]" style={{ borderColor: TINTA, background: TINTA, opacity: 0.25 }} />
+                Punto del microdato · tamaño = hechos
+              </li>
+            )}
             <li className="flex items-center gap-2"><span className="h-0.5 w-5" style={{ background: AZUL }} />Trazado del túnel (OE 1)</li>
-            <li>Tamaño del círculo = fallecidos 2015–2019.</li>
+            {!mostrarMicrodato && (
+              <li className="flex items-center gap-2"><span className="h-0.5 w-5" style={{ background: '#7A2E12' }} />Vía actual, Ruta 40 [F, OSM]</li>
+            )}
+            <li className="flex items-center gap-2"><span className="h-0.5 w-5 opacity-35" style={{ background: '#7A2E12' }} />Túnel de La Línea (2020)</li>
           </ul>
-        </div>
-      </div>
-      <p className="text-[11px] leading-relaxed text-slate-500">
-        Fuente: ANSV, Sectores Críticos de Siniestralidad Vial (rs3u-8r4q) [F]; nivel de confianza leído del
-        Getis-Ord Gi* que publica la propia fuente. Trazado: OE 1 [CP]. Relieve: Copernicus DEM GLO-30.
-      </p>
-    </div>
-  );
-}
 
-/* =================================================================== microdato */
-
-const MD = mapas.microdato;
-type Punto = (typeof MD.puntos)[number];
-
-function FranjaDensidad() {
-  const vals = MD.densidad.valores;
-  const max = Math.max(...vals);
-  const paso = MD.densidad.paso_km;
-  const fin = MD.resumen.limites_tramo_km.fin;
-  const W = 1000;
-  const color = (v: number) => {
-    const t = v / max;
-    const a = [247, 249, 251], b = [123, 160, 212], c = [25, 63, 119];
-    const m = (u: number[], w: number[], k: number) => u.map((x, i) => Math.round(x + (w[i] - x) * k));
-    const rgb = t < 0.5 ? m(a, b, t / 0.5) : m(b, c, (t - 0.5) / 0.5);
-    return `rgb(${rgb.join(',')})`;
-  };
-  const x = (km: number) => 24 + (km / fin) * (W - 48);
-  const L = MD.resumen.limites_tramo_km;
-  return (
-    <svg viewBox={`0 0 ${W} 70`} className="h-auto w-full" role="img" aria-label="Franja de densidad lineal de hechos">
-      {vals.map((v, i) => (
-        <rect key={i} x={x(i * paso)} y={10} width={x(paso) - x(0) + 0.6} height={34} fill={color(v)} />
-      ))}
-      <rect x={x(0)} y={10} width={x(fin) - x(0)} height={34} fill="none" stroke="#CBD5E1" />
-      {[L.calarca, L.cajamarca].map((k) => (
-        <line key={k} x1={x(k)} x2={x(k)} y1={4} y2={50} stroke="#5B6B80" strokeDasharray="3 3" />
-      ))}
-      {[0, 10, 20, 30, 40, 50, 60, 70, 80].map((k) => (
-        <text key={k} x={x(k)} y={64} fontSize={11} textAnchor="middle" fill="#64748B">km {k}</text>
-      ))}
-    </svg>
-  );
-}
-
-function TipKm({ active, payload }: { active?: boolean; payload?: { payload: Record<string, number | string> }[] }) {
-  if (!active || !payload?.length) return null;
-  const d = payload[0].payload;
-  return (
-    <div className="rounded-lg border border-slate-200 bg-white p-2 text-[11px] shadow">
-      <p className="font-bold text-uni-900">km {d.km_desde} – {d.km_hasta}</p>
-      <p className="text-slate-600">{d.tramo}</p>
-      <p>Hechos: <b>{d.hechos}</b> (con fallecido: {d.hechos_fatales})</p>
-      <p>Fallecidos: <b>{d.fallecidos}</b> · Lesionados: <b>{d.lesionados}</b></p>
-    </div>
-  );
-}
-
-export function DensidadLinealOE5() {
-  const [sel, setSel] = useState<number | null>(0);
-  const v: Ventana = mapas.corredor;
-  const p = proyector(v);
-  const nmax = Math.max(...MD.puntos.map((q) => q.hechos));
-  const pts = mapas.trazado.map(([lo, la]) => `${p.x(lo)},${p.y(la)}`).join(' ');
-  const barras = useMemo(
-    () => MD.por_km.map((r) => ({ ...r, no_fatales: r.hechos - r.hechos_fatales, etiqueta: r.km_desde })),
-    [],
-  );
-  const q: Punto | null = sel !== null ? MD.puntos[sel] : null;
-  const R = MD.resumen;
-  const T = MD.tasa_post_tunel;
-  const L = R.limites_tramo_km;
-
-  return (
-    <div className="space-y-5">
-      <p className="text-xs leading-relaxed text-slate-600">
-        <b>{es(R.victimas)} víctimas</b> ({es(R.fallecidos)} fallecidos, {es(R.lesionados)} lesionados) en{' '}
-        <b>{es(R.hechos)} hechos</b> y solo {R.puntos_distintos_hechos} puntos distintos, entre el{' '}
-        {R.periodo[0].split('-').reverse().join('/')} y el {R.periodo[1].split('-').reverse().join('/')}. Tasa del paso 2021–2025, como cota inferior [H]: <b>{es(T.tasa_H1, 2)}</b> a{' '}
-        <b>{es(T.tasa_H2, 2)}</b> fallecidos por 10<sup>8</sup> veh-km; no es comparable con la de 2015–2019.
-      </p>
-
-      {/* A · mapa */}
-      <div className="grid gap-4 lg:grid-cols-[1fr_260px]">
-        <div>
-          <p className="mb-2 text-xs font-bold text-uni-900">A · Dónde cayeron los hechos</p>
-          <Fondo v={v} etiqueta="Puntos georreferenciados por la ANSV en la Ruta 4003">
-            <polyline points={pts} fill="none" stroke={GRIS} strokeWidth={3} strokeDasharray="10 7" />
-            <Rotulo x={p.x(-75.640)} y={p.y(4.505)} texto="Calarcá" />
-            <Rotulo x={p.x(-75.427)} y={p.y(4.420)} texto="Cajamarca" />
-            <Rotulo x={p.x(-75.245)} y={p.y(4.385)} texto="Ibagué" />
-            {MD.puntos.map((pt, i) => (
-              <circle key={i} cx={p.x(pt.lon)} cy={p.y(pt.lat)} r={6 + 18 * Math.sqrt(pt.hechos / nmax)}
-                      fill={pt.fallecidos ? AZUL : AZUL_CLARO} fillOpacity={0.9}
-                      stroke={sel === i ? '#F59E0B' : 'white'} strokeWidth={sel === i ? 4 : 2}
-                      style={{ cursor: 'pointer' }} onClick={() => setSel(i)} onMouseEnter={() => setSel(i)} />
-            ))}
-          </Fondo>
-        </div>
-        <div className="space-y-3 lg:pt-6">
-          {q && (
-            <Ficha titulo={`km ${es(q.km, 1)} · ${q.municipio}`} filas={[
-              ['Tramo', q.tramo],
-              ['Hechos', `${es(q.hechos)} (${es(q.hechos_fatales)} con fallecido)`],
-              ['Fallecidos', es(q.fallecidos)],
-              ['Lesionados', es(q.lesionados)],
-            ]} />
+          {mostrarMicrodato && (
+            <div className="space-y-1 border-t border-slate-200 pt-3">
+              <div className="flex items-center gap-1.5">
+                <span className="text-[11px] font-semibold text-slate-600">
+                  Siniestros por km de vía, núcleo gaussiano, banda 1,5 km
+                </span>
+                <span
+                  title="Cálculo propio del semillero"
+                  className="shrink-0 rounded border border-blue-500/30 bg-blue-500/10 px-1 py-0.5 text-[9px] font-bold text-blue-700"
+                >
+                  CP
+                </span>
+              </div>
+              <div
+                className="h-2.5 w-full rounded-sm"
+                style={{ background: `linear-gradient(90deg, rgb(${DENSIDAD_CLARO.join(',')}), rgb(${DENSIDAD_MEDIO.join(',')}), rgb(${DENSIDAD_OSCURO.join(',')}))` }}
+              />
+              <div className="flex justify-between text-[10px] text-slate-500">
+                <span>0</span>
+                <span>máx. {es(mapas.via_densidad.max, 1)} siniestros/km</span>
+              </div>
+            </div>
           )}
-          <ul className="space-y-1.5 text-[11px] text-slate-600">
-            <li className="flex items-center gap-2"><span className="h-3 w-3 rounded-full" style={{ background: AZUL }} />Punto con al menos un fallecido</li>
-            <li className="flex items-center gap-2"><span className="h-3 w-3 rounded-full" style={{ background: AZUL_CLARO }} />Punto solo con lesionados</li>
-            <li className="flex items-center gap-2"><span className="h-0.5 w-5 border-t-2 border-dashed" style={{ borderColor: GRIS }} />Trazado del túnel (OE 1)</li>
-            <li>Tamaño = hechos en ese punto. El punto de Calarcá urbano con {R.punto_mas_cargado_hechos.hechos} hechos
-              parece un punto por defecto de la georreferenciación.</li>
-          </ul>
         </div>
-      </div>
-
-      {/* B · prensa */}
-      <div>
-        <p className="mb-2 text-xs font-bold text-uni-900">
-          B · ¿Están en el anexo los fatales conocidos por prensa? Figuran {R.prensa.en_anexo} de {R.prensa.total}.
-        </p>
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[520px] text-left text-[11px]">
-            <thead className="bg-uni-800 text-white">
-              <tr>{['Fecha', 'Hecho', 'Muertos en prensa', 'En el anexo'].map((h) => <th key={h} className="px-2 py-1.5 font-semibold">{h}</th>)}</tr>
-            </thead>
-            <tbody>
-              {MD.prensa.map((r) => {
-                const [y, m, d] = r.fecha.split('-');
-                const si = r.en_anexo_ANSV === 'si';
-                return (
-                  <tr key={r.fecha} className={`border-b border-slate-100 ${si ? 'text-slate-800' : 'text-slate-500'}`}>
-                    <td className="px-2 py-1.5 font-mono">{`${d}/${m}/${y}`}</td>
-                    <td className="px-2 py-1.5">{r.hecho}</td>
-                    <td className="px-2 py-1.5">{r.muertos_prensa.replace('no indicado', 's. d.')}</td>
-                    <td className="px-2 py-1.5 font-semibold" style={{ color: si ? AZUL : undefined }}>
-                      {si ? `Sí · ${r.fallecidos_anexo}` : 'No'}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {/* C · franja */}
-      <div>
-        <p className="mb-1 text-xs font-bold text-uni-900">
-          C · Densidad lineal de hechos a lo largo de la Ruta 4003 (núcleo gaussiano, banda {es(MD.densidad.bw_km, 1)} km [H])
-        </p>
-        <FranjaDensidad />
-      </div>
-
-      {/* D · barras */}
-      <div>
-        <p className="mb-1 text-xs font-bold text-uni-900">D · Hechos por kilómetro (pasa el cursor por una barra)</p>
-        <div className="h-[260px] w-full">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={barras} margin={{ top: 22, right: 8, left: 0, bottom: 8 }} barCategoryGap={1}>
-              <CartesianGrid stroke="#e2e8f0" strokeDasharray="3 3" vertical={false} />
-              <ReferenceArea x1={Math.floor(L.calarca)} x2={Math.floor(L.cajamarca)} fill="#EEF2F7"
-                             label={{ value: 'Paso Calarcá – Cajamarca · 45 km', position: 'insideTop', fontSize: 11, fill: TINTA }} />
-              <XAxis dataKey="etiqueta" interval={9} tick={{ fill: '#64748b', fontSize: 11 }} stroke="#94a3b8"
-                     tickFormatter={(k) => `km ${k}`} />
-              <YAxis allowDecimals={false} tick={{ fill: '#64748b', fontSize: 11 }} stroke="#94a3b8" width={32} />
-              <Tooltip content={<TipKm />} cursor={{ fill: 'rgba(148,163,184,0.15)' }} />
-              <Bar dataKey="hechos_fatales" stackId="h" fill={AZUL} name="Hechos con fallecido" />
-              <Bar dataKey="no_fatales" stackId="h" fill={AZUL_CLARO} name="Hechos solo con lesionados" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-        <p className="text-[11px] leading-relaxed text-slate-500">
-          Entre el km 11 y el 41 —el ascenso y el Alto de La Línea— el anexo registra {R.paso_km_11_a_41.hechos} hechos
-          y {R.paso_km_11_a_41.fallecidos} fallecido. La figura muestra dónde se pudo georreferenciar, no dónde está el riesgo.
-        </p>
       </div>
 
       <p className="text-[11px] leading-relaxed text-slate-500">
-        Fuente: ANSV – Observatorio Nacional de Seguridad Vial, oficio 20265000140371 del 22 sep 2026 (solicitud de
-        D. Torrente), fuente primaria INMLCF [F]. Hechos, abscisa y tramos: procesar_microdato_ANSV_OE5.py [CP] [H].
-        Prensa: El Tiempo, El Espectador, Infobae.
+        {mostrarGi && 'Sectores críticos: ANSV, Sectores Críticos de Siniestralidad Vial (rs3u-8r4q) [F]; nivel de confianza leído del Getis-Ord Gi* que publica la propia fuente. '}
+        {mostrarMicrodato && 'Microdato: ANSV, oficio 20265000140371 del 22 sep 2026 (solicitud de D. Torrente), fuente primaria INMLCF [F]; densidad, abscisa y tramos: procesar_microdato_ANSV_OE5.py [CP]. '}
+        Trazado: OE 1 [CP]. Relieve: Copernicus DEM GLO-30. Vía: © colaboradores de OpenStreetMap.
+      </p>
+    </div>
+  );
+}
+
+/* =================================================================== prensa */
+
+/** Cruce entre el microdato y los siniestros fatales que documentó la prensa. */
+export function PrensaMicrodatoOE5() {
+  const R = mapas.microdato.resumen;
+  return (
+    <div className="space-y-3">
+      <p className="text-xs leading-relaxed text-slate-600">
+        De los <strong className="text-slate-700">{R.prensa.total}</strong> siniestros fatales que
+        documentó la prensa entre 2022 y 2025, el anexo de la ANSV georreferencia{' '}
+        <strong className="text-slate-700">{R.prensa.en_anexo}</strong>.
+      </p>
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[520px] text-left text-[11px]">
+          <thead className="bg-uni-800 text-white">
+            <tr>{['Fecha', 'Hecho', 'Muertos en prensa', 'En el anexo'].map((h) => <th key={h} className="px-2 py-1.5 font-semibold">{h}</th>)}</tr>
+          </thead>
+          <tbody>
+            {mapas.microdato.prensa.map((r) => {
+              const [y, m, d] = r.fecha.split('-');
+              const si = r.en_anexo_ANSV === 'si';
+              return (
+                <tr key={r.fecha} className={`border-b border-slate-100 ${si ? 'text-slate-800' : 'text-slate-500'}`}>
+                  <td className="px-2 py-1.5 font-mono">{`${d}/${m}/${y}`}</td>
+                  <td className="px-2 py-1.5">{r.hecho}</td>
+                  <td className="px-2 py-1.5">{r.muertos_prensa.replace('no indicado', 's. d.')}</td>
+                  <td className="px-2 py-1.5 font-semibold" style={{ color: si ? AZUL : undefined }}>
+                    {si ? `Sí · ${r.fallecidos_anexo}` : 'No'}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      <p className="text-[11px] leading-relaxed text-slate-500">
+        Fuente: ANSV – Observatorio Nacional de Seguridad Vial, oficio 20265000140371 del 22 sep 2026
+        (solicitud de D. Torrente) [F]. Prensa: El Tiempo, El Espectador, Infobae.
       </p>
     </div>
   );

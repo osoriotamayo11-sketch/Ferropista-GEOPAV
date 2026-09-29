@@ -2,7 +2,7 @@
 """
 OE 5 - Actividad 5 (fila 35 del Cronograma)
 Consolidacion del diagnostico operacional de la infraestructura vial actual.
-Producto: Informe_diagnostico_vial_OE5_v2.pdf
+Producto: Informe_diagnostico_vial_OE5_v4.pdf (rev. 4, 26 sep 2026: láminas con formato institucional)
 
 REVISION 2 (16 sep 2026): presentacion corregida segun el tutor. Portada, tabla de
 contenido, indices de tablas, figuras y anexos, logo de la Universidad en el encabezado,
@@ -48,7 +48,14 @@ ACT1 = os.path.join(OE5, "Act1_Aforos")
 ACT3 = os.path.join(OE5, "Act3_Siniestros")
 ACT4 = os.path.join(OE5, "Act4_Analisis")
 VIS = os.path.join(OE5, "Visuales")
-SALIDA = os.path.join(BASE, "Informe_diagnostico_vial_OE5_v3.pdf")
+SALIDA = os.path.join(BASE, "Informe_diagnostico_vial_OE5_v4.pdf")
+
+def _alto(ruta, ancho):
+    """Alto proporcional de una lámina: se lee del PNG, no se escribe a mano (las láminas cambian de tamaño)."""
+    from PIL import Image as _PI
+    with _PI.open(ruta) as _im:
+        return ancho * _im.height / _im.width
+
 RAIZ = os.path.dirname(OE5)
 LOGO_U = os.path.join(RAIZ, "public", "logo-unibague.png")
 LOGO_G = os.path.join(RAIZ, "public", "logo-geopav.png")
@@ -290,7 +297,7 @@ def portada(canv, doc):
     tit = Paragraph("Informe de diagnóstico operacional de la infraestructura vial del paso del Alto de La Línea",
                     ParagraphStyle("pt", fontName=F_BOLD, fontSize=26, leading=32, textColor=AZUL))
     w, h = tit.wrap(W - 2 * MARGEN, 100 * mm); tit.drawOn(canv, MARGEN, H - 88 * mm - h)
-    sub = Paragraph("Corredor Ibagué – Calarcá, Ruta Nacional 40 · Revisión 3",
+    sub = Paragraph("Corredor Ibagué – Calarcá, Ruta Nacional 40 · Revisión 4",
                     ParagraphStyle("ps", fontName=F_REG, fontSize=14, leading=19, textColor=GRIS))
     w2, h2 = sub.wrap(W - 2 * MARGEN, 30 * mm); sub.drawOn(canv, MARGEN, H - 96 * mm - h - h2)
     ficha = [("Objetivo específico", "OE 5 — Diagnóstico vial: tránsito y siniestralidad del paso de La Línea"),
@@ -298,7 +305,7 @@ def portada(canv, doc):
              ("Entregable / formato", "Informe de diagnóstico vial · Documento PDF"),
              ("Periodo en el Plan de Acción", "29 sep 2026 – 3 oct 2026"),
              ("Responsable asignado", "Castaño Cifuentes Maicol Stiven"),
-             ("Revisión", "3 · incorpora el microdato ANSV 2021 – mar 2026 (oficio 20265000140371)")]
+             ("Revisión", "4 · láminas con formato institucional y vía actual; contenido de la revisión 3 sin cambios")]
     t = Table([[Paragraph(f"<b>{k}</b>", CELDA), Paragraph(v, CELDA)] for k, v in ficha],
               colWidths=[52 * mm, W - 2 * MARGEN - 52 * mm])
     t.setStyle(TableStyle([("BACKGROUND", (0, 0), (0, -1), FONDO), ("LINEBELOW", (0, 0), (-1, -1), 0.4, LINEA),
@@ -334,7 +341,7 @@ def construir_documento(cuerpo_fn):
         CONT.update({"T": 0, "F": 0, "A": 0})
         doc = Doc(SALIDA, pagesize=LETRA, leftMargin=MARGEN, rightMargin=MARGEN,
                   topMargin=32 * mm, bottomMargin=25 * mm,
-                  title="Informe de diagnóstico vial - OE 5 Act 5 - Semillero GEOPAV (rev. 3)",
+                  title="Informe de diagnóstico vial - OE 5 Act 5 - Semillero GEOPAV (rev. 4)",
                   author="Semillero de Investigación GEOPAV - Universidad de Ibagué", invariant=1)
         doc.semilla = previo
         fr = Frame(doc.leftMargin, doc.bottomMargin, doc.width, doc.height, id="f")
@@ -633,7 +640,7 @@ def cuerpo(doc):
         tf = f"Figura {CONT['F']}. Exposición y siniestralidad del corredor, lámina de la Actividad 4"
         A(Marca("F", tf))
         A(Paragraph(tf, ParagraphStyle("TF", parent=TIT_TABLA, alignment=1)))
-        A(Image(lam, width=doc.width, height=doc.width * 1639 / 3100))
+        A(Image(lam, width=doc.width, height=_alto(lam, doc.width)))
         A(Paragraph("Fuente: OE5_SeguridadVial/Visuales/graficos_siniestralidad_OE5.png, generada por "
                     "Act4_Analisis/graficos_siniestralidad_OE5.py [CP].", ParagraphStyle("FF", parent=FUENTE, alignment=1)))
 
@@ -652,7 +659,7 @@ def cuerpo(doc):
         tf2 = f"Figura {CONT['F']}. Densidad lineal de siniestros georreferenciados, Ruta 4003, 2021 – marzo 2026"
         A(Marca("F", tf2))
         A(Paragraph(tf2, ParagraphStyle("TF2", parent=TIT_TABLA, alignment=1)))
-        A(Image(lam2, width=doc.width, height=doc.width * 1880 / 3100))
+        A(Image(lam2, width=doc.width, height=_alto(lam2, doc.width)))
         A(Paragraph("Fuente: ANSV, oficio 20265000140371 (solicitud de D. Torrente); figura generada por "
                     "Act4_Analisis/densidad_lineal_OE5.py [CP]. Muestra dónde se pudo georreferenciar, no "
                     "dónde está el riesgo.", ParagraphStyle("FF2", parent=FUENTE, alignment=1)))
@@ -660,7 +667,8 @@ def cuerpo(doc):
     A(Paragraph("<i>Nota de elaboración: la revisión 2 de este informe corrigió su presentación a pedido del "
                 "tutor. La revisión 3 incorpora el microdato georreferenciado que la ANSV entregó por solicitud "
                 "(oficio 20265000140371), la densidad lineal calculada sobre ese microdato y la tasa de "
-                "mortalidad posterior al túnel como cota inferior. Las tres revisiones contaron con apoyo de un "
+                "mortalidad posterior al túnel como cota inferior. La revisión 4 solo cambia la presentación de las "
+                "láminas de los anexos (encabezado institucional y la vía actual dibujada en los mapas). Las cuatro revisiones contaron con apoyo de un "
                 "asistente de inteligencia artificial (Claude, de Anthropic); el semillero verificó cada "
                 "resultado y los controles automáticos del script se detienen si alguna cifra no cuadra.</i>", FUENTE))
 

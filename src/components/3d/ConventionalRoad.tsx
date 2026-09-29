@@ -19,6 +19,7 @@ import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { Car, Truck, CAR_COLORS, TRUCK_COLORS } from './Vehicles';
 import { getMountainHeight } from './Mountain';
+import Humo from './Humo';
 
 const rawPoints2D: [number, number][] = [
   [-20, 6], [-15, 6], [-11, 5],
@@ -55,13 +56,14 @@ function AnimatedVehicle({
 
     group.current.position.copy(position);
     group.current.lookAt(target);
-    group.current.rotateY(Math.PI / 2);
+    group.current.rotateY(-Math.PI / 2);
   });
 
   if (type === 'car') {
     return (
       <group ref={group}>
         <Car color={CAR_COLORS[colorIdx % CAR_COLORS.length]} />
+        <Humo position={[-0.22, 0.02, 0]} particulas={1} opacidadMax={0.25} />
       </group>
     );
   }
@@ -70,6 +72,7 @@ function AnimatedVehicle({
   return (
     <group ref={group}>
       <Truck bodyColor={truckColors.body} cabColor={truckColors.cab} />
+      <Humo position={[0.18, 0.28, 0.14]} particulas={3} opacidadMax={0.8} />
     </group>
   );
 }
@@ -141,7 +144,7 @@ export default function ConventionalRoad({ showTrucks = true, vehicleCount }: Pr
 
   return (
     <group>
-      <mesh geometry={roadGeometry} receiveShadow castShadow>
+      <mesh geometry={roadGeometry}>
         <meshStandardMaterial color="#64748B" roughness={0.9} metalness={0.1} />
       </mesh>
 

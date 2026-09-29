@@ -13,6 +13,10 @@ directamente en vez de depender solo del color.
 import csv
 import os
 import matplotlib
+import sys
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "Comun"))
+from lamina_institucional import encabezado, pie, dibujar_via, FUENTE_VIA  # marco común (sesión 16)
+
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
@@ -41,7 +45,7 @@ VIS = os.path.join(OE5, 'Visuales')
 aforos = leer(os.path.join(ACT1, 'aforos_cocora_mensual.csv'), ['dias','total','livianos','buses','pesados','otros','tpd','tpd_pes'])
 sin    = leer(os.path.join(ACT3, 'siniestros_ANSV_corredor.csv'), ['fallecidos'])
 
-fig = plt.figure(figsize=(13.5, 5.9), dpi=200)
+fig = plt.figure(figsize=(13.5, 7.6), dpi=200)
 fig.patch.set_facecolor('white')
 # wspace amplio: los rotulos numerados del panel derecho son largos y sin holgura
 # invaden el area de trazado del panel izquierdo.
@@ -102,14 +106,14 @@ ax2.set_title('Sectores críticos del corredor Ibagué – Armenia', fontsize=12
 ax2.text(0, 1.035, 'ANSV · los seis están en jurisdicción de Calarcá (Quindío)',
          transform=ax2.transAxes, fontsize=9, color=SUAVE)
 
-fig.suptitle('Objetivo específico 5 · Línea base de siniestralidad y exposición del corredor',
-             fontsize=14.5, weight='bold', color=TINTA, x=0.055, ha='left', y=0.955)
-fig.text(0.055, 0.018,
+arriba = encabezado(fig, 'Línea base de siniestralidad y exposición del corredor — OE 5',
+                    'Semillero GEOPAV, Universidad de Ibagué · Paz y Región 2026B')
+abajo = pie(fig,
          'Fuentes: ANSV, conjunto rs3u-8r4q (fallecidos 2015–2019, marca F) · ANI, conjunto 8yi9-t44c '
          '(aforo del peaje Cocora, marca F). El tránsito promedio diario es cálculo propio [CP]:\n'
          'total mensual dividido entre los días del mes. La serie mensual es volátil, de modo que el análisis usa la media de los últimos doce meses.\n'
-         'Las dos series están en la misma unidad y comparten un solo eje. Semillero GEOPAV · Universidad de Ibagué · Paz y Región 2026B.',
-         fontsize=8, color=SUAVE, va='bottom')
+         'Las dos series están en la misma unidad y comparten un solo eje. Scripts: fig_oe5.py. Elaborado con apoyo de IA (Claude) y verificado contra las fuentes citadas.')
+gs.update(top=arriba - 0.12, bottom=abajo + 0.10)
 fig.savefig(os.path.join(VIS, 'siniestralidad_OE5.png'), facecolor='white')
 fig.savefig(os.path.join(VIS, 'siniestralidad_OE5.pdf'), facecolor='white')
 print('figura escrita')

@@ -5,8 +5,9 @@
  *
  * El OE 2 es el único objetivo cuyo producto está vivo mientras el semestre corre:
  * la consulta ciudadana. Por eso esta sección no presenta resultados —todavía no
- * los hay— sino una invitación a participar y la declaración de qué se pregunta y
- * qué no se guarda. Los resultados llegarán cuando cierre la ventana de recolección.
+ * los hay— sino qué es la consulta, qué mide, cómo se responde y para qué sirve,
+ * más la invitación a participar. Los resultados llegarán cuando cierre la
+ * ventana de recolección.
  *
  * Instrumento vigente: el OFICIAL, avalado por la entidad receptora (versión
  * 'oficial-2026-09'). Eso se dice aquí y se repite en la propia página de la
@@ -16,54 +17,32 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import {
-  Users, CheckCircle2, Circle, Loader2, ArrowRight, ShieldCheck, ListChecks, Clock,
-  FolderOpen, ExternalLink,
+  Users, ArrowRight, ShieldCheck, ListChecks, Clock,
 } from 'lucide-react';
-import { PLAN_ACCION, EQUIPO, type EstadoItem } from '@/data/proyecto';
-import Acordeon from './Acordeon';
+import { PLAN_ACCION } from '@/data/proyecto';
+import { METODO_OE } from '@/data/metodo_oe';
+import ComoSeHizo from './ComoSeHizo';
 
-/**
- * Carpetas de Google Drive de las cinco actividades del OE 2, en orden de actividad.
- * Son las mismas que el Google Sheet oficial referencia en su columna
- * «Carpeta de Google Drive». Verificadas abiertas sin sesión el 18 sep 2026.
- */
-const DRIVE_URLS_OE2 = [
-  'https://drive.google.com/drive/folders/1Uc76S1A3TmD2-JeTnOtIvp6m_0Q-Lc2v',
-  'https://drive.google.com/drive/folders/1tjaDUkU04ZWvX1MJH0XkPW2ZC0N7DDOB',
-  'https://drive.google.com/drive/folders/1AJJXG6WE2qvNJ0cYZ_7_HOOXxNpmGTkH',
-  'https://drive.google.com/drive/folders/1oU26wwyBRw1DdW8M_H1sQpqBcyyB8XRd',
-  'https://drive.google.com/drive/folders/1avkuU9JmbhRok1t_EEgyH4hBSkaEi0AW',
-];
-
-const ESTADO_UI: Record<EstadoItem, { texto: string; clase: string; Icono: React.ComponentType<{ className?: string }> }> = {
-  completado: { texto: 'Completado', clase: 'bg-gmae-50 text-gmae-700 border-gmae-300', Icono: CheckCircle2 },
-  en_curso:   { texto: 'En curso',   clase: 'bg-uni-50 text-uni-700 border-uni-200',    Icono: Loader2 },
-  pendiente:  { texto: 'Pendiente',  clase: 'bg-slate-100 text-slate-600 border-slate-300', Icono: Circle },
-};
-
-const BadgeEstado: React.FC<{ estado: EstadoItem }> = ({ estado }) => {
-  const { texto, clase, Icono } = ESTADO_UI[estado];
-  return (
-    <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full border ${clase}`}>
-      <Icono className={`w-3 h-3 ${estado === 'en_curso' ? 'animate-spin' : ''}`} />
-      {texto}
-    </span>
-  );
-};
-
-/* Los bloques del cuestionario oficial, en el mismo orden en que se presentan en
-   /consulta. Si allí cambian, aquí también: es la promesa que se le hace a quien
-   decide si entra o no. Preguntas: OE2_Plataforma/Act3_Instrumento/instrumento_oficial_2026-09.json */
-const BLOQUES_CONSULTA = [
-  { letra: 'A', titulo: 'Su relación con el corredor', detalle: 'Si conduce carga, es particular, comerciante, residente o trabajador de la zona; con qué frecuencia usa el corredor.' },
-  { letra: 'B', titulo: 'Conocimiento y opinión sobre la Ferropista', detalle: 'Qué tanto conoce la propuesta y su opinión sobre movilidad, seguridad vial, economía, empleo y confianza en el proyecto.' },
-  { letra: 'C', titulo: 'Preguntas según su perfil', detalle: 'Dos preguntas adicionales para transportadores de carga, particulares, residentes o comerciantes.' },
-  { letra: 'D', titulo: 'Lo que quiera añadir', detalle: 'Dos preguntas abiertas y opcionales sobre el principal beneficio y el principal impacto negativo que espera.' },
-];
-
-const NO_SE_GUARDA = [
-  'Nombre, cédula, teléfono o correo: no se piden en ninguna pregunta.',
-  'Dirección IP o identificador de dispositivo: el servidor no lee ninguna cabecera de red, y así está escrito en el código publicado.',
+/* Los cuatro puntos de "Qué es la consulta", en el mismo orden en que se
+   presentan al visitante. Texto acordado con el equipo; no son cifras sueltas
+   sino la descripción del instrumento, así que no pasan por proyecto.ts. */
+const QUE_ES_LA_CONSULTA = [
+  {
+    titulo: 'Qué es',
+    texto: 'Una encuesta en línea y anónima para quienes usan o habitan el corredor Ibagué – Armenia: conductores de vehículos de carga y particulares, residentes, comerciantes y trabajadores de la zona.',
+  },
+  {
+    titulo: 'Qué mide',
+    texto: 'Qué tanto se conoce la propuesta de la Ferropista y cómo se perciben sus efectos: movilidad, seguridad vial, desarrollo económico y empleo, las posibles afectaciones a quienes hoy viven del tránsito de carga, y el grado de aceptación del proyecto.',
+  },
+  {
+    titulo: 'Cómo',
+    texto: '17 preguntas: 2 sobre el uso del corredor, 11 en escala de acuerdo, 2 según el perfil (carga, particular, residente o comerciante) y 2 abiertas sobre el principal beneficio y el principal impacto. Toma unos cinco minutos.',
+  },
+  {
+    titulo: 'Para qué',
+    texto: 'Es el único dato primario del proyecto: recoge la voz de los usuarios del corredor, que ninguna entidad mide. Sus resultados se contrastan con la siniestralidad del OE 5 y alimentan la integración del OE 7. Recibe respuestas hasta el 3 de octubre de 2026.',
+  },
 ];
 
 export const SintesisOE2: React.FC = () => {
@@ -84,53 +63,18 @@ export const SintesisOE2: React.FC = () => {
             <span>Objetivo específico 2 · Plataforma y consulta ciudadana</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-uni-900 tracking-tight">
-            El único dato que no sale de un archivo
+            Qué es la consulta
           </h2>
-          <p className="text-base sm:text-lg text-slate-500 leading-relaxed">
-            Todo lo demás de este sitio se calcula sobre datos publicados por INVÍAS, la ANSV,
-            la ANI y un modelo de elevación. Falta lo que ninguna entidad mide: qué tanto
-            conocen y qué opinan de la propuesta de la Ferropista quienes usan y habitan el
-            corredor. Esta consulta lo pregunta directamente, y es el único dato primario
-            del proyecto.
-          </p>
         </div>
 
-        {/* 1. Estado del objetivo */}
-        <div className="rounded-2xl bg-white border border-gmae-300/60 p-6 sm:p-8 mb-6">
-          <div className="flex flex-wrap items-center gap-3 mb-4">
-            <BadgeEstado estado={oe2.estado} />
-            <span className="text-[11px] font-mono text-slate-500">{oe2.inicio} → {oe2.fin}</span>
-            <span className="text-[11px] text-slate-500">· Responsable: {oe2.responsable}</span>
-          </div>
-          <p className="text-sm text-slate-700 leading-relaxed mb-5">{oe2.titulo}</p>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-3">
-            {oe2.actividades.map((a, i) => {
-              const { Icono } = ESTADO_UI[a.estado];
-              const tinte = a.estado === 'completado' ? 'text-gmae-600'
-                : a.estado === 'en_curso' ? 'text-uni-600' : 'text-slate-400';
-              return (
-                <a
-                  key={a.n}
-                  href={DRIVE_URLS_OE2[i]}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex flex-col rounded-xl bg-slate-50 border border-slate-200 p-3 space-y-1.5 hover:border-uni-300 hover:bg-white transition-colors"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono text-slate-500">Act {a.n}</span>
-                    <Icono className={`w-3.5 h-3.5 ${tinte} ${a.estado === 'en_curso' ? 'animate-spin' : ''}`} />
-                  </div>
-                  <p className="text-[11px] text-slate-600 leading-snug">{a.entregable}</p>
-                  <p className="text-[10px] font-mono text-slate-400">{a.inicio} → {a.fin}</p>
-                  <span className="flex items-center gap-1.5 pt-1.5 mt-auto border-t border-slate-200 text-[10px] font-semibold text-uni-700">
-                    <FolderOpen className="w-3 h-3 shrink-0" />
-                    Ver evidencia en Drive
-                    <ExternalLink className="w-2.5 h-2.5 shrink-0 text-slate-400 group-hover:text-uni-600" />
-                  </span>
-                </a>
-              );
-            })}
-          </div>
+        {/* Qué es la consulta: los cuatro puntos, textuales */}
+        <div className="mb-10 grid gap-4 sm:grid-cols-2">
+          {QUE_ES_LA_CONSULTA.map((p) => (
+            <div key={p.titulo} className="rounded-xl border border-slate-200 bg-slate-50 p-4 sm:p-5">
+              <p className="text-xs font-bold uppercase tracking-wide text-uni-700">{p.titulo}</p>
+              <p className="mt-1.5 text-sm leading-relaxed text-slate-600">{p.texto}</p>
+            </div>
+          ))}
         </div>
 
         {/* 2. La llamada a participar */}
@@ -181,49 +125,15 @@ export const SintesisOE2: React.FC = () => {
           </p>
         </motion.div>
 
-        {/* 3. Qué se pregunta, plegado */}
         <div className="mb-4">
-          <Acordeon
-            titulo="Qué se pregunta"
-            resumen="Los bloques del cuestionario, en el mismo orden en que aparecen."
-            icono={<ListChecks className="h-5 w-5 text-uni-600" />}
-            contador={`${BLOQUES_CONSULTA.length} bloques`}
-          >
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {BLOQUES_CONSULTA.map((b) => (
-                <div key={b.letra} className="rounded-xl border border-slate-200 bg-slate-50 p-4">
-                  <p className="font-mono text-[11px] font-bold text-uni-700">Bloque {b.letra}</p>
-                  <p className="mt-0.5 text-xs font-semibold leading-snug text-slate-700">{b.titulo}</p>
-                  <p className="mt-1.5 text-[11px] leading-relaxed text-slate-500">{b.detalle}</p>
-                </div>
-              ))}
-            </div>
-          </Acordeon>
+          <ComoSeHizo
+            porQue={METODO_OE.oe2.porQue}
+            paraQue={METODO_OE.oe2.paraQue}
+            como={METODO_OE.oe2.como}
+            noAfirma={METODO_OE.oe2.noAfirma}
+            resumen="Por qué existe la consulta, el instrumento que usa, el calendario y qué no puede concluirse de sus respuestas."
+          />
         </div>
-
-        {/* 4. Qué no se guarda, plegado */}
-        <Acordeon
-          titulo="Qué no se guarda"
-          resumen="Lo que la consulta no recoge, y por qué se puede comprobar en vez de creerlo."
-          icono={<ShieldCheck className="h-5 w-5 text-gmae-600" />}
-          contador={`${NO_SE_GUARDA.length} puntos`}
-          tono="gris"
-        >
-          <ul className="max-w-4xl space-y-2.5 text-xs leading-relaxed text-slate-600">
-            {NO_SE_GUARDA.map((n) => (
-              <li key={n} className="flex gap-2">
-                <span className="shrink-0 text-slate-400">·</span>
-                <span>{n}</span>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-4 border-t border-slate-200 pt-3 text-[11px] leading-relaxed text-slate-500">
-            Las respuestas se almacenan con seguridad a nivel de fila: quien visita el sitio
-            puede depositar una respuesta y no puede leer ninguna, ni la suya. Se publican
-            siempre agregadas, nunca individuales. Trabajo del {EQUIPO.semillero},{' '}
-            {EQUIPO.universidad}.
-          </p>
-        </Acordeon>
 
       </div>
     </section>

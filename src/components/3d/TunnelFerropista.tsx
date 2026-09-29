@@ -23,7 +23,7 @@ function TunnelPortal({ x, isLeft }: { x: number; isLeft: boolean }) {
   const dir = isLeft ? -1 : 1;
   return (
     <group position={[x, 0, -2]}>
-      <mesh position={[0, 0, 0]} rotation={[0, Math.PI / 2, 0]} castShadow>
+      <mesh position={[0, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
         <torusGeometry args={[1.6, 0.25, 16, 32, Math.PI]} />
         <meshStandardMaterial color="#A9C0CE" roughness={0.7} />
       </mesh>
@@ -38,7 +38,7 @@ function TunnelPortal({ x, isLeft }: { x: number; isLeft: boolean }) {
 function TunnelBody() {
   const len = 17.8;
   return (
-    <mesh position={[0, 0, -2]} rotation={[0, 0, Math.PI / 2]} receiveShadow>
+    <mesh position={[0, 0, -2]} rotation={[0, 0, Math.PI / 2]}>
       <cylinderGeometry args={[1.6, 1.6, len, 24, 1, true, 0, Math.PI]} />
       <meshStandardMaterial color="#5A6D7A" roughness={0.9} side={THREE.DoubleSide} />
     </mesh>
@@ -91,15 +91,15 @@ export default function TunnelFerropista() {
 
   return (
     <group>
-      <mesh position={[0, 0.15, -2]} receiveShadow>
+      <mesh position={[0, 0.15, -2]}>
         <boxGeometry args={[40, 0.05, 1.2]} />
         <meshStandardMaterial color="#4B5563" roughness={0.9} />
       </mesh>
-      <mesh position={[0, 0.18, -1.7]} receiveShadow>
+      <mesh position={[0, 0.18, -1.7]}>
         <boxGeometry args={[40, 0.02, 0.05]} />
         <meshStandardMaterial color="#9CA3AF" metalness={0.8} roughness={0.2} />
       </mesh>
-      <mesh position={[0, 0.18, -2.3]} receiveShadow>
+      <mesh position={[0, 0.18, -2.3]}>
         <boxGeometry args={[40, 0.02, 0.05]} />
         <meshStandardMaterial color="#9CA3AF" metalness={0.8} roughness={0.2} />
       </mesh>

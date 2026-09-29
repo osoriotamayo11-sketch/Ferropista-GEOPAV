@@ -4,17 +4,20 @@
  * PasoAutopista3D — envoltura de las escenas 3D del proceso operativo (Solution).
  *
  * - Carga diferida y sin SSR: three.js no entra en la ruta crítica.
- * - Se monta al acercarse a la pantalla y se detiene al salir de ella
- *   (frameloop 'demand'), así cuatro lienzos no consumen GPU a la vez.
- * - Con «reducir movimiento» la escena queda estática.
- * - Si WebGL falla, se muestra el pictograma SVG propio que había antes.
+ * - Cada tarjeta monta su propio <Canvas> (ver `3d/AutopistaRodante`), con su
+ *   propio IntersectionObserver: se monta al acercarse a la pantalla y detiene
+ *   el render (frameloop 'never') al salir de ella. Anima siempre que está en
+ *   pantalla, igual que EscenaComparativa — no respeta «reducir movimiento»,
+ *   porque los esquemas comparativos del encabezado tampoco lo hacen.
+ * - Si WebGL falla, se muestra el pictograma SVG propio que había antes. El
+ *   límite de error es por tarjeta.
  */
 
 import dynamic from 'next/dynamic';
 import { Component, useEffect, useRef, useState, type ReactNode } from 'react';
 import type { PasoAutopista } from './3d/AutopistaRodante';
 
-const AutopistaRodante = dynamic(() => import('./3d/AutopistaRodante'), {
+const AutopistaEscena = dynamic(() => import('./3d/AutopistaRodante'), {
   ssr: false,
   loading: () => (
     <div className="flex h-full w-full items-center justify-center bg-sky-50">
@@ -37,11 +40,8 @@ export default function PasoAutopista3D({ paso, respaldo }: { paso: PasoAutopist
   const ref = useRef<HTMLDivElement>(null);
   const [montado, setMontado] = useState(false);
   const [enPantalla, setEnPantalla] = useState(false);
-  const [quieto, setQuieto] = useState(false);
 
   useEffect(() => {
-    const mq = window.matchMedia?.('(prefers-reduced-motion: reduce)');
-    setQuieto(!!mq?.matches);
     const nodo = ref.current;
     if (!nodo || typeof IntersectionObserver === 'undefined') {
       setMontado(true);
@@ -63,7 +63,7 @@ export default function PasoAutopista3D({ paso, respaldo }: { paso: PasoAutopist
     <div ref={ref} className="aspect-[4/3] w-full">
       {montado ? (
         <Respaldo respaldo={respaldo}>
-          <AutopistaRodante paso={paso} animar={enPantalla && !quieto} />
+          <AutopistaEscena paso={paso} enPantalla={enPantalla} />
         </Respaldo>
       ) : (
         respaldo

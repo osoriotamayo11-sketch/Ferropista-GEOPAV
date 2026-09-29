@@ -11,8 +11,9 @@
  *    mapa de entorno HDR desde un CDN externo en tiempo de ejecución; el sitio
  *    no depende de recursos de terceros para renderizar. Se reemplaza por una
  *    luz hemisférica, que da un resultado equivalente sin salir a la red.
- *  - `dpr` acotado y sombras opcionales, para las tarjetas pequeñas.
- *  - `frameloop="demand"` no se usa: las escenas son animadas por definición.
+ *  - Rendimiento igual al de `AutopistaRodante.tsx`: sin sombras, `dpr`
+ *    acotado a [1, 1.5] y `frameloop` en 'never' cuando la tarjeta no está en
+ *    pantalla (lo controla `EsquemaHero3D.tsx` con un IntersectionObserver).
  */
 
 import { Canvas } from '@react-three/fiber';
@@ -25,9 +26,11 @@ interface Props {
   scenario: 'convencional' | 'ferropista';
   /** Alto del lienzo. Usa valores pequeños dentro de la tarjeta del encabezado. */
   height?: number;
-  /** 'compacta' y 'media' bajan arbolado, malla y flota; solo 'plena' proyecta sombras. */
+  /** 'compacta' y 'media' bajan arbolado, malla y flota. */
   calidad?: 'compacta' | 'media' | 'plena';
   className?: string;
+  /** false detiene el render (frameloop 'never') cuando la tarjeta no está en pantalla. */
+  activo?: boolean;
 }
 
 export default function EscenaComparativa({
@@ -35,6 +38,7 @@ export default function EscenaComparativa({
   height = 400,
   calidad = 'plena',
   className = '',
+  activo = true,
 }: Props) {
   const compacta = calidad === 'compacta';
   const media = calidad === 'media';
@@ -46,22 +50,13 @@ export default function EscenaComparativa({
       style={{ height }}
     >
       <Canvas
-        shadows={!ligera}
-        dpr={ligera ? [1, 1.75] : [1, 2]}
+        dpr={[1, 1.5]}
+        frameloop={activo ? 'always' : 'never'}
         camera={{ position: ligera ? [17, 11, 16] : [15, 12, 15], fov: 40 }}
       >
         <ambientLight intensity={0.45} />
         <hemisphereLight args={['#DCEBF5', '#4A5D3A', 0.55]} />
-        <directionalLight
-          castShadow={!ligera}
-          position={[10, 15, -5]}
-          intensity={1.2}
-          shadow-mapSize={[1024, 1024]}
-          shadow-camera-left={-10}
-          shadow-camera-right={10}
-          shadow-camera-top={10}
-          shadow-camera-bottom={-10}
-        />
+        <directionalLight position={[10, 15, -5]} intensity={1.2} />
         <directionalLight position={[-10, 10, 10]} intensity={0.3} color="#D5E8F2" />
 
         <Mountain

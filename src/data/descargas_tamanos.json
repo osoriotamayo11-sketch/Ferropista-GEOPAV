@@ -1,0 +1,12 @@
+{
+ "generado_por": "scripts/generar_tamanos_descargas.mjs",
+ "tamanos_bytes": {
+  "/oe3/descargas/OE3_Act1_Planos_geologicos_portales.pdf": 3662842,
+  "/oe3/descargas/OE3_Act1_Lamina_geologia_portales.pdf": 759484,
+  "/oe3/descargas/OE3_Act2_Mapa_susceptibilidad.pdf": 951933,
+  "/oe3/lamina_portales_geologia.jpg": 526351,
+  "/oe3/mapa_susceptibilidad.jpg": 454376,
+  "/oe5/graficos_siniestralidad.jpg": 351768,
+  "/oe5/densidad_lineal.jpg": 335077
+ }
+}

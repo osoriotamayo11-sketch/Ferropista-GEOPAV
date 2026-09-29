@@ -8,6 +8,7 @@ import { Problematic } from '@/components/Problematic';
 import { PlanDeAccion } from '@/components/PlanDeAccion';
 import { SintesisOE1 } from '@/components/SintesisOE1';
 import { SintesisOE2 } from '@/components/SintesisOE2';
+import { SintesisOE3 } from '@/components/SintesisOE3';
 import { SintesisOE5 } from '@/components/SintesisOE5';
 import { Solution } from '@/components/Solution';
 import { ImpactsGrid } from '@/components/ImpactsGrid';
@@ -62,6 +63,9 @@ export default function Home() {
 
       {/* Consulta ciudadana del OE 2 (objetivo en curso, con la consulta abierta) */}
       <SintesisOE2 />
+
+      {/* Geotecnia de portales del OE 3 (objetivo en curso) */}
+      <SintesisOE3 />
 
       {/* Síntesis y tasa de siniestralidad del OE 5 (objetivo cerrado) */}
       <SintesisOE5 />

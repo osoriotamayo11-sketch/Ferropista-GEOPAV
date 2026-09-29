@@ -1,0 +1,637 @@
+{
+ "generado_por": "OE3_Geotecnia/Act5_Cimentacion/cimentacion_conceptual_OE3.py",
+ "control_act4_dif_relativa": 2.2769409784104623e-15,
+ "hipotesis": {
+  "anden_longitud_m": {
+   "valor": 750,
+   "marca": "F",
+   "justificacion": "Trenes de hasta 750 m (ponencia, dia. 23)"
+  },
+  "marquesina_luz_m": {
+   "valor": 12.0,
+   "marca": "H",
+   "justificacion": "Cubre la vía y un andén peatonal de servicio; pórtico metálico de una luz"
+  },
+  "marquesina_separacion_m": {
+   "valor": 10.0,
+   "marca": "H",
+   "justificacion": "Separación entre pórticos a lo largo del andén"
+  },
+  "marquesina_altura_libre_m": {
+   "valor": 7.0,
+   "marca": "H",
+   "justificacion": "Mayor que la altura máxima de un vehículo de carga, 4,40 m (Res. 4100/2004, art. 7), más la plataforma del vagón"
+  },
+  "cubierta_tablero_kPa": {
+   "valor": 0.08,
+   "marca": "F",
+   "justificacion": "Tablero metálico calibre 20 (NSR-10 tabla B.3.4.1-4)"
+  },
+  "cubierta_estructura_kPa": {
+   "valor": 0.25,
+   "marca": "H",
+   "justificacion": "Peso propio de correas y cerchas metálicas por m² en planta"
+  },
+  "columna_metalica_kN_m": {
+   "valor": 0.5,
+   "marca": "H",
+   "justificacion": "Peso lineal de la columna metálica"
+  },
+  "cubierta_Lr_kPa": {
+   "valor": 0.5,
+   "marca": "F",
+   "justificacion": "Cubierta metálica con pendiente ≤ 15° (NSR-10 tabla B.4.2.1-2)"
+  },
+  "edificio_luz_m": {
+   "valor": 6.0,
+   "marca": "H",
+   "justificacion": "Pórticos de concreto de 6 × 6 m; planta de 18 × 12 m (3 × 2 luces), 2 pisos"
+  },
+  "edificio_planta_m": {
+   "valor": [
+    18.0,
+    12.0
+   ],
+   "marca": "H",
+   "justificacion": "Edificio de control y operación de la terminal"
+  },
+  "edificio_altura_piso_m": {
+   "valor": 2.9,
+   "marca": "H",
+   "justificacion": "Menor de 3 m: permite usar la tabla B.3.4.3-1"
+  },
+  "losa_espesor_m": {
+   "valor": 0.15,
+   "marca": "H",
+   "justificacion": "Losa maciza equivalente (peso de losa aligerada)"
+  },
+  "oficinas_particiones_kPa": {
+   "valor": 2.0,
+   "marca": "F",
+   "justificacion": "Oficinas, particiones fijas de mampostería (NSR-10 tabla B.3.4.3-1)"
+  },
+  "oficinas_afinado_kPa": {
+   "valor": 1.8,
+   "marca": "F",
+   "justificacion": "Afinado de piso y cubierta, oficinas (NSR-10 tabla B.3.4.3-1)"
+  },
+  "oficinas_L_kPa": {
+   "valor": 2.0,
+   "marca": "F",
+   "justificacion": "Oficinas (NSR-10 tabla B.4.2.1-1); cubierta con la misma carga (nota 1 de la tabla B.4.2.1-2)"
+  },
+  "viga_seccion_m": {
+   "valor": [
+    0.4,
+    0.35
+   ],
+   "marca": "H",
+   "justificacion": "Viga de 0,40 × 0,50 m; 0,35 m bajo la losa"
+  },
+  "columna_seccion_m": {
+   "valor": [
+    0.4,
+    0.4
+   ],
+   "marca": "H",
+   "justificacion": "Columna de concreto"
+  },
+  "tridem_kN": {
+   "valor": 235.44,
+   "marca": "F",
+   "justificacion": "Eje trídem de 12 llantas, 24.000 kg (Res. 4100/2004, art. 9)"
+  },
+  "tractomula_3S3_kN": {
+   "valor": 510.12,
+   "marca": "F",
+   "justificacion": "Tracto-camión 3S3, 52.000 kg (Res. 4100/2004, art. 8)"
+  },
+  "tridem_huella_m": {
+   "valor": [
+    2.5,
+    2.8
+   ],
+   "marca": "H",
+   "justificacion": "Huella del trídem: ancho de ejes × longitud de los tres ejes"
+  },
+  "factor_dinamico": {
+   "valor": 1.3,
+   "marca": "H",
+   "justificacion": "Incremento por impacto del vehículo en rampa (sin tabla verificada en la NSR-10 para camiones)"
+  },
+  "rampa_losa_m": {
+   "valor": 0.25,
+   "marca": "H",
+   "justificacion": "Losa de concreto de la rampa"
+  },
+  "rampa_base_m": {
+   "valor": 0.3,
+   "marca": "H",
+   "justificacion": "Base granular compactada bajo la losa"
+  },
+  "rampa_altura_m": {
+   "valor": 1.0,
+   "marca": "H",
+   "justificacion": "Desnivel entre la vía de acceso y la plataforma del vagón"
+  },
+  "rampa_pendiente": {
+   "valor": 0.08,
+   "marca": "H",
+   "justificacion": "Pendiente longitudinal de la rampa"
+  },
+  "rampa_ancho_m": {
+   "valor": 4.0,
+   "marca": "H",
+   "justificacion": "Un carril de 3,65 m más bordillos"
+  },
+  "base_granular_kN_m3": {
+   "valor": 20.0,
+   "marca": "H",
+   "justificacion": "Peso unitario de la base granular"
+  },
+  "Df_m": {
+   "valor": 1.5,
+   "marca": "H",
+   "justificacion": "Profundidad de desplante: la misma de la Act 4"
+  }
+ },
+ "constantes": {
+  "gamma_concreto_kN_m3": 23.544,
+  "gamma_relleno_kN_m3": 20.0,
+  "Df_m": 1.5,
+  "rho_adm_m": 0.025,
+  "Cd": 0.99,
+  "FSICP": 3.0,
+  "FSBM": 1.5,
+  "paso_B_m": 0.1,
+  "B_min_m": 1.0,
+  "B_max_m": 6.0
+ },
+ "cargas": {
+  "Z-1": {
+   "estructura": "Marquesina metálica del andén de carga (columna típica)",
+   "area_aferente_m2": 60.0,
+   "PD_kN": 23.3,
+   "PL_kN": 30.0,
+   "P_kN": 53.3,
+   "combinacion": "D + Lr (NSR-10 ec. B.2.3-3)",
+   "h_m": 0.4
+  },
+  "Z-2": {
+   "estructura": "Edificio de control, 2 pisos, pórticos de concreto (columna interior)",
+   "area_aferente_m2": 36.0,
+   "PD_kN": 556.831872,
+   "PL_kN": 144.0,
+   "P_kN": 700.831872,
+   "combinacion": "D + L (NSR-10 ec. B.2.3-2)",
+   "h_m": 0.6
+  }
+ },
+ "zapatas": [
+  {
+   "zapata": "Z-1",
+   "suelo": "S1",
+   "portal": "Oriental (Ibagué)",
+   "caso": "Mínimo",
+   "nf": "NF en la base",
+   "B_m": 1.2,
+   "q_act_kPa": 67.01388888888889,
+   "qadm_kPa": 69.22840343735868,
+   "gobierna": "Asentamiento",
+   "uso": 0.9680114745030398
+  },
+  {
+   "zapata": "Z-1",
+   "suelo": "S1",
+   "portal": "Oriental (Ibagué)",
+   "caso": "Mínimo",
+   "nf": "NF profundo",
+   "B_m": 1.2,
+   "q_act_kPa": 67.01388888888889,
+   "qadm_kPa": 69.22840343735868,
+   "gobierna": "Asentamiento",
+   "uso": 0.9680114745030398
+  },
+  {
+   "zapata": "Z-1",
+   "suelo": "S1",
+   "portal": "Oriental (Ibagué)",
+   "caso": "Típico",
+   "nf": "NF en la base",
+   "B_m": 1.0,
+   "q_act_kPa": 83.3,
+   "qadm_kPa": 324.0074626865672,
+   "gobierna": "Asentamiento",
+   "uso": 0.25709284381693803
+  },
+  {
+   "zapata": "Z-1",
+   "suelo": "S1",
+   "portal": "Oriental (Ibagué)",
+   "caso": "Típico",
+   "nf": "NF profundo",
+   "B_m": 1.0,
+   "q_act_kPa": 83.3,
+   "qadm_kPa": 324.0074626865672,
+   "gobierna": "Asentamiento",
+   "uso": 0.25709284381693803
+  },
+  {
+   "zapata": "Z-1",
+   "suelo": "S1",
+   "portal": "Oriental (Ibagué)",
+   "caso": "Máximo",
+   "nf": "NF en la base",
+   "B_m": 1.0,
+   "q_act_kPa": 83.3,
+   "qadm_kPa": 569.7408412483039,
+   "gobierna": "Asentamiento",
+   "uso": 0.14620682592718726
+  },
+  {
+   "zapata": "Z-1",
+   "suelo": "S1",
+   "portal": "Oriental (Ibagué)",
+   "caso": "Máximo",
+   "nf": "NF profundo",
+   "B_m": 1.0,
+   "q_act_kPa": 83.3,
+   "qadm_kPa": 569.7408412483039,
+   "gobierna": "Asentamiento",
+   "uso": 0.14620682592718726
+  },
+  {
+   "zapata": "Z-1",
+   "suelo": "S2",
+   "portal": "Occidental (Calarcá)",
+   "caso": "Mínimo",
+   "nf": "NF en la base",
+   "B_m": 1.0,
+   "q_act_kPa": 83.3,
+   "qadm_kPa": 93.65507267027644,
+   "gobierna": "Asentamiento",
+   "uso": 0.8894339369450636
+  },
+  {
+   "zapata": "Z-1",
+   "suelo": "S2",
+   "portal": "Occidental (Calarcá)",
+   "caso": "Mínimo",
+   "nf": "NF profundo",
+   "B_m": 1.0,
+   "q_act_kPa": 83.3,
+   "qadm_kPa": 93.65507267027644,
+   "gobierna": "Asentamiento",
+   "uso": 0.8894339369450636
+  },
+  {
+   "zapata": "Z-1",
+   "suelo": "S2",
+   "portal": "Occidental (Calarcá)",
+   "caso": "Típico",
+   "nf": "NF en la base",
+   "B_m": 1.0,
+   "q_act_kPa": 83.3,
+   "qadm_kPa": 285.56775434596756,
+   "gobierna": "Asentamiento",
+   "uso": 0.29169960099585124
+  },
+  {
+   "zapata": "Z-1",
+   "suelo": "S2",
+   "portal": "Occidental (Calarcá)",
+   "caso": "Típico",
+   "nf": "NF profundo",
+   "B_m": 1.0,
+   "q_act_kPa": 83.3,
+   "qadm_kPa": 285.56775434596756,
+   "gobierna": "Asentamiento",
+   "uso": 0.29169960099585124
+  },
+  {
+   "zapata": "Z-1",
+   "suelo": "S2",
+   "portal": "Occidental (Calarcá)",
+   "caso": "Máximo",
+   "nf": "NF en la base",
+   "B_m": 1.0,
+   "q_act_kPa": 83.3,
+   "qadm_kPa": 478.2304360216586,
+   "gobierna": "Asentamiento",
+   "uso": 0.1741838112458142
+  },
+  {
+   "zapata": "Z-1",
+   "suelo": "S2",
+   "portal": "Occidental (Calarcá)",
+   "caso": "Máximo",
+   "nf": "NF profundo",
+   "B_m": 1.0,
+   "q_act_kPa": 83.3,
+   "qadm_kPa": 478.2304360216586,
+   "gobierna": "Asentamiento",
+   "uso": 0.1741838112458142
+  },
+  {
+   "zapata": "Z-2",
+   "suelo": "S1",
+   "portal": "Oriental (Ibagué)",
+   "caso": "Mínimo",
+   "nf": "NF en la base",
+   "B_m": null,
+   "q_act_kPa": 49.467552,
+   "qadm_kPa": 33.04568068747173,
+   "gobierna": "Asentamiento",
+   "uso": null
+  },
+  {
+   "zapata": "Z-2",
+   "suelo": "S1",
+   "portal": "Oriental (Ibagué)",
+   "caso": "Mínimo",
+   "nf": "NF profundo",
+   "B_m": null,
+   "q_act_kPa": 49.467552,
+   "qadm_kPa": 33.04568068747173,
+   "gobierna": "Asentamiento",
+   "uso": null
+  },
+  {
+   "zapata": "Z-2",
+   "suelo": "S1",
+   "portal": "Oriental (Ibagué)",
+   "caso": "Típico",
+   "nf": "NF en la base",
+   "B_m": 2.5,
+   "q_act_kPa": 142.13309952,
+   "qadm_kPa": 144.90298507462688,
+   "gobierna": "Asentamiento",
+   "uso": 0.9808845514590306
+  },
+  {
+   "zapata": "Z-2",
+   "suelo": "S1",
+   "portal": "Oriental (Ibagué)",
+   "caso": "Típico",
+   "nf": "NF profundo",
+   "B_m": 2.5,
+   "q_act_kPa": 142.13309952,
+   "qadm_kPa": 144.90298507462688,
+   "gobierna": "Asentamiento",
+   "uso": 0.9808845514590306
+  },
+  {
+   "zapata": "Z-2",
+   "suelo": "S1",
+   "portal": "Oriental (Ibagué)",
+   "caso": "Máximo",
+   "nf": "NF en la base",
+   "B_m": 1.4,
+   "q_act_kPa": 387.5672816326531,
+   "qadm_kPa": 414.6720294630743,
+   "gobierna": "Asentamiento",
+   "uso": 0.9346356978416968
+  },
+  {
+   "zapata": "Z-2",
+   "suelo": "S1",
+   "portal": "Oriental (Ibagué)",
+   "caso": "Máximo",
+   "nf": "NF profundo",
+   "B_m": 1.4,
+   "q_act_kPa": 387.5672816326531,
+   "qadm_kPa": 414.6720294630743,
+   "gobierna": "Asentamiento",
+   "uso": 0.9346356978416968
+  },
+  {
+   "zapata": "Z-2",
+   "suelo": "S2",
+   "portal": "Occidental (Calarcá)",
+   "caso": "Mínimo",
+   "nf": "NF en la base",
+   "B_m": null,
+   "q_act_kPa": 49.467552,
+   "qadm_kPa": 30.48417877837941,
+   "gobierna": "Asentamiento",
+   "uso": null
+  },
+  {
+   "zapata": "Z-2",
+   "suelo": "S2",
+   "portal": "Occidental (Calarcá)",
+   "caso": "Mínimo",
+   "nf": "NF profundo",
+   "B_m": null,
+   "q_act_kPa": 49.467552,
+   "qadm_kPa": 30.48417877837941,
+   "gobierna": "Asentamiento",
+   "uso": null
+  },
+  {
+   "zapata": "Z-2",
+   "suelo": "S2",
+   "portal": "Occidental (Calarcá)",
+   "caso": "Típico",
+   "nf": "NF en la base",
+   "B_m": 3.0,
+   "q_act_kPa": 107.87020799999999,
+   "qadm_kPa": 108.68925144865585,
+   "gobierna": "Asentamiento",
+   "uso": 0.9924643565233976
+  },
+  {
+   "zapata": "Z-2",
+   "suelo": "S2",
+   "portal": "Occidental (Calarcá)",
+   "caso": "Típico",
+   "nf": "NF profundo",
+   "B_m": 3.0,
+   "q_act_kPa": 107.87020799999999,
+   "qadm_kPa": 108.68925144865585,
+   "gobierna": "Asentamiento",
+   "uso": 0.9924643565233976
+  },
+  {
+   "zapata": "Z-2",
+   "suelo": "S2",
+   "portal": "Occidental (Calarcá)",
+   "caso": "Máximo",
+   "nf": "NF en la base",
+   "B_m": 1.6,
+   "q_act_kPa": 303.76244999999994,
+   "qadm_kPa": 307.66902251353656,
+   "gobierna": "Asentamiento",
+   "uso": 0.987302678437948
+  },
+  {
+   "zapata": "Z-2",
+   "suelo": "S2",
+   "portal": "Occidental (Calarcá)",
+   "caso": "Máximo",
+   "nf": "NF profundo",
+   "B_m": 1.6,
+   "q_act_kPa": 303.76244999999994,
+   "qadm_kPa": 307.66902251353656,
+   "gobierna": "Asentamiento",
+   "uso": 0.987302678437948
+  }
+ ],
+ "losa_edificio": {
+  "espesor_m": 0.4,
+  "planta_m": [
+   18.0,
+   12.0
+  ],
+  "n_columnas": 12.0,
+  "q_uniforme_kPa": 28.885151999999998,
+  "Cd": 1.15,
+  "casos": [
+   {
+    "suelo": "S1",
+    "portal": "Oriental (Ibagué)",
+    "caso": "Mínimo",
+    "q_act_kPa": 28.885151999999998,
+    "qadm_kPa": 27.893575600259574,
+    "gobierna": "Asentamiento",
+    "cumple": false
+   },
+   {
+    "suelo": "S1",
+    "portal": "Oriental (Ibagué)",
+    "caso": "Típico",
+    "q_act_kPa": 28.885151999999998,
+    "qadm_kPa": 46.914665801427645,
+    "gobierna": "Asentamiento",
+    "cumple": true
+   },
+   {
+    "suelo": "S1",
+    "portal": "Oriental (Ibagué)",
+    "caso": "Máximo",
+    "q_act_kPa": 28.885151999999998,
+    "qadm_kPa": 65.93575600259572,
+    "gobierna": "Asentamiento",
+    "cumple": true
+   },
+   {
+    "suelo": "S2",
+    "portal": "Occidental (Calarcá)",
+    "caso": "Mínimo",
+    "q_act_kPa": 28.885151999999998,
+    "qadm_kPa": 23.288189995911136,
+    "gobierna": "Asentamiento",
+    "cumple": false
+   },
+   {
+    "suelo": "S2",
+    "portal": "Occidental (Calarcá)",
+    "caso": "Típico",
+    "q_act_kPa": 28.885151999999998,
+    "qadm_kPa": 39.28366498568897,
+    "gobierna": "Asentamiento",
+    "cumple": true
+   },
+   {
+    "suelo": "S2",
+    "portal": "Occidental (Calarcá)",
+    "caso": "Máximo",
+    "q_act_kPa": 28.885151999999998,
+    "qadm_kPa": 56.02913997546681,
+    "gobierna": "Asentamiento",
+    "cumple": true
+   }
+  ]
+ },
+ "rampa": {
+  "q_tridem_kPa": 29.95566430144361,
+  "q_peso_propio_kPa": 11.886,
+  "q_total_kPa": 41.84166430144361,
+  "area_reparticion_m2": 10.217499999999998,
+  "longitud_m": 12.5,
+  "casos": [
+   {
+    "suelo": "S1",
+    "portal": "Oriental (Ibagué)",
+    "caso": "Mínimo",
+    "B_eq_m": 3.05,
+    "q_act_kPa": 41.84166430144361,
+    "qadm_kPa": 26.594781680272263,
+    "gobierna": "Asentamiento",
+    "cumple": false
+   },
+   {
+    "suelo": "S1",
+    "portal": "Oriental (Ibagué)",
+    "caso": "Típico",
+    "B_eq_m": 3.05,
+    "q_act_kPa": 41.84166430144361,
+    "qadm_kPa": 107.22129924149746,
+    "gobierna": "Asentamiento",
+    "cumple": true
+   },
+   {
+    "suelo": "S1",
+    "portal": "Oriental (Ibagué)",
+    "caso": "Máximo",
+    "B_eq_m": 3.05,
+    "q_act_kPa": 41.84166430144361,
+    "qadm_kPa": 187.84781680272263,
+    "gobierna": "Asentamiento",
+    "cumple": true
+   },
+   {
+    "suelo": "S2",
+    "portal": "Occidental (Calarcá)",
+    "caso": "Mínimo",
+    "B_eq_m": 3.05,
+    "q_act_kPa": 41.84166430144361,
+    "qadm_kPa": 31.399122186975884,
+    "gobierna": "Asentamiento",
+    "cumple": false
+   },
+   {
+    "suelo": "S2",
+    "portal": "Occidental (Calarcá)",
+    "caso": "Típico",
+    "B_eq_m": 3.05,
+    "q_act_kPa": 41.84166430144361,
+    "qadm_kPa": 94.41442765441559,
+    "gobierna": "Asentamiento",
+    "cumple": true
+   },
+   {
+    "suelo": "S2",
+    "portal": "Occidental (Calarcá)",
+    "caso": "Máximo",
+    "B_eq_m": 3.05,
+    "q_act_kPa": 41.84166430144361,
+    "qadm_kPa": 157.70473312185533,
+    "gobierna": "Asentamiento",
+    "cumple": true
+   }
+  ]
+ },
+ "sismo_SGC": {
+  "oriental_Ibague": {
+   "Aa": 0.2,
+   "Av": 0.2,
+   "zona": "Intermedia"
+  },
+  "occidental_Calarca": {
+   "Aa": 0.25,
+   "Av": 0.25,
+   "zona": "Alta"
+  }
+ },
+ "pendiente_Act2": {
+  "oriental_Ibague": {
+   "media_250m": 16.7,
+   "p90_250m": 31.1
+  },
+  "occidental_Calarca": {
+   "media_250m": 8.3,
+   "p90_250m": 12.3
+  }
+ }
+}
