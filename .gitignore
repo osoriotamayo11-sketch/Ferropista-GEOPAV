@@ -71,3 +71,6 @@ OE3_Geotecnia/Act3_Parametros/Fuentes/*.pdf
 
 # Fuentes de terceros de la Act 4 del OE 3 (USACE EM 1110-1-1905, FHWA NHI-06-088 y 089; md5 en el script)
 OE3_Geotecnia/Act4_Capacidad/Fuentes/*.pdf
+
+# Fuentes de terceros del OE 4 (Hoek, Hoek y Marinos, DAUB, Castro y Pérez, Dávila, Ingason, Thunderhead; md5 en el Proyecto)
+OE4_Tuneles/Fuentes/

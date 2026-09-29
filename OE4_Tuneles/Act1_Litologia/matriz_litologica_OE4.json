@@ -1,0 +1,918 @@
+{
+ "generado": "2026-09-29T09:39:34",
+ "longitud_eje_m": 52226.384518409286,
+ "tramos": [
+  {
+   "tramo": "T1",
+   "pk_ini": 0.0,
+   "pk_fin": 13111.332117979075,
+   "longitud": 13111.332117979075,
+   "pct": 25.104805241414823,
+   "simbolo": "P-Pi",
+   "descripcion": "Granodioritas que varían de sienogranitos a tonalitas y de cuarzomonzonitas a cuarzomonzodioritas",
+   "edad": "Pérmico",
+   "cob_min": -0.0,
+   "cob_med": 347.9437665782491,
+   "cob_max": 756.0,
+   "juegos": [
+    {
+     "id": "R1",
+     "nombre": "PCAn — Neises y Anfibolitas de Tierradentro — Neis cuarzo-feldespático-biotítico, meteorizado",
+     "sci": [
+      25.0,
+      60.0,
+      100.0
+     ],
+     "mi": [
+      23.0,
+      28.0,
+      33.0
+     ],
+     "gsi": [
+      30.0,
+      42.0,
+      55.0
+     ],
+     "origen": "OE 3 Act 3 (hoja Roca)"
+    },
+    {
+     "id": "R2",
+     "nombre": "Jcdi — Batolito de Ibagué — Granodiorita biotítico-hornbléndica",
+     "sci": [
+      25.0,
+      80.0,
+      150.0
+     ],
+     "mi": [
+      26.0,
+      29.0,
+      32.0
+     ],
+     "gsi": [
+      35.0,
+      48.0,
+      60.0
+     ],
+     "origen": "OE 3 Act 3 (hoja Roca)"
+    }
+   ]
+  },
+  {
+   "tramo": "T2",
+   "pk_ini": 13111.332117979075,
+   "pk_fin": 15234.717352296724,
+   "longitud": 2123.3852343176495,
+   "pct": 4.065732778360672,
+   "simbolo": "J-Pi",
+   "descripcion": "Granodioritas que varían de sienogranitos a tonalitas y de cuarzomonzonitas a cuarzomonzodioritas",
+   "edad": "Jurásico",
+   "cob_min": 166.0,
+   "cob_med": 436.87213114754087,
+   "cob_max": 675.7,
+   "juegos": [
+    {
+     "id": "R2",
+     "nombre": "Jcdi — Batolito de Ibagué — Granodiorita biotítico-hornbléndica",
+     "sci": [
+      25.0,
+      80.0,
+      150.0
+     ],
+     "mi": [
+      26.0,
+      29.0,
+      32.0
+     ],
+     "gsi": [
+      35.0,
+      48.0,
+      60.0
+     ],
+     "origen": "OE 3 Act 3 (hoja Roca)"
+    }
+   ]
+  },
+  {
+   "tramo": "T3",
+   "pk_ini": 15234.717352296724,
+   "pk_fin": 16382.537052414096,
+   "longitud": 1147.8197001173721,
+   "pct": 2.197777446594598,
+   "simbolo": "T-Mmg",
+   "descripcion": "Gneises cuarzofeldespáticos algunos con sillimanita, cordierita y hornblenda; anfibolitas; migmatitas; esquistos, y mármoles.",
+   "edad": "Triásico",
+   "cob_min": 681.4,
+   "cob_med": 782.0,
+   "cob_max": 828.5,
+   "juegos": [
+    {
+     "id": "gneis_anfibolita",
+     "nombre": "Gneises cuarzofeldespáticos y anfibolitas (T-Mmg)",
+     "sci": [
+      50,
+      100,
+      180
+     ],
+     "mi": [
+      21,
+      27,
+      33
+     ],
+     "gsi": [
+      35,
+      50,
+      65
+     ],
+     "origen": "HM00 tablas 1-2 [F] + GSI [H]",
+     "notas": [
+      "Gneis y anfibolita: R5-R6 (100 a > 250 MPa) en roca sana; reducido por foliación y fracturamiento [H].",
+      "Gneis 28 ± 5; anfibolitas 26 ± 6 (tabla 2).",
+      "Foliado, fracturado; superficies regulares [H]."
+     ]
+    }
+   ]
+  },
+  {
+   "tramo": "T4",
+   "pk_ini": 16382.537052414096,
+   "pk_fin": 36739.91807307666,
+   "longitud": 20357.381020662564,
+   "pct": 38.97911220235203,
+   "simbolo": "J3K1?-Mbg",
+   "descripcion": "Esquistos grafíticos, cuarzomoscovíticos, cloríticos y anfibólicos; filitas; cuarcitas; mármoles, y serpentinitas.",
+   "edad": "Jurásico Superior-Cretácico Inferior?",
+   "cob_min": 504.8,
+   "cob_med": 926.4289383561644,
+   "cob_max": 1371.3,
+   "juegos": [
+    {
+     "id": "esquistos",
+     "nombre": "Esquistos grafíticos, cuarzomoscovíticos y cloríticos; filitas (J3K1?-Mbg)",
+     "sci": [
+      15,
+      40,
+      80
+     ],
+     "mi": [
+      7,
+      12,
+      15
+     ],
+     "gsi": [
+      20,
+      35,
+      55
+     ],
+     "origen": "HM00 tablas 1-2 [F] + GSI [H]",
+     "notas": [
+      "Esquisto R3-R4 (25-100 MPa); el grafito y la sericita lo debilitan: mínimo 15 MPa [H].",
+      "Esquistos 12 ± 3; filitas 7 ± 3 (tabla 2); el mínimo toma la filita [H].",
+      "Foliado a laminado/cizallado (tabla 3/4 de Hoek y Marinos); análogo: RMR 50-85 del Complejo Cajamarca en La Línea (lectura cualitativa, Hoek no recomienda convertir RMR a GSI) [H]."
+     ]
+    }
+   ]
+  },
+  {
+   "tramo": "T5",
+   "pk_ini": 36739.91807307666,
+   "pk_fin": 38234.7628082388,
+   "longitud": 1494.8447351621362,
+   "pct": 2.8622405110872995,
+   "simbolo": "n4n6-Hi",
+   "descripcion": "Pórfidos dioríticos, granodioríticos y tonalíticos.",
+   "edad": "Serravaliano-Mesiniano",
+   "cob_min": 1197.0,
+   "cob_med": 1283.4720930232556,
+   "cob_max": 1374.2,
+   "juegos": [
+    {
+     "id": "porfido",
+     "nombre": "Pórfidos dioríticos, granodioríticos y tonalíticos (n4n6-Hi)",
+     "sci": [
+      60,
+      120,
+      200
+     ],
+     "mi": [
+      15,
+      20,
+      25
+     ],
+     "gsi": [
+      40,
+      55,
+      70
+     ],
+     "origen": "HM00 tablas 1-2 [F] + GSI [H]",
+     "notas": [
+      "Pórfido: roca ígnea hipoabisal R5 (100-250 MPa) [H].",
+      "Pórfidos (20 ± 5), tabla 2.",
+      "Masivo a fracturado; en La Línea el pórfido andesítico dio RMR mayormente 50-80 (lectura de figura) [H]."
+     ]
+    }
+   ]
+  },
+  {
+   "tramo": "T6",
+   "pk_ini": 38234.7628082388,
+   "pk_fin": 42424.2741349041,
+   "longitud": 4189.511326665306,
+   "pct": 8.021829129658677,
+   "simbolo": "J3K1?-Mbg",
+   "descripcion": "Esquistos grafíticos, cuarzomoscovíticos, cloríticos y anfibólicos; filitas; cuarcitas; mármoles, y serpentinitas.",
+   "edad": "Jurásico Superior-Cretácico Inferior?",
+   "cob_min": 1327.3,
+   "cob_med": 1620.346666666667,
+   "cob_max": 1877.3,
+   "juegos": [
+    {
+     "id": "esquistos",
+     "nombre": "Esquistos grafíticos, cuarzomoscovíticos y cloríticos; filitas (J3K1?-Mbg)",
+     "sci": [
+      15,
+      40,
+      80
+     ],
+     "mi": [
+      7,
+      12,
+      15
+     ],
+     "gsi": [
+      20,
+      35,
+      55
+     ],
+     "origen": "HM00 tablas 1-2 [F] + GSI [H]",
+     "notas": [
+      "Esquisto R3-R4 (25-100 MPa); el grafito y la sericita lo debilitan: mínimo 15 MPa [H].",
+      "Esquistos 12 ± 3; filitas 7 ± 3 (tabla 2); el mínimo toma la filita [H].",
+      "Foliado a laminado/cizallado (tabla 3/4 de Hoek y Marinos); análogo: RMR 50-85 del Complejo Cajamarca en La Línea (lectura cualitativa, Hoek no recomienda convertir RMR a GSI) [H]."
+     ]
+    }
+   ]
+  },
+  {
+   "tramo": "T7",
+   "pk_ini": 42424.2741349041,
+   "pk_fin": 52226.384518409286,
+   "longitud": 9802.110383505184,
+   "pct": 18.7685026905319,
+   "simbolo": "b5k4-VCm",
+   "descripcion": "Basaltos y andesitas intercalados con arenitas lodosas líticas, lodolitas carbonosas, arenitas feldespáticas, calizas y limolitas silíceas.",
+   "edad": "Aptiano-Santoniano",
+   "cob_min": -0.0,
+   "cob_med": 1014.4223404255318,
+   "cob_max": 2031.4,
+   "juegos": [
+    {
+     "id": "R3",
+     "nombre": "Kqs — Fm. Quebradagrande, miembro sedimentario — Grauvacas, lutitas, chert, calizas; localmente cataclasadas",
+     "sci": [
+      10.0,
+      30.0,
+      60.0
+     ],
+     "mi": [
+      6.0,
+      12.0,
+      18.0
+     ],
+     "gsi": [
+      20.0,
+      30.0,
+      40.0
+     ],
+     "origen": "OE 3 Act 3 (hoja Roca)"
+    },
+    {
+     "id": "R4",
+     "nombre": "Kqv — Fm. Quebradagrande, miembro volcánico — Diabasas y andesitas; sectores de intensa cataclasis",
+     "sci": [
+      25.0,
+      70.0,
+      150.0
+     ],
+     "mi": [
+      15.0,
+      20.0,
+      25.0
+     ],
+     "gsi": [
+      25.0,
+      38.0,
+      50.0
+     ],
+     "origen": "OE 3 Act 3 (hoja Roca)"
+    }
+   ]
+  }
+ ],
+ "contraste": {
+  "atlas": [
+   {
+    "pk_ini": 0.0,
+    "pk_fin": 445.9959288250166,
+    "codigo": "MP3NP1-Mg2"
+   },
+   {
+    "pk_ini": 445.9959288250166,
+    "pk_fin": 15227.573441640658,
+    "codigo": "T3J-Pi"
+   },
+   {
+    "pk_ini": 15227.573441640658,
+    "pk_fin": 16404.05149552002,
+    "codigo": "NP?CA?-Ma2"
+   },
+   {
+    "pk_ini": 16404.064388639887,
+    "pk_fin": 24139.233821295853,
+    "codigo": "NP?CA?-Mev2"
+   },
+   {
+    "pk_ini": 24139.318252732042,
+    "pk_fin": 25693.024292271955,
+    "codigo": "Q-p"
+   },
+   {
+    "pk_ini": 25692.98031638936,
+    "pk_fin": 26654.086758765254,
+    "codigo": "NP?CA?-Mev2"
+   },
+   {
+    "pk_ini": 26654.165362553445,
+    "pk_fin": 27091.67167443742,
+    "codigo": "Q2-vc"
+   },
+   {
+    "pk_ini": 27091.40379197284,
+    "pk_fin": 42445.97529075951,
+    "codigo": "NP?CA?-Mev2"
+   },
+   {
+    "pk_ini": 42445.99617713249,
+    "pk_fin": 52226.384518409286,
+    "codigo": "K1-VCm"
+   }
+  ],
+  "tolima": [
+   {
+    "pk_ini": 0.0,
+    "pk_fin": 473.9920816072018,
+    "codigo": "PEnat"
+   },
+   {
+    "pk_ini": 473.9920816072018,
+    "pk_fin": 13270.200048573575,
+    "codigo": "Ji"
+   },
+   {
+    "pk_ini": 13270.200048573575,
+    "pk_fin": 13998.952619066777,
+    "codigo": "NgQp"
+   },
+   {
+    "pk_ini": 13998.952619066777,
+    "pk_fin": 15402.053841595525,
+    "codigo": "Pzes"
+   },
+   {
+    "pk_ini": 15402.053841595525,
+    "pk_fin": 16400.54403794976,
+    "codigo": "PEnat"
+   },
+   {
+    "pk_ini": 16400.54403794976,
+    "pk_fin": 17418.802238281845,
+    "codigo": "Pzes"
+   },
+   {
+    "pk_ini": 17418.802238281845,
+    "pk_fin": 17489.13028089093,
+    "codigo": "Pzev"
+   },
+   {
+    "pk_ini": 17489.13028089093,
+    "pk_fin": 17560.292518506678,
+    "codigo": "Pzes"
+   },
+   {
+    "pk_ini": 17560.292518506678,
+    "pk_fin": 17777.916712732644,
+    "codigo": "Pzev"
+   },
+   {
+    "pk_ini": 17777.916712732644,
+    "pk_fin": 18517.101107235158,
+    "codigo": "Pzes"
+   },
+   {
+    "pk_ini": 18517.101107235158,
+    "pk_fin": 22173.201915204874,
+    "codigo": "Pzev"
+   },
+   {
+    "pk_ini": 22173.201915204874,
+    "pk_fin": 22560.99748567353,
+    "codigo": "NgQac"
+   },
+   {
+    "pk_ini": 22560.99748567353,
+    "pk_fin": 23176.33938384572,
+    "codigo": "Pzes"
+   },
+   {
+    "pk_ini": 23176.33938384572,
+    "pk_fin": 23207.82547136738,
+    "codigo": "Pzev"
+   },
+   {
+    "pk_ini": 23207.82547136738,
+    "pk_fin": 23311.05636913417,
+    "codigo": "Pzes"
+   },
+   {
+    "pk_ini": 23311.05636913417,
+    "pk_fin": 23671.969908848456,
+    "codigo": "Pzev"
+   },
+   {
+    "pk_ini": 23671.969908848456,
+    "pk_fin": 23978.053105746443,
+    "codigo": "Pzes"
+   },
+   {
+    "pk_ini": 23978.053105746443,
+    "pk_fin": 25353.430018206513,
+    "codigo": "NgQp"
+   },
+   {
+    "pk_ini": 25353.430018206513,
+    "pk_fin": 26512.37182034182,
+    "codigo": "Pzev"
+   },
+   {
+    "pk_ini": 26512.37182034182,
+    "pk_fin": 26820.06605120342,
+    "codigo": "NgQac"
+   },
+   {
+    "pk_ini": 26820.06605120342,
+    "pk_fin": 28059.1418648044,
+    "codigo": "Pzes"
+   },
+   {
+    "pk_ini": 28059.1418648044,
+    "pk_fin": 28344.439390183827,
+    "codigo": "NgQp"
+   },
+   {
+    "pk_ini": 28344.439390183827,
+    "pk_fin": 32637.33692529234,
+    "codigo": "Pzes"
+   },
+   {
+    "pk_ini": 32637.33692529234,
+    "pk_fin": 33031.079723187264,
+    "codigo": "Pzev"
+   },
+   {
+    "pk_ini": 33031.079723187264,
+    "pk_fin": 33178.30240890887,
+    "codigo": "Pzes"
+   },
+   {
+    "pk_ini": 33178.30240890887,
+    "pk_fin": 34108.68015994328,
+    "codigo": "Pzev"
+   },
+   {
+    "pk_ini": 34108.68015994328,
+    "pk_fin": 39194.0955245096,
+    "codigo": "Pzes"
+   },
+   {
+    "pk_ini": 39194.0955245096,
+    "pk_fin": 40422.9321366984,
+    "codigo": "Pzev"
+   },
+   {
+    "pk_ini": 40422.9321366984,
+    "pk_fin": 40636.9721726106,
+    "codigo": "Pzes"
+   },
+   {
+    "pk_ini": 40636.9721726106,
+    "pk_fin": 42494.86862595251,
+    "codigo": "Pzev"
+   },
+   {
+    "pk_ini": 42494.86862595251,
+    "pk_fin": 42816.950541793594,
+    "codigo": "Kiq"
+   }
+  ],
+  "quindio": [
+   {
+    "pk_ini": 42831.61978454872,
+    "pk_fin": 45514.782412322114,
+    "codigo": "Ri1"
+   },
+   {
+    "pk_ini": 45514.782412322114,
+    "pk_fin": 46336.31295951686,
+    "codigo": "Stv1"
+   },
+   {
+    "pk_ini": 46336.31295951686,
+    "pk_fin": 48819.4261795818,
+    "codigo": "Ri1"
+   },
+   {
+    "pk_ini": 48819.4261795818,
+    "pk_fin": 49359.74111168048,
+    "codigo": "Stv1"
+   },
+   {
+    "pk_ini": 49359.74111168048,
+    "pk_fin": 49976.94375854348,
+    "codigo": "Ri1"
+   },
+   {
+    "pk_ini": 49976.94375854348,
+    "pk_fin": 51887.891719244966,
+    "codigo": "Stv1"
+   },
+   {
+    "pk_ini": 51887.891719244966,
+    "pk_fin": 52226.384518409286,
+    "codigo": "Strc1"
+   }
+  ]
+ },
+ "fallas": [
+  {
+   "fuente": "Atlas 2007",
+   "pk": 13129.54753999112,
+   "nombre": "sin nombre",
+   "tipo": "—",
+   "angulo": 38.43444719778623
+  },
+  {
+   "fuente": "Atlas 2007",
+   "pk": 15227.304321531321,
+   "nombre": "sin nombre",
+   "tipo": "—",
+   "angulo": 56.38531027405082
+  },
+  {
+   "fuente": "Atlas 2007",
+   "pk": 16403.78087527301,
+   "nombre": "sin nombre",
+   "tipo": "—",
+   "angulo": 77.9907835014144
+  },
+  {
+   "fuente": "Atlas 2007",
+   "pk": 38487.15440952956,
+   "nombre": "sin nombre",
+   "tipo": "—",
+   "angulo": 61.98227771159611
+  },
+  {
+   "fuente": "Atlas 2007",
+   "pk": 42445.1257748239,
+   "nombre": "sin nombre",
+   "tipo": "—",
+   "angulo": 85.49284288737766
+  },
+  {
+   "fuente": "MGC 2023",
+   "pk": 13111.332117979075,
+   "nombre": "Falla de Ibagué",
+   "tipo": "Falla de rumbo dextral",
+   "angulo": 38.76112834649837,
+   "coincide_atlas": true,
+   "coincide_tolima": false
+  },
+  {
+   "fuente": "MGC 2023",
+   "pk": 15234.717352296724,
+   "nombre": "Falla de Chapetón-Pericos",
+   "tipo": "Falla de rumbo dextral",
+   "angulo": 55.711829458142034,
+   "coincide_atlas": true,
+   "coincide_tolima": true
+  },
+  {
+   "fuente": "MGC 2023",
+   "pk": 16382.537052414096,
+   "nombre": "sin nombre",
+   "tipo": "Falla inversa o de cabalgamiento",
+   "angulo": 75.46395494758389,
+   "coincide_atlas": true,
+   "coincide_tolima": true
+  },
+  {
+   "fuente": "MGC 2023",
+   "pk": 38487.401903642545,
+   "nombre": "Falla de Palestina",
+   "tipo": "Falla",
+   "angulo": 61.957925867610356,
+   "coincide_atlas": true,
+   "coincide_tolima": true
+  },
+  {
+   "fuente": "MGC 2023",
+   "pk": 42424.2741349041,
+   "nombre": "Falla de San Jerónimo",
+   "tipo": "Falla",
+   "angulo": 83.55420817884402,
+   "coincide_atlas": true,
+   "coincide_tolima": true
+  },
+  {
+   "fuente": "Tolima",
+   "pk": 13725.477701454269,
+   "nombre": "sin nombre",
+   "tipo": "—",
+   "angulo": 49.44730844338582
+  },
+  {
+   "fuente": "Tolima",
+   "pk": 15392.575214168508,
+   "nombre": "sin nombre",
+   "tipo": "—",
+   "angulo": 51.15200905368596
+  },
+  {
+   "fuente": "Tolima",
+   "pk": 16400.540671313564,
+   "nombre": "sin nombre",
+   "tipo": "—",
+   "angulo": 83.5654881355942
+  },
+  {
+   "fuente": "Tolima",
+   "pk": 26779.5894894253,
+   "nombre": "sin nombre",
+   "tipo": "—",
+   "angulo": 83.46073097523228
+  },
+  {
+   "fuente": "Tolima",
+   "pk": 38655.81985516386,
+   "nombre": "sin nombre",
+   "tipo": "—",
+   "angulo": 64.10123387404235
+  },
+  {
+   "fuente": "Tolima",
+   "pk": 42494.87388685787,
+   "nombre": "sin nombre",
+   "tipo": "—",
+   "angulo": 73.30179798642143
+  }
+ ],
+ "zona_falla": {
+  "ancho_m": [
+   60,
+   350,
+   590
+  ],
+  "sci_factor": 0.25,
+  "gsi": [
+   10,
+   15,
+   25
+  ],
+  "nota": "Zona de falla: σci del tramo × 0,25 y GSI 10-25 [H]; en La Línea las fallas dieron RMR ≈ 20-40 (lectura de figura 4, Castro y Pérez 2013)."
+ },
+ "gamma_roca_MN_m3": 0.027,
+ "analogo_linea": {
+  "geometria": {
+   "longitud_osm": 8606.31382857476,
+   "pk_extremos": [
+    37210.96895378015,
+    44636.03345729406
+   ],
+   "dist_extremos": [
+    17.905347619960306,
+    4369.942881024088
+   ],
+   "angulo": 30.37693494724573
+  },
+  "sectores_TPL": [
+   [
+    "A",
+    "Suelo residual",
+    "Suelo residual",
+    11,
+    50
+   ],
+   [
+    "B",
+    "Complejo Quebradagrande · miembro volcánico",
+    "Diabasas",
+    50,
+    1235
+   ],
+   [
+    "C",
+    "Falla Alaska",
+    "Metadiabasas y lutitas",
+    1235,
+    1300
+   ],
+   [
+    "D",
+    "Quebradagrande · volcánico sedimentario",
+    "Diabasas, chert, areniscas, lutitas",
+    1300,
+    1945
+   ],
+   [
+    "E",
+    "Falla El Viento",
+    "Metapelitas oscuras grafitosas, cuarcitas y metadiabasas",
+    1945,
+    1990
+   ],
+   [
+    "F",
+    "Quebradagrande · volcánico sedimentario",
+    "Diabasas, chert, areniscas, lutitas",
+    1990,
+    2600
+   ],
+   [
+    "G",
+    "Quebradagrande · sedimentario volcánico",
+    "Areniscas, areniscas conglomeráticas, diabasas, lutitas",
+    2600,
+    2935
+   ],
+   [
+    "H",
+    "Quebradagrande · metasedimentario",
+    "Metalutitas, metalodolitas y metalimolitas",
+    2935,
+    2970
+   ],
+   [
+    "I",
+    "Falla La Vaca",
+    "Lutitas, lodolitas y areniscas finas",
+    2970,
+    3160
+   ],
+   [
+    "J",
+    "Quebradagrande · metasedimentario",
+    "Metalutitas, metalodolitas y metalimolitas",
+    3160,
+    3850
+   ],
+   [
+    "K",
+    "Miembro tectonizado · milonítico",
+    "Esquistos verdes cuarzosericíticos, cuarcitas",
+    3850,
+    4335
+   ],
+   [
+    "L",
+    "Falla La Soledad",
+    "—",
+    4335,
+    4870
+   ],
+   [
+    "M",
+    "Gabros de La Línea",
+    "Gabros, anfibolitas",
+    4870,
+    6080
+   ],
+   [
+    "N",
+    "Complejo Cajamarca",
+    "Esquistos verdes, esquistos grises",
+    6080,
+    7750
+   ],
+   [
+    "O",
+    "Falla La Cristalina",
+    "—",
+    7750,
+    7830
+   ],
+   [
+    "P",
+    "Contacto pórfido andesítico / Cajamarca",
+    "Pórfido con xenolitos de esquisto",
+    7830,
+    8105
+   ],
+   [
+    "Q",
+    "Pórfido andesítico",
+    "Pórfido andesítico",
+    8105,
+    8542
+   ]
+  ],
+  "fallas_II_centenario": [
+   [
+    "La Gata",
+    522
+   ],
+   [
+    "Alaska",
+    185
+   ],
+   [
+    "El Viento",
+    70
+   ],
+   [
+    "La Vaca",
+    436
+   ],
+   [
+    "Campanario",
+    515
+   ],
+   [
+    "La Soledad",
+    590
+   ],
+   [
+    "Los Chorros",
+    440
+   ],
+   [
+    "La Cristalina",
+    60
+   ]
+  ],
+  "longitud_II_centenario": 8562,
+  "suma_fallas_m": 2818,
+  "fraccion_en_falla": 0.329128708245737,
+  "rmr_figura4": [
+   [
+    "Complejo Quebradagrande (K0-K4+3)",
+    "25-80; mayoría 35-65"
+   ],
+   [
+    "Falla La Soledad (K4+3-K4+9)",
+    "20-40"
+   ],
+   [
+    "Complejo Cajamarca y gabros (K4+9-K8)",
+    "40-85; mayoría 60-80"
+   ],
+   [
+    "Fallas señaladas (Alaska, El Viento, La Vaca, La Cristalina)",
+    "≈ 20-35"
+   ]
+  ]
+ },
+ "fraccion_en_falla_MGC": [
+  0.005744223016131874,
+  0.0335079675941026,
+  0.05648485965863009
+ ],
+ "consultas": {
+  "mgc_uc": {
+   "url": "https://srvags.sgc.gov.co/arcgis/rest/services/Mapa_Geologico_Colombia/Mapa_Geologico_Colombia_V2023/MapServer/733",
+   "fecha": "2026-09-29"
+  },
+  "mgc_fallas": {
+   "url": "https://srvags.sgc.gov.co/arcgis/rest/services/Mapa_Geologico_Colombia/Mapa_Geologico_Colombia_V2023/MapServer/704",
+   "fecha": "2026-09-29"
+  },
+  "atlas_uc": {
+   "url": "https://srvags.sgc.gov.co/arcgis/rest/services/Atlas_Geologico_Colombiano/Atlas_Geologico_Colombia/MapServer/13",
+   "fecha": "2026-09-29"
+  },
+  "atlas_fallas": {
+   "url": "https://srvags.sgc.gov.co/arcgis/rest/services/Atlas_Geologico_Colombiano/Atlas_Geologico_Colombia/MapServer/11",
+   "fecha": "2026-09-29"
+  },
+  "tol_uc": {
+   "url": "https://srvags.sgc.gov.co/arcgis/rest/services/Geologia/Geologia_Por_Departamentos/MapServer/188",
+   "fecha": "2026-09-29"
+  },
+  "tol_fallas": {
+   "url": "https://srvags.sgc.gov.co/arcgis/rest/services/Geologia/Geologia_Por_Departamentos/MapServer/187",
+   "fecha": "2026-09-29"
+  },
+  "qui_uc": {
+   "url": "https://srvags.sgc.gov.co/arcgis/rest/services/Geomecanica_Por_Regiones/Geomecanica_del_Departamento_del_Quindio/MapServer/19",
+   "fecha": "2026-09-29"
+  }
+ }
+}
