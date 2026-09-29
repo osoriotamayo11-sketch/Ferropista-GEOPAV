@@ -1,0 +1,248 @@
+{
+ "sentidos": {
+  "IBG_CAL": {
+   "ruta": "Ibagué → Calarcá",
+   "insumos": {
+    "ruta": "Ibagué → Calarcá",
+    "ruta_id": 14037,
+    "periodo": "20260901",
+    "config": "Tractocamión tres ejes con semiremolque de tres ejes - Contenedor cargado -",
+    "costo_hora": 90704.0,
+    "horas_espera": 4.0,
+    "costo_espera": 362816.0,
+    "costo_mov_carga": 892292.0,
+    "costo_total_viaje": 1255108.0,
+    "cf_mes": 17032529.82,
+    "cf_viaje": 518202.25,
+    "cv_viaje": 506520.27,
+    "otros_viaje": 230382.21,
+    "v_combustible": 253917.54,
+    "v_peajes": 106700.0,
+    "v_llantas": 45449.82,
+    "v_lubricantes": 11651.5,
+    "v_filtros": 5909.39,
+    "v_mantenimiento": 68370.99,
+    "v_lavado": 4341.77,
+    "v_imprevistos": 10179.26,
+    "tasa_imprevistos": 0.075,
+    "o_comisiones": 140206.63,
+    "o_admin": 51236.13,
+    "o_rete": 38939.46,
+    "horas_habiles_mes": 230.0,
+    "acpm": 11616.0,
+    "toneladas": 34.0,
+    "dist_total_km": 85.01,
+    "dist_km": {
+     "Plano": 14.94,
+     "Ondulado": 20.09,
+     "Montaña": 38.77,
+     "Urbano": 11.0,
+     "Afirmado": 0.21
+    },
+    "vel_kmh": {
+     "Plano": 56.25,
+     "Ondulado": 33.13,
+     "Montaña": 23.57,
+     "Urbano": 23.57,
+     "Afirmado": 15.0
+    },
+    "horas_viaje_pub": 3.0,
+    "rend_kmgal": {
+     "Plano": 6.48,
+     "Ondulado": 4.8,
+     "Montaña": 3.26,
+     "Urbano": 3.26,
+     "Afirmado": 2.07
+    },
+    "factor_viajes": 32.8685,
+    "horas_recorrido": 7.0,
+    "km_llantas": 534.64,
+    "km_lubricantes": 137.06,
+    "km_filtros": 69.51,
+    "km_mantenimiento": 804.27,
+    "km_lavado": 51.07,
+    "peajes_lista": [
+     [
+      "COCORA",
+      63800.0
+     ],
+     [
+      "TUNEL DE LA LINEA TOLIMA",
+      42900.0
+     ]
+    ]
+   },
+   "unitarios": {
+    "cf_hora": 74054.47747826087,
+    "cv_km_sin_comb": 1716.29125,
+    "comb_km": {
+     "Plano": 1792.5925925925924,
+     "Ondulado": 2420.0,
+     "Montaña": 3563.19018404908,
+     "Urbano": 3563.19018404908,
+     "Afirmado": 5611.594202898551
+    },
+    "f_otros": 0.22482400406307065,
+    "f_detalle": {
+     "comisiones_prestacional": 0.13682399602186943,
+     "administrativo": 0.050000003903495745,
+     "retefuente_ica": 0.03800000413770549
+    },
+    "costo_hora_total": 90703.70162372197
+   },
+   "reproduccion": {
+    "horas": 2.9975815542607953,
+    "combustible": 253917.54357606475,
+    "variables": 506519.46273856476,
+    "movilizacion": 892288.9393777681,
+    "total": 1255103.745872656
+   },
+   "error_rel": {
+    "movilizacion": -3.4300679956356106e-06,
+    "total": -3.3894512215804085e-06,
+    "costo_hora": -3.2895603064853063e-06
+   }
+  },
+  "CAL_IBG": {
+   "ruta": "Calarcá → Ibagué",
+   "insumos": {
+    "ruta": "Calarcá → Ibagué",
+    "ruta_id": 15393,
+    "periodo": "20260901",
+    "config": "Tractocamión tres ejes con semiremolque de tres ejes - Contenedor cargado -",
+    "costo_hora": 90704.0,
+    "horas_espera": 4.0,
+    "costo_espera": 362816.0,
+    "costo_mov_carga": 699001.0,
+    "costo_total_viaje": 1061817.0,
+    "cf_mes": 17032529.82,
+    "cf_viaje": 479389.1,
+    "cv_viaje": 387520.76,
+    "otros_viaje": 194902.14,
+    "v_combustible": 213890.13,
+    "v_peajes": 42900.0,
+    "v_llantas": 40723.6,
+    "v_lubricantes": 10439.89,
+    "v_filtros": 5294.88,
+    "v_mantenimiento": 61261.25,
+    "v_lavado": 3890.28,
+    "v_imprevistos": 9120.74,
+    "tasa_imprevistos": 0.075,
+    "o_comisiones": 118614.07,
+    "o_admin": 43345.49,
+    "o_rete": 32942.57,
+    "horas_habiles_mes": 230.0,
+    "acpm": 11616.0,
+    "toneladas": 34.0,
+    "dist_total_km": 76.17,
+    "dist_km": {
+     "Plano": 25.09,
+     "Ondulado": 11.83,
+     "Montaña": 28.04,
+     "Urbano": 11.0,
+     "Afirmado": 0.21
+    },
+    "vel_kmh": {
+     "Plano": 56.25,
+     "Ondulado": 33.13,
+     "Montaña": 23.57,
+     "Urbano": 23.57,
+     "Afirmado": 15.0
+    },
+    "horas_viaje_pub": 2.47,
+    "rend_kmgal": {
+     "Plano": 6.48,
+     "Ondulado": 4.8,
+     "Montaña": 3.26,
+     "Urbano": 3.26,
+     "Afirmado": 2.07
+    },
+    "factor_viajes": 35.5297,
+    "horas_recorrido": 6.47,
+    "km_llantas": 534.64,
+    "km_lubricantes": 137.06,
+    "km_filtros": 69.51,
+    "km_mantenimiento": 804.27,
+    "km_lavado": 51.07,
+    "peajes_lista": [
+     [
+      "TUNEL DE LA LINEA QUINDIO",
+      42900.0
+     ]
+    ]
+   },
+   "unitarios": {
+    "cf_hora": 74054.47747826087,
+    "cv_km_sin_comb": 1716.29125,
+    "comb_km": {
+     "Plano": 1792.5925925925924,
+     "Ondulado": 2420.0,
+     "Montaña": 3563.19018404908,
+     "Urbano": 3563.19018404908,
+     "Afirmado": 5611.594202898551
+    },
+    "f_otros": 0.22482398573711,
+    "f_detalle": {
+     "comisiones_prestacional": 0.1368239945961625,
+     "administrativo": 0.0499999965394326,
+     "retefuente_ica": 0.037999994601514854
+    },
+    "costo_hora_total": 90703.70026660252
+   },
+   "reproduccion": {
+    "horas": 2.473465429978476,
+    "combustible": 213890.12771603296,
+    "variables": 387520.03222853295,
+    "movilizacion": 698996.2974076959,
+    "total": 1061811.098474106
+   },
+   "error_rel": {
+    "movilizacion": -6.727590238231329e-06,
+    "total": -5.557950093049158e-06,
+    "costo_hora": -3.3045223747363295e-06
+   }
+  }
+ },
+ "unitarios": {
+  "cf_hora": 74054.47747826087,
+  "cv_km_sin_comb": 1716.29125,
+  "comb_km": {
+   "Plano": 1792.5925925925924,
+   "Ondulado": 2420.0,
+   "Montaña": 3563.19018404908,
+   "Urbano": 3563.19018404908,
+   "Afirmado": 5611.594202898551
+  },
+  "f_otros": 0.22482400406307065,
+  "f_detalle": {
+   "comisiones_prestacional": 0.13682399602186943,
+   "administrativo": 0.050000003903495745,
+   "retefuente_ica": 0.03800000413770549
+  },
+  "costo_hora_total": 90703.70162372197
+ },
+ "peajes": {
+  "IBG_CAL": [
+   [
+    "COCORA",
+    63800.0
+   ],
+   [
+    "TUNEL DE LA LINEA TOLIMA",
+    42900.0
+   ]
+  ],
+  "CAL_IBG": [
+   [
+    "TUNEL DE LA LINEA QUINDIO",
+    42900.0
+   ]
+  ]
+ },
+ "md5": {
+  "SICETAC_IBG_CAL": "c991f42266763925dbb7f1ff4d959ed5",
+  "SICETAC_CAL_IBG": "d5db8d1a5738d305169b755f79936152",
+  "SICETAC_PEAJ": "fc08f828f3d1785a0a236a0cdc44a8c2",
+  "RES2024": "4b904c9c93e17704b40d7829009435d5"
+ }
+}

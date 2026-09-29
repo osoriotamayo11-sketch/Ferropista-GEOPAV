@@ -74,3 +74,6 @@ OE3_Geotecnia/Act4_Capacidad/Fuentes/*.pdf
 
 # Fuentes de terceros del OE 4 (Hoek, Hoek y Marinos, DAUB, Castro y Pérez, Dávila, Ingason, Thunderhead; md5 en el Proyecto)
 OE4_Tuneles/Fuentes/
+
+# Fuentes de terceros del OE 6 (SICE-TAC, resoluciones Mintransporte, CAF; md5 en OE6_Logistica/comun_OE6.py)
+OE6_Logistica/Fuentes/

@@ -1,0 +1,135 @@
+{
+ "sentidos": {
+  "IBG_CAL": {
+   "ruta": "Ibagué → Calarcá",
+   "ruta_id": 14037,
+   "km_total": 85.01,
+   "km": {
+    "Plano": 14.94,
+    "Ondulado": 20.09,
+    "Montaña": 38.77,
+    "Urbano": 11.0,
+    "Afirmado": 0.21
+   },
+   "vel_kmh": {
+    "Plano": 56.25,
+    "Ondulado": 33.13,
+    "Montaña": 23.57,
+    "Urbano": 23.57,
+    "Afirmado": 15.0
+   },
+   "horas_terreno": {
+    "Plano": 0.2656,
+    "Ondulado": 0.6063990341080591,
+    "Montaña": 1.6448875689435725,
+    "Urbano": 0.4666949512091642,
+    "Afirmado": 0.014
+   },
+   "horas_pub_sicetac": 3.0,
+   "horas": {
+    "Mínimo": 2.9975815542607953,
+    "Típico": 4.0,
+    "Máximo": 5.0
+   },
+   "vel_media_kmh": {
+    "Mínimo": 28.359528660418217,
+    "Típico": 21.2525,
+    "Máximo": 17.002000000000002
+   },
+   "nombre_oficial": "IBAGUE TOLIMA _ CALARCA QUINDIO"
+  },
+  "CAL_IBG": {
+   "ruta": "Calarcá → Ibagué",
+   "ruta_id": 15393,
+   "km_total": 76.17,
+   "km": {
+    "Plano": 25.09,
+    "Ondulado": 11.83,
+    "Montaña": 28.04,
+    "Urbano": 11.0,
+    "Afirmado": 0.21
+   },
+   "vel_kmh": {
+    "Plano": 56.25,
+    "Ondulado": 33.13,
+    "Montaña": 23.57,
+    "Urbano": 23.57,
+    "Afirmado": 15.0
+   },
+   "horas_terreno": {
+    "Plano": 0.44604444444444447,
+    "Ondulado": 0.35707817687896165,
+    "Montaña": 1.1896478574459057,
+    "Urbano": 0.4666949512091642,
+    "Afirmado": 0.014
+   },
+   "horas_pub_sicetac": 2.47,
+   "horas": {
+    "Mínimo": 2.473465429978476,
+    "Típico": 4.0,
+    "Máximo": 5.0
+   },
+   "vel_media_kmh": {
+    "Mínimo": 30.794851254768833,
+    "Típico": 19.0425,
+    "Máximo": 15.234
+   },
+   "nombre_oficial": "CALARCA QUINDIO _ IBAGUE TOLIMA"
+  }
+ },
+ "escenarios": [
+  "Mínimo",
+  "Típico",
+  "Máximo"
+ ],
+ "ida_vuelta_h": {
+  "Mínimo": 5.471046984239271,
+  "Típico": 8.0,
+  "Máximo": 10.0
+ },
+ "parametros": {
+  "t_tipico_h": 4.0,
+  "espera_max_pare_siga_h": 1.0
+ },
+ "controles": [
+  {
+   "quien": "INVÍAS",
+   "que": "Ahorro del Cruce de la Cordillera Central, carga pesada, Calarcá–Cajamarca",
+   "valor": "≈ 50 min",
+   "detalle": "Velocidad de 15 a 60 km/h",
+   "fuente": "INVIAS",
+   "nota": "Declarado en la web del INVÍAS; no dice si es medido o esperado."
+  },
+  {
+   "quien": "CAF",
+   "que": "Ahorro del Túnel II Centenario, vehículos pesados",
+   "valor": "80 min",
+   "detalle": "Velocidad de 18 a 60 km/h, tramo Cajamarca–Calarcá",
+   "fuente": "CAF",
+   "nota": "Impacto ESPERADO en la estructuración; la propia CAF anota que no se documentó línea base (pág. 8)."
+  },
+  {
+   "quien": "Ponencia",
+   "que": "Velocidad media actual del tramo Ibagué–Armenia",
+   "valor": "< 20 km/h",
+   "detalle": "«Servicio irregular»",
+   "fuente": "PON",
+   "nota": "[F, dia. 13]"
+  },
+  {
+   "quien": "Prensa",
+   "que": "Evento extremo: trancones en Calle Larga (Cajamarca)",
+   "valor": "8 a 10 h",
+   "detalle": "Una o dos veces por semana, jul–sep 2026",
+   "fuente": "PRENSA_8H",
+   "nota": "Declaración del alcalde de Cajamarca; reapertura de ambos carriles prevista el 30 sep 2026. No entra al promedio."
+  }
+ ],
+ "md5": {
+  "PON": "2e7d264eb6d98f368dc9a6bd5bf5bd6d",
+  "SICETAC_IBG_CAL": "c991f42266763925dbb7f1ff4d959ed5",
+  "SICETAC_CAL_IBG": "d5db8d1a5738d305169b755f79936152",
+  "SICETAC_DIST": "0da631933a44d12069e59806877b8982",
+  "CAF": "e37299dc391fa062e9b2e7d508630d62"
+ }
+}

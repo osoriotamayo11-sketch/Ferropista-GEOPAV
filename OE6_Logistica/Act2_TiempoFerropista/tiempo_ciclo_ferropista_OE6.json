@@ -1,0 +1,179 @@
+{
+ "ciclo_operacion_min": {
+  "Peaje y carga": 25.0,
+  "Desplazamiento": 30.0,
+  "Descarga": 15.0
+ },
+ "ciclo_operacion_total_min": 70.0,
+ "trenes_dia": 140,
+ "camiones_tren": 35,
+ "horas_operacion": 24.0,
+ "reparto_sentido": 0.5,
+ "intervalo_min": 20.571428571428573,
+ "espera_min": {
+  "Mínimo": 0.0,
+  "Típico": 10.285714285714286,
+  "Máximo": 20.571428571428573
+ },
+ "vel_acceso_kmh": {
+  "Mínimo": 33.13,
+  "Típico": 23.57,
+  "Máximo": 15.0
+ },
+ "vel_acceso_terreno": {
+  "Mínimo": "Ondulado",
+  "Típico": "Montaña",
+  "Máximo": "Afirmado"
+ },
+ "portales": {
+  "oriental": {
+   "lat": 4.364,
+   "lon": -75.196,
+   "cota_msnm": 951.0
+  },
+  "occidental": {
+   "lat": 4.48,
+   "lon": -75.652,
+   "cota_msnm": 1451.5
+  }
+ },
+ "capacidad_camiones_dia": 4900,
+ "sentidos": {
+  "IBG_CAL": {
+   "ruta": "Ibagué → Calarcá",
+   "acceso_origen": {
+    "tramo": "ibague_portalE",
+    "km": 13.9007,
+    "min_auto": 21.996666666666666,
+    "snap_m": [
+     10.36992651,
+     5.315837693
+    ],
+    "via": [
+     "Calle 42",
+     "Vía a la Montañita"
+    ]
+   },
+   "acceso_destino": {
+    "tramo": "portalW_calarca",
+    "km": 7.5038,
+    "min_auto": 15.296666666666665,
+    "snap_m": [
+     258.3123305,
+     33.05677522
+    ],
+    "via": [
+     "",
+     "Carrera 25"
+    ]
+   },
+   "km_acceso": 21.4045,
+   "horas": {
+    "Mínimo": 1.8127427306570076,
+    "Típico": 2.2462199729276526,
+    "Máximo": 2.936490476190476
+   },
+   "horas_carretera": {
+    "Mínimo": 2.9975815542607953,
+    "Típico": 4.0,
+    "Máximo": 5.0
+   },
+   "reduccion_h": {
+    "Bajo": 0.06109107807031933,
+    "Central": 1.7537800270723474,
+    "Alto": 3.187257269342992
+   },
+   "reduccion_pct": {
+    "Bajo": 0.02038012209658943,
+    "Central": 0.43844500676808684,
+    "Alto": 0.6374514538685985
+   }
+  },
+  "CAL_IBG": {
+   "ruta": "Calarcá → Ibagué",
+   "acceso_origen": {
+    "tramo": "calarca_portalW",
+    "km": 7.4072,
+    "min_auto": 15.215,
+    "snap_m": [
+     33.05677522,
+     258.3123305
+    ],
+    "via": [
+     "Carrera 25",
+     ""
+    ]
+   },
+   "acceso_destino": {
+    "tramo": "portalE_ibague",
+    "km": 13.975700000000002,
+    "min_auto": 24.05,
+    "snap_m": [
+     5.315837693,
+     10.36992651
+    ],
+    "via": [
+     "Vía a la Montañita",
+     "Calle 42"
+    ]
+   },
+   "km_acceso": 21.3829,
+   "horas": {
+    "Mínimo": 1.8120907535969413,
+    "Típico": 2.245303553750732,
+    "Máximo": 2.9350504761904763
+   },
+   "horas_carretera": {
+    "Mínimo": 2.473465429978476,
+    "Típico": 4.0,
+    "Máximo": 5.0
+   },
+   "reduccion_h": {
+    "Bajo": -0.46158504621200036,
+    "Central": 1.7546964462492678,
+    "Alto": 3.1879092464030587
+   },
+   "reduccion_pct": {
+    "Bajo": -0.18661471497340357,
+    "Central": 0.43867411156231695,
+    "Alto": 0.6375818492806118
+   }
+  }
+ },
+ "osrm_via": {
+  "IBG_CAL": {
+   "km": 79.0094,
+   "min_auto": 96.79333333333334,
+   "snap_m": [
+    10.36992651,
+    33.05677522
+   ],
+   "via": [
+    "Calle 42",
+    "Carrera 25"
+   ]
+  },
+  "CAL_IBG": {
+   "km": 67.9054,
+   "min_auto": 75.87666666666668,
+   "snap_m": [
+    33.05677522,
+    10.36992651
+   ],
+   "via": [
+    "Carrera 25",
+    "Calle 42"
+   ]
+  }
+ },
+ "md5": {
+  "nominatim_calarca.json": "c718ef1ab84b90889a83244bd13aaecb",
+  "nominatim_ibague.json": "7b96bbfc0a6bdd732e347aaa6507d006",
+  "osrm_calarca_ibague_via.json": "a7c12c25b15b723050b249c68dd39bc4",
+  "osrm_calarca_portalW.json": "8f1eec435210d9ba456f7a22eaa83fbd",
+  "osrm_ibague_calarca_via.json": "91ad02b83d3992e32c970115bfcc2c64",
+  "osrm_ibague_portalE.json": "80def4e6d56f5a54383dcf3a27142bbf",
+  "osrm_portalE_ibague.json": "7976e92c667264ee081de67fc5d104ae",
+  "osrm_portalW_calarca.json": "c330589e261b9a8018d3ad0eb2997039"
+ }
+}

@@ -1,0 +1,184 @@
+{
+ "sentidos": {
+  "IBG_CAL": {
+   "ruta": "Ibagué → Calarcá",
+   "combustible": 253917.54357606475,
+   "variables_km": 145901.9191625,
+   "peajes": 106700.0,
+   "rangos": {
+    "Bajo": {
+     "h_carretera": 2.9975815542607953,
+     "h_ferropista": 2.936490476190476,
+     "dh": 0.06109107807031933,
+     "c_carretera": 892288.9393777681,
+     "c_ferropista_sin_tarifa": 458463.8631754132,
+     "tarifa_indiferencia": 433825.07620235486,
+     "reduccion_pct_sin_tarifa": 0.4861934930011348
+    },
+    "Central": {
+     "h_carretera": 4.0,
+     "h_ferropista": 2.2462199729276526,
+     "dh": 1.7537800270723474,
+     "c_carretera": 983212.002982212,
+     "c_ferropista_sin_tarifa": 342151.2867795999,
+     "tarifa_indiferencia": 641060.716202612,
+     "reduccion_pct_sin_tarifa": 0.652006601077072
+    },
+    "Alto": {
+     "h_carretera": 5.0,
+     "h_ferropista": 1.8127427306570076,
+     "dh": 3.187257269342992,
+     "c_carretera": 1073915.704605934,
+     "c_ferropista_sin_tarifa": 272862.57034276816,
+     "tarifa_indiferencia": 801053.1342631658,
+     "reduccion_pct_sin_tarifa": 0.745918074228281
+    }
+   }
+  },
+  "CAL_IBG": {
+   "ruta": "Calarcá → Ibagué",
+   "combustible": 213890.12771603296,
+   "variables_km": 130729.9045125,
+   "peajes": 42900.0,
+   "rangos": {
+    "Bajo": {
+     "h_carretera": 2.473465429978476,
+     "h_ferropista": 2.9350504761904763,
+     "dh": -0.46158504621200036,
+     "c_carretera": 698996.3078661608,
+     "c_ferropista_sin_tarifa": 458139.38185303763,
+     "tarifa_indiferencia": 240856.92601312313,
+     "reduccion_pct_sin_tarifa": 0.3445753908892475
+    },
+    "Central": {
+     "h_carretera": 4.0,
+     "h_ferropista": 2.245303553750732,
+     "dh": 1.7546964462492678,
+     "c_carretera": 837458.6440236898,
+     "c_ferropista_sin_tarifa": 341928.4891592826,
+     "tarifa_indiferencia": 495530.1548644072,
+     "reduccion_pct_sin_tarifa": 0.5917070155053409
+    },
+    "Alto": {
+     "h_carretera": 5.0,
+     "h_ferropista": 1.8120907535969413,
+     "dh": 3.1879092464030587,
+     "c_carretera": 928162.3456474119,
+     "c_ferropista_sin_tarifa": 272694.0030677332,
+     "tarifa_indiferencia": 655468.3425796786,
+     "reduccion_pct_sin_tarifa": 0.7062001013653234
+    }
+   }
+  }
+ },
+ "rangos": [
+  "Bajo",
+  "Central",
+  "Alto"
+ ],
+ "anual": {
+  "2026": {
+   "tpd_grandes": 2740.0236860414143,
+   "tpd_medianos": 2218.114412509716,
+   "camiones_dia_captados": 2466.021317437273,
+   "camiones_ano": 900097.7808646046,
+   "ocupacion_capacidad": 0.5032696566198516,
+   "rangos": {
+    "Bajo": {
+     "ahorro_bruto": 303639886491.72,
+     "horas_grandes": -180241.8659869934,
+     "horas_medianos_H": -97273.38799298054,
+     "ahorro_transportador": {
+      "0.0": 303639886491.72,
+      "0.5": 151819943245.86,
+      "0.75": 75909971622.93,
+      "1.0": 0.0
+     }
+    },
+    "Central": {
+     "ahorro_bruto": 511521460399.196,
+     "horas_grandes": 1578985.94392623,
+     "horas_medianos_H": 852151.1443411398,
+     "ahorro_transportador": {
+      "0.0": 511521460399.196,
+      "0.5": 255760730199.598,
+      "0.75": 127880365099.799,
+      "1.0": 0.0
+     }
+    },
+    "Alto": {
+     "ahorro_bruto": 655505874543.9404,
+     "horas_grandes": 2869136.616732677,
+     "horas_medianos_H": 1548422.9360144602,
+     "ahorro_transportador": {
+      "0.0": 655505874543.9404,
+      "0.5": 327752937271.9702,
+      "0.75": 163876468635.9851,
+      "1.0": 0.0
+     }
+    }
+   }
+  },
+  "2030": {
+   "tpd_grandes": 3083.9207982482862,
+   "tpd_medianos": 2496.50731286766,
+   "camiones_dia_captados": 2775.5287184234576,
+   "camiones_ano": 1013067.982224562,
+   "ocupacion_capacidad": 0.5664344323313178,
+   "rangos": {
+    "Bajo": {
+     "ahorro_bruto": 341749367313.8309,
+     "horas_grandes": -202863.8080992004,
+     "horas_medianos_H": -109482.05516464781,
+     "ahorro_transportador": {
+      "0.0": 341749367313.8309,
+      "0.5": 170874683656.91544,
+      "0.75": 85437341828.45772,
+      "1.0": 0.0
+     }
+    },
+    "Central": {
+     "ahorro_bruto": 575721910183.3612,
+     "horas_grandes": 1777162.590755138,
+     "horas_medianos_H": 959103.6204075345,
+     "ahorro_transportador": {
+      "0.0": 575721910183.3612,
+      "0.5": 287860955091.6806,
+      "0.75": 143930477545.8403,
+      "1.0": 0.0
+     }
+    },
+    "Alto": {
+     "ahorro_bruto": 737777636805.9597,
+     "horas_grandes": 3229238.5392262214,
+     "horas_medianos_H": 1742763.6560903415,
+     "ahorro_transportador": {
+      "0.0": 737777636805.9597,
+      "0.5": 368888818402.97986,
+      "0.75": 184444409201.48993,
+      "1.0": 0.0
+     }
+    }
+   }
+  }
+ },
+ "contraste_fuente": {
+  "horas_M_dia28": 5.0,
+  "horas_M_dia29": 5.3,
+  "ahorro_bill_dia28": 2.5
+ },
+ "parametros": {
+  "tpd_grandes_2017": 2100,
+  "tpd_medianos_2017": 1700,
+  "crecimiento": 0.03,
+  "captacion_grandes": 0.9,
+  "captacion_medianos": 0.6,
+  "reparto_sentido": 0.5,
+  "tarifas": [
+   0.0,
+   0.5,
+   0.75,
+   1.0
+  ]
+ }
+}

@@ -41,13 +41,14 @@ Una cifra sin marca no entra al sitio, ni al Plan de Acción, ni a una memoria.
 | `OE2_Plataforma/` | Objetivo 2 — esquema de la base de datos de la consulta ciudadana |
 | `OE3_Geotecnia/` | Objetivo 3 — geología de los portales (planchas del SGC), susceptibilidad a movimientos en masa, parámetros geotécnicos, capacidad portante por Meyerhof (NSR-10, Título H) y esquema conceptual de cimentación de las terminales Ro-Ro. Scripts, JSON, Excel, PDF y plano DXF |
 | `OE4_Tuneles/` | Objetivo 4 — matriz litológica del eje con la cartografía del SGC, sectorización para tuneladora con el índice de squeezing de Hoek y Marinos, cuadro de sostenimientos, esquema de ventilación longitudinal e informe de métodos constructivos. Scripts, JSON, Excel, PDF y plano DXF |
+| `OE6_Logistica/` | Objetivo 6 — tiempos de ciclo del cruce Ibagué–Calarcá por la Ruta 40 y con Ferropista, matriz de costos unitarios del tractocamión 3S3 a partir del SICE-TAC del Ministerio de Transporte, modelo de ahorros operativos e informe económico-logístico. Scripts, JSON, Excel y PDF |
 | `OE5_SeguridadVial/` | Objetivo 5 — aforos de INVÍAS y de la ANI, sectores críticos de la ANSV, cálculo de la tasa de siniestralidad y sus figuras |
 | `public/` | Láminas y recursos publicados en el sitio |
 
 Estado a 29 de septiembre de 2026: **objetivos 1 y 5 cerrados**; objetivo 2 con la consulta
-ciudadana abierta hasta el 3 de octubre; **objetivos 3 y 4 con sus cinco actividades elaboradas**
-(nivel conceptual: parámetros análogos o regionales, sin exploración de subsuelo). Los objetivos 6 y 7
-siguen en los bloques siguientes del semestre.
+ciudadana abierta hasta el 3 de octubre; **objetivos 3, 4 y 6 con sus cinco actividades elaboradas**
+(nivel conceptual: parámetros análogos o regionales, sin exploración de subsuelo; costos de referencia
+del SICE-TAC). El objetivo 7 sigue en el bloque 3 del semestre.
 
 ---
 
@@ -65,9 +66,9 @@ cualquiera puede descargar de su fuente original. Lo omitido y dónde conseguirl
 - **Los límites municipales crudos del IGAC** (8,4 MB). El mismo script los descarga y recorta.
 - **La ponencia de referencia en PDF.** Es obra de un tercero y no se redistribuye. Está citada
   diapositiva por diapositiva en `src/data/proyecto.ts`.
-- **Las fuentes de terceros de los objetivos 3 y 4** (planchas y memorias del SGC, Hoek, Carrillo, NSR-10,
+- **Las fuentes de terceros de los objetivos 3, 4 y 6** (planchas y memorias del SGC, Hoek, Carrillo, NSR-10,
   Revista EIA, USACE EM 1110-1-1905, FHWA NHI-06-088 y 089; Hoek y Marinos, DAUB, Castro y Pérez, Dávila,
-  Ingason). Los scripts guardan su enlace y su
+  Ingason; consultas y listados del SICE-TAC, resoluciones del Ministerio de Transporte y evaluación ex post de CAF). Los scripts guardan su enlace y su
   huella md5 y se detienen si el archivo descargado no coincide.
 - **Variables de entorno.** Ninguna credencial se versiona, aquí ni en el repositorio de trabajo.
 
@@ -99,6 +100,9 @@ Este espejo no sustituye esa historia: la declara.
   (sectores críticos y fallecidos 2015–2019).
 - **ANI** — conjunto `8yi9-t44c` de datos.gov.co (aforo del peaje Cocora).
 - **IGAC** — límites municipales de Tolima y Quindío.
+- **Ministerio de Transporte** — SICE-TAC (costos eficientes del transporte de carga, periodo 20260901), distancias por terreno y peajes por ruta.
+- **INVÍAS y CAF** — ahorros de tiempo atribuidos al Túnel de La Línea (controles del objetivo 6).
+- **OpenStreetMap** — distancias viales de acceso a los portales (OSRM y Nominatim).
 - **Fernández Ordóñez, H. O. (2025)** — *Túnel para cruce férreo de la Cordillera Central de
   los Andes y semilla para la Estrella Andina*. XX Seminario Andino de Túneles y Obras
   Subterráneas, SAI, Medellín, 8 de octubre de 2025.
